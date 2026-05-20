@@ -44,6 +44,7 @@ open index.html
 ```
 opc-board/
 ├── index.html              # 🏠 Landing Page（GitHub Pages 入口）
+├── CNAME                   # 🌐 Custom domain: opc-board.is-a.dev
 ├── opc.sh                  # 🖥️ CLI 工具（本地终端里跑董事会）
 ├── README.md               # 📖 你现在看到的这个
 ├── _config.yml             # ⚙️ GitHub Pages 配置
@@ -186,7 +187,7 @@ MIT — 随便用，随便改，随便赚钱。
 
 ## 🌐 Live Demo
 
-👉 [opc-board.elimek.com](https://opc-board.elimek.com)
+👉 [opc-board.is-a.dev](https://opc-board.is-a.dev)
 
 ---
 
