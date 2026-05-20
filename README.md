@@ -182,7 +182,7 @@ MIT — 随便用，随便改，随便赚钱。
 
 ## 🌐 Live Demo
 
-👉 [opc-board.yourdomain.com](https://elimek.github.io/opc-board)
+👉 [opc-board.elimek.com](https://opc-board.elimek.com)
 
 ---
 

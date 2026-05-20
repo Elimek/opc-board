@@ -2,7 +2,7 @@
 # Deploy: push to main, GitHub Pages auto-builds from root
 title: OPC Board
 description: Your One-Person Company Operating System — distilled wisdom from Naval, Buffett, Musk, Bryan Johnson, Dan Koe, Zhang Xuedong, and more.
-url: "https://elimek.github.io/opc-board"
+url: "https://opc-board.elimek.com"
 baseurl: "/opc-board"
 markdown: kramdown
 theme: null
