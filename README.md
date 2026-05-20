@@ -15,12 +15,13 @@
 
 | 角色 | 导师 | 核心原则 |
 |------|------|----------|
-| **💼 Finance CEO** | Naval · 巴菲特 · 段永平 | 长期复利 + 杠杆 + 诚信 |
-| **🏢 Deal-Making & Real Estate** | Trump | 杠杆投资 · 不良资产 · 交易谈判 |
-| **🧬 Health CEO** | Bryan Johnson · Andrew Huberman | 数据驱动优化 + 神经科学协议 |
-| **📱 Media CEO** | Dan Koe | 内容 → 品牌 → 产品闭环 |
-| **🧠 Strategy Advisor** | 张雪峰 · lidangzzz | ROI 第一 · 现实主义 · 避坑 |
-| **🚀 Innovation CEO** | Elon Musk | 第一性原理 · 快速迭代 |
+| **💼 CFO** | Naval · 巴菲特 · 段永平 | 长期复利 · 价值投资 |
+| **🏢 CBO** | Trump | 个人品牌 · 谈判 · 注意力 |
+| **🧬 CHO** | Bryan Johnson · Huberman | 健康优化 · 精力管理 |
+| **📱 CMO** | Dan Koe | 内容营销 · 产品转化 |
+| **🧠 CSO** | 张雪峰 | 战略决策 · ROI评估 |
+| **📊 CDO** | Lidangzzz | 数据驱动 · 指数定投 |
+| **🚀 CTO** | Elon Musk | 第一性原理 · 工程创新 |
 
 ---
 
