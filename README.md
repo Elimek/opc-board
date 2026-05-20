@@ -19,9 +19,9 @@
 | **🏢 CBO** | Trump | 个人品牌 · 谈判 · 注意力 |
 | **🧬 CHO** | Bryan Johnson · Huberman | 健康优化 · 精力管理 |
 | **📱 CMO** | Dan Koe | 内容营销 · 产品转化 |
-| **🧠 CSO** | 张雪峰 | 战略决策 · ROI评估 |
-| **📊 CDO** | Lidangzzz | 数据驱动 · 指数定投 |
-| **🚀 CTO** | Elon Musk | 第一性原理 · 工程创新 |
+| **🧠 CSO** | 张雪峰 | 宏观战略 · 方向选择 · ROI |
+| **⚡ COO** | Lidangzzz | 具体战术 · 落地执行 · 反诈 |
+| **🚀 CVO** | Elon Musk | 长期Vision · All-In执行力 |
 
 ---
 
