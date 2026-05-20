@@ -1,0 +1,9 @@
+# OPC Board — .gitignore
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+node_modules/
+.env
+.vercel
+dist/
