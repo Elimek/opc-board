@@ -17,4 +17,4 @@ core_principles:
 |-------|------|---------------|
 | [Naval Ravikant](naval.md) | 财富·幸福 | Productize Yourself, 杠杆四象限, 特定知识, 欲望管理, 无限游戏 |
 | [Buffett & Duan Yongping](buffett-duan.md) | 价值投资 | 护城河, 能力圈, 安全边际, 好生意三原则 |
-| [Donald Trump](trump.md) | 品牌·谈判 | 大胆谈判, 品牌放大, 现金流为王, 杠杆博弈 |
+| [Donald Trump](trump.md) | 交易·不动产·杠杆 | 杠杆投资, 品牌放大, 现金流为王, 谈判博弈 |

@@ -15,7 +15,8 @@
 
 | 角色 | 导师 | 核心原则 |
 |------|------|----------|
-| **💼 Finance CEO** | Naval · 巴菲特 · 段永平 · 特朗普 | 长期复利 + 杠杆 + 诚信 + 品牌放大 |
+| **💼 Finance CEO** | Naval · 巴菲特 · 段永平 | 长期复利 + 杠杆 + 诚信 |
+| **🏢 Deal-Making & Real Estate** | Trump | 杠杆投资 · 不良资产 · 交易谈判 |
 | **🧬 Health CEO** | Bryan Johnson · Andrew Huberman | 数据驱动优化 + 神经科学协议 |
 | **📱 Media CEO** | Dan Koe | 内容 → 品牌 → 产品闭环 |
 | **🧠 Strategy Advisor** | 张雪峰 · lidangzzz | ROI 第一 · 现实主义 · 避坑 |
