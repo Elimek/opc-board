@@ -150,10 +150,10 @@ footer a{color:#52525b;text-decoration:none}footer a:hover{color:#2563eb}
   <div class="container">
     <div class="hero-grid">
       <div>
-        <div class="badge">🏢 Open Source · MIT</div>
+        <div class="badge">🏢 10 Advisors · 1 CEO (You) · Equal Vote</div>
         <h1><span lang="en">Your <span class="g">OPC Board</span></span><span lang="zh">你的 <span class="g">董事会</span></span></h1>
-        <p lang="en">Hire the world's best minds — Naval, Buffett, Trump, Bryan Johnson, Dan Koe, Zhang Xuedong, Lidangzzz, Musk — as your executive team. Deploy for free.</p>
-        <p lang="zh">把全世界最聪明的人装进你的董事会。免费部署，一人公司标配。</p>
+        <p lang="en">10 super advisors — Naval, Buffett, Duan, Trump, Bryan, Huberman, Dan Koe, Zhang Xuedong, Lidangzzz, Musk. On every decision: everyone votes, everyone scores, only pass if all ≥6. You are the CEO.</p>
+        <p lang="zh">10位超级顾问——每个决策全员投票，每人打分，全部6分以上才通过。你是CEO，你说了算。</p>
         <div class="ha">
           <a href="#board" class="btn btn-pri"><span lang="en">Meet the Board →</span><span lang="zh">认识董事会 →</span></a>
           <a href="https://github.com/Elimek/opc-board" class="btn btn-sec">GitHub ★</a>
@@ -168,7 +168,7 @@ footer a{color:#52525b;text-decoration:none}footer a:hover{color:#2563eb}
           <div class="kcol"><div class="kch">Finance</div>
             <div class="kcard kp"><span class="ki">💼</span><div class="kl">Naval</div><div class="ks">Leverage</div></div>
             <div class="kcard kp"><span class="ki">🐂</span><div class="kl">Buffett</div><div class="ks">Moat</div></div>
-            <div class="kcard kp"><span class="ki">🇨🇳</span><div class="kl">Duan</div><div class="ks">Value</div></div></div>
+            <div class="kcard kp"><span class="ki">📱</span><div class="kl">Duan</div><div class="ks">Value</div></div></div>
           <div class="kcol"><div class="kch">Brand</div>
             <div class="kcard kd"><span class="ki">🏢</span><div class="kl">Trump</div><div class="ks">Deal · Brand</div></div></div>
           <div class="kcol"><div class="kch">Health</div>
@@ -214,19 +214,23 @@ footer a{color:#52525b;text-decoration:none}footer a:hover{color:#2563eb}
   </div>
 </section>
 
-<section class="s">
+<section class="s" id="demo">
   <div class="container">
-    <div class="sh"><div class="st">🎯 LIVE DEMO</div>
-      <h2 lang="en">A Real Board Meeting</h2><h2 lang="zh">真实的董事会</h2>
+    <div class="sh"><div class="st">🎯 CONSENSUS ENGINE</div>
+      <h2 lang="en">10 Voices, 1 Decision</h2><h2 lang="zh">10人平权投票·打分割·取交集</h2>
     </div>
-    <div class="dc gl">
-      <div class="dh">📋 <span lang="en">Agenda: Should I go full-time on my solo venture or take a job?</span><span lang="zh">议题：应该全职做一人公司还是先拿offer？</span></div>
-      <div class="db">
-        <div class="al"><div class="ad dfi">💼</div><div class="ac"><div class="role cfi">CFO (Naval)</div><div class="tx" lang="en">"Have you validated your product? Get a job for runway, build at night."</div><div class="tx" lang="zh">「产品验证过了吗？先拿offer保底，业余时间做。」</div></div></div>
-        <div class="al"><div class="ad dhe">🧬</div><div class="ac"><div class="role che">CHO (Bryan Johnson)</div><div class="tx" lang="en">"Going all-in with no safety net spikes cortisol, ruins sleep, accelerates aging."</div><div class="tx" lang="zh">「没有安全网的All-In会毁掉睡眠、加速衰老。」</div></div></div>
-        <div class="al"><div class="ad dme">📱</div><div class="ac"><div class="role cme">CMO (Dan Koe)</div><div class="tx" lang="en">"Day job =素材. Build in public. Your content IS your product prototype."</div><div class="tx" lang="zh">「全职工作就是素材，公开构建，你的内容就是产品原型。」</div></div></div>
-        <div class="al"><div class="ad dst">🧠</div><div class="ac"><div class="role cst">CSO (Zhang Xuedong)</div><div class="tx" lang="en">"普通人家孩子，先拿offer保底。拿offer同时搞副业，ROI最高。"</div><div class="tx" lang="zh">「普通人家孩子，先拿offer保底。拿offer同时搞副业，ROI最高。」</div></div></div>
-        <div class="al"><div class="ad din">🚀</div><div class="ac"><div class="role cin">CVO (Elon Musk)</div><div class="tx" lang="en">"Weekend MVP. If you can't get 10 users in 48 hours, keep the day job."</div><div class="tx" lang="zh">「周末做个MVP。48小时拿不到10个用户就继续上班。」</div></div></div>
+    <div class="dc" style="background:#fff;border:1px solid #e4e4e7;border-radius:14px;overflow:hidden">
+      <div class="dh" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap">
+        <span>📋 <span lang="en">Decision: Portfolio allocation for monthly DCA</span><span lang="zh">议题：定投方案</span></span>
+        <span id="roundLabel" style="font-size:12px;background:#f4f4f5;padding:2px 10px;border-radius:6px;font-weight:400">Round 1 / 3</span>
+      </div>
+      <div class="db" id="consensusBody"></div>
+      <div style="padding:10px 20px 14px;border-top:1px solid #f1f5f9;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+        <div id="resultBadge" style="font-size:13px;font-weight:600;color:#71717a">⚖️ All 10 must score ≥ 6</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-sec" onclick="prevRound()" id="prevBtn" disabled style="padding:6px 14px;font-size:12px">← Prev</button>
+          <button class="btn btn-pri" onclick="nextRound()" id="nextBtn" style="padding:6px 14px;font-size:12px">Next Round →</button>
+        </div>
       </div>
     </div>
   </div>
@@ -301,6 +305,82 @@ function setLang(l){
 }
 var pref = 'en';
 setLang(pref);
+
+// === Consensus Engine — 10人平权投票+打分+交集迭代 ===
+const advisors = [
+  {id:1,name:'Naval',emoji:'💼',role:'CFO',color:'#16a34a'},
+  {id:2,name:'Buffett',emoji:'🐂',role:'CFO',color:'#16a34a'},
+  {id:3,name:'Duan',emoji:'📱',role:'CFO',color:'#16a34a'},
+  {id:4,name:'Trump',emoji:'🏢',role:'CBO',color:'#2563eb'},
+  {id:5,name:'Bryan',emoji:'🧬',role:'CHO',color:'#9333ea'},
+  {id:6,name:'Huberman',emoji:'⚡',role:'CHO',color:'#9333ea'},
+  {id:7,name:'Dan Koe',emoji:'📱',role:'CMO',color:'#2563eb'},
+  {id:8,name:'Zhang',emoji:'🧠',role:'CSO',color:'#d97706'},
+  {id:9,name:'Lidangzzz',emoji:'⚡',role:'COO',color:'#0891b2'},
+  {id:10,name:'Musk',emoji:'🚀',role:'CVO',color:'#a855f7'}
+];
+
+// 3 rounds of voting data
+// Round 1: some fail (<6), Round 2: adjusted, Round 3: all ≥6 ✅
+const rounds = [
+  // Round 1
+  [
+    {score:7,note:'SOXQ+QQQJ+SCHD+IAU+BND'},{score:6,note:'55% growth, 45% defense'},{score:5,note:'Duan: cash too low'},
+    {score:4,note:'Too balanced, no core'},{score:8,note:'Low stress'},{score:7,note:'Set & forget'},
+    {score:6,note:'Good content angle'},{score:5,note:'28y can be more aggressive'},{score:7,note:'Fees 0.13% OK'},
+    {score:3,note:'BND 10% is wasted'}
+  ],
+  // Round 2: adjusted — dropped BND to 5%, added to SOXQ
+  [
+    {score:7,note:'Better'},{score:7,note:'Still 40% growth not bad'},{score:6,note:'Cash still low, acceptable'},
+    {score:6,note:'Getting there'},{score:8,note:'Low stress'},{score:7,note:'Still good'},
+    {score:6,note:'Still content-ready'},{score:6,note:'Reasonable'},{score:7,note:'Good data'},
+    {score:5,note:'Still has BND'}
+  ],
+  // Round 3: consensus ✅ all ≥6
+  [
+    {score:7,note:'Pass'},{score:7,note:'Pass'},{score:7,note:'Pass'},
+    {score:7,note:'Pass'},{score:8,note:'Pass'},{score:7,note:'Pass'},
+    {score:6,note:'Pass'},{score:7,note:'Pass'},{score:7,note:'Pass'},
+    {score:6,note:'Pass — final, no BND'}
+  ]
+];
+const finalRound = rounds[2];
+const labels = ['1st attempt','Adjusted','Consensus ✅'];
+
+let currentRound = 0;
+function renderRound(){
+  var r = rounds[currentRound];
+  var html = '<div style="display:flex;flex-wrap:wrap;gap:4px;padding:4px 0">';
+  for(var i=0;i<advisors.length;i++){
+    var a = advisors[i], v = r[i];
+    var pass = v.score >= 6;
+    var barW = (v.score/10)*100;
+    html += '<div style="flex:1;min-width:90px;max-width:110px;background:#fafafa;border-radius:8px;padding:6px 4px;text-align:center;border:1px solid '+(pass?'#22c55e':'#ef4444')+'30">';
+    html += '<div style="font-size:10px">'+a.emoji+'</div>';
+    html += '<div style="font-size:9px;font-weight:600">'+a.name+'</div>';
+    html += '<div style="font-size:8px;color:#94a3b8">'+a.role+'</div>';
+    html += '<div style="margin-top:4px;height:4px;background:#e4e4e7;border-radius:2px;overflow:hidden">';
+    html += '<div style="height:100%;width:'+barW+'%;background:'+(pass?'#22c55e':'#ef4444')+';border-radius:2px"></div></div>';
+    html += '<div style="font-size:14px;font-weight:700;color:'+(pass?'#22c55e':'#ef4444')+'">'+v.score+'/10</div>';
+    html += '<div style="font-size:7px;color:#94a3b8">'+v.note+'</div>';
+    html += '</div>';
+  }
+  html += '</div>';
+  // Overall result
+  var allPass = r.every(function(v){return v.score>=6});
+  var avg = Math.round(r.reduce(function(s,v){return s+v.score},0)/r.length*10)/10;
+  html += '<div style="margin-top:8px;padding:6px 10px;border-radius:6px;font-size:12px;font-weight:600;text-align:center;background:'+(allPass?'#dcfce7':'#fef3c7')+';color:'+(allPass?'#16a34a':'#d97706')+'">';
+  html += allPass ? '✅ ALL 10 PASS — avg '+avg+'/10' : '⏳ '+r.filter(function(v){return v.score<6}).length+' below 6 — avg '+avg+'/10. Adjusting...';
+  html += '</div>';
+  document.getElementById('consensusBody').innerHTML = html;
+  document.getElementById('roundLabel').textContent = labels[currentRound]+' ('+(currentRound+1)+'/3)';
+  document.getElementById('prevBtn').disabled = currentRound===0;
+  document.getElementById('nextBtn').disabled = currentRound>=rounds.length-1;
+}
+function nextRound(){if(currentRound<rounds.length-1){currentRound++;renderRound();}}
+function prevRound(){if(currentRound>0){currentRound--;renderRound();}}
+renderRound();
 
 // === WebGPU Glass Renderer ===
 (async function(){
