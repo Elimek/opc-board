@@ -27,7 +27,7 @@
 
 ```bash
 # 把你自己的董事会克隆下来
-git clone https://github.com/YOUR_USERNAME/opc-board.git
+git clone https://github.com/Elimek/opc-board.git
 cd opc-board
 
 # 部署到 GitHub Pages（免费）
@@ -182,7 +182,7 @@ MIT — 随便用，随便改，随便赚钱。
 
 ## 🌐 Live Demo
 
-👉 [opc-board.yourdomain.com](https://YOUR_USERNAME.github.io/opc-board)
+👉 [opc-board.yourdomain.com](https://elimek.github.io/opc-board)
 
 ---
 
