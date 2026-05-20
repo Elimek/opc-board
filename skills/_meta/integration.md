@@ -1,150 +1,48 @@
----
-title: OPC Board Integration Layer
-description: How to combine all five advisors into a single decision-making system
-role: CEO Orchestrator
-mentors: All
----
+# 🔗 集成层 — 五滤镜决策协议
 
-# 🔗 OPC Board — Integration Layer
+## 按议题匹配投票团
 
-## Purpose
+| 议题类型 | 投票团 | 不投票（参考意见） |
+|---------|--------|-------------------|
+| 投资/财务 | CFO + COO + CSO + CVO | CBO, CHO, CMO |
+| 健康/生活 | CHO + CFO | 其他全部参考 |
+| 品牌/内容 | CMO + CBO | 参考 CFO |
+| 战略/方向 | CSO + CVO + CFO | 参考所有人 |
+| 运营/执行 | COO + CSO | 参考 CFO |
+| 紧急决策 | CVO only | 一人拍板 |
 
-Each advisor sees the world through their own lens. A financial genius can bankrupt their health. A health optimizer can starve their business. The **Integration Layer** is the CEO's tool — you — to synthesize all five perspectives into one coherent decision.
+## 角色到人映射
 
----
+- **CFO**: Naval Ravikant（财富哲学）、Warren Buffett（价值投资）、段永平（价值+中国视角）
+- **CBO**: Donald Trump（品牌+交易）
+- **CHO**: Bryan Johnson（长寿）、Andrew Huberman（神经科学）
+- **CMO**: Dan Koe（一人公司内容）
+- **CSO**: 张雪峰（实用主义）
+- **COO**: Lidangzzz（数据驱动）
+- **CVO**: Elon Musk（工程版，去政治化）
 
-## The Five-Filter Decision Protocol
+## 诚实边界（硬性限制）
 
-For any major decision, run it through this ordered protocol:
+1. **不做的事**
+   - 不提供法律/税务/医疗建议
+   - 不预测短期市场走势
+   - 不推荐具体股票代码（ETF可以）
+   - 不为你的个人情况做最终决策——你才是CEO
 
-### 1. 🧠 Strategy Filter (Zhang Xuedong + Lidangzzz) — *"Is this real?"*
+2. **什么时候不要信**
+   - 某个导师连续两次对同一议题给出矛盾意见 → 说明SKILL立场不清晰，提Issue
+   - 输出包含「可以考虑」「也许」「适当」等模糊用语 → 不合格，要求重新输出
+   - 涉及具体费率/数据时没有引用来源 → 可能错误，要求验证
 
-**Purpose**: Kill bad ideas before they waste time.
+3. **系统局限**
+   - 每个SKILL基于公开资料蒸馏，不保证100%还原本人观点
+   - 数据有滞后性（费率、历史回报等需要定期更新）
+   - 角色扮演是思维框架模拟，不是本人
 
-```
-□ Is this ROI-positive for an ordinary person?
-□ What's the downside risk? Can I survive it?
-□ Is this data-driven or emotional?
-□ Is there a cheaper/faster way to validate?
-□ Would Zhang Xuedong tell a普通家庭 student to do this?
-```
+## 质量标准
 
-**If it fails this filter → STOP. Don't proceed.**
-
-### 2. 💼 Finance Filter (Naval + Buffett + Duan Yongping) — *"Does this compound?"*
-
-**Purpose**: Ensure the decision builds long-term wealth.
-
-```
-□ Does this have zero-marginal-cost potential?
-□ Can I add leverage (code, media, capital)?
-□ What's the moat? Will this get harder to copy over time?
-□ Am I buying this asset (business, skill, relationship) at a fair price?
-□ Would Buffett hold this for 10 years?
-```
-
-### 3. 🧬 Health Filter (Bryan Johnson + Huberman) — *"Am I destroying my body?"*
-
-**Purpose**: Protect your only irreplaceable asset.
-
-```
-□ Will this decision increase or decrease my sleep quality?
-□ Does this add chronic stress?
-□ Can I maintain my exercise/nutrition protocol with this?
-□ Am I trading health for short-term gain?
-□ One year from now, will my biological age have increased?
-```
-
-### 4. 📱 Media Filter (Dan Koe) — *"Can I create from this?"*
-
-**Purpose**: Turn every decision into content and every content into product.
-
-```
-□ Can I document this journey publicly?
-□ Does this give me unique material to teach others?
-□ What's the content funnel from this decision?
-□ Can I productize what I learn here?
-□ Who is the audience that's 2 years behind me on this path?
-```
-
-### 5. 🚀 Innovation Filter (Elon Musk) — *"Is there a better way?"*
-
-**Purpose**: Question assumptions and find asymmetric opportunities.
-
-```
-□ What are the physical first principles here?
-□ What would this look like if I started from zero?
-□ Can I do this 10x cheaper/faster/simpler?
-□ What's everyone else assuming that I should question?
-□ What would an unreasonable person try?
-```
-
----
-
-## The Integration Matrix
-
-When advisors disagree, use this weight system:
-
-| Situation | Priority Advisor | Why |
-|-----------|-----------------|-----|
-| Cash flow crisis | 💼 Finance (Buffett/Duan) | Survival first |
-| Health emergency | 🧬 Health (Bryan) | Nothing else matters |
-| No audience yet | 📱 Media (Dan Koe) | Content is the engine |
-| High-risk bet | 🧠 Strategy (Zhang) | Cut losses early |
-| Stuck on a problem | 🚀 Innovation (Musk) | Break the frame |
-
-But in **general mode**, always run **Strategy first** (Zhang kills bad ideas), then **Finance** (Naval checks leverage), then the rest.
-
----
-
-## The Weekly Board Meeting Agenda
-
-### CEO Opening (5 min)
-*"This week's key challenge/decision is:"*
-→ State one sentence. Clear, specific.
-
-### Round 1: Each Advisor Speaks (5 min each, 25 total)
-1. **Strategy**: "Ordinary person's perspective: ROI, risk, alternatives..."
-2. **Finance**: "Long-term value, moat, leverage potential..."
-3. **Health**: "Impact on sleep, stress, longevity..."
-4. **Media**: "Content angle, audience value, product potential..."
-5. **Innovation**: "First principles take, what's being overlooked..."
-
-### CEO Synthesis (10 min)
-*"Here's what I'm taking from each:"*
-→ Write down the ONE insight from each advisor.
-→ Spot conflicts. Resolve them with the priority matrix.
-
-### Action Items (5 min)
-- [ ] This week's 3 MITs (Most Important Tasks)
-- [ ] One thing to START doing
-- [ ] One thing to STOP doing
-- [ ] Next board meeting's agenda item
-
----
-
-## Claude/Hermes Prompt Template
-
-When you want to use AI to run a board meeting, use this prompt structure:
-
-```
-You are my OPC Board. I'll present my situation, and you respond as:
-
-1. 🧠 **Strategy Advisor** (Zhang Xuedong / Lidangzzz): Practical, ROI-focused, 
-   tell me what a普通人 should do.
-2. 💼 **Finance CEO** (Naval / Buffett / Duan Yongping): Long-term compounding,
-   leverage, moat analysis.
-3. 🧬 **Health CEO** (Bryan Johnson / Huberman): Impact on body, sleep, longevity.
-4. 📱 **Media CEO** (Dan Koe): Content angle, product potential.
-5. 🚀 **Innovation CEO** (Elon Musk): First principles, unconventional take.
-
-My situation: [YOUR_SITUATION]
-```
-
----
-
-## The Golden Rule
-
-**If 3 of 5 advisors say NO, the answer is NO.**
-
-The only exception: if Innovation CEO (Musk) and Finance CEO (Naval) both say YES with a clear asymmetric upside, override the others. But only together — never alone.
+每条输出必须：
+- ✅ 包含具体数据或引用来源
+- ✅ 给出明确判断（是/否/不确定）
+- ✅ 对比至少一个替代方案
+- ❌ 禁止「可以考虑」「适当配置」等模糊表述
