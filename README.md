@@ -44,6 +44,7 @@ open index.html
 ```
 opc-board/
 ├── index.html              # 🏠 Landing Page（GitHub Pages 入口）
+├── opc.sh                  # 🖥️ CLI 工具（本地终端里跑董事会）
 ├── README.md               # 📖 你现在看到的这个
 ├── _config.yml             # ⚙️ GitHub Pages 配置
 ├── LICENSE                 # 📜 MIT 许可证
@@ -56,6 +57,9 @@ opc-board/
 │   ├── media/              # 📱 Dan Koe
 │   ├── strategy/           # 🧠 张雪峰 · lidangzzz
 │   └── innovation/         # 🚀 Elon Musk
+│
+├── dashboard/
+│   └── index.html          # 🎛️ 交互式 Dashboard（本地打开即可用）
 │
 ├── checklist/              # ✅ 每周/每日执行模板
 │   ├── weekly-board-meeting.md

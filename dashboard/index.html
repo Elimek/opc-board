@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPC Board — Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+body{background:#0a0a0b;color:#e4e4e7;min-height:100vh}
+.container{max-width:1200px;margin:0 auto;padding:1rem}
+/* Header */
+.app-header{background:#121214;border-bottom:1px solid #2a2a2e;padding:0.75rem 0;position:sticky;top:0;z-index:100}
+.app-header .container{display:flex;justify-content:space-between;align-items:center;padding-top:0;padding-bottom:0}
+.app-header h1{font-size:1.2rem;background:linear-gradient(135deg,#22c55e,#3b82f6,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}
+.nav-tabs{display:flex;gap:0;background:#1a1a1e;border-radius:10px;overflow:hidden}
+.nav-tab{padding:0.5rem 1.2rem;cursor:pointer;font-size:0.85rem;color:#71717a;border:none;background:transparent;transition:all 0.2s}
+.nav-tab.active{color:#22c55e;background:rgba(34,197,94,0.1)}
+.nav-tab:hover{color:#e4e4e7}
+/* Panels */
+.panel{display:none;animation:fadeIn 0.3s}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* Cards */
+.card{background:#1a1a1e;border:1px solid #2a2a2e;border-radius:14px;padding:1.25rem;margin-bottom:1rem}
+.card h3{font-size:1rem;margin-bottom:0.75rem;color:#e4e4e7}
+/* Grid */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}}
+/* Board Meeting */
+.meeting-input{width:100%;padding:0.85rem 1rem;background:#121214;border:1px solid #2a2a2e;border-radius:10px;color:#e4e4e7;font-size:0.95rem;margin-bottom:1rem;outline:none}
+.meeting-input:focus{border-color:#22c55e}
+.meeting-btn{background:linear-gradient(135deg,#22c55e,#3b82f6);color:#fff;border:none;padding:0.7rem 1.5rem;border-radius:10px;font-weight:600;cursor:pointer;font-size:0.9rem;transition:all 0.2s}
+.meeting-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(34,197,94,0.2)}
+.response-area{margin-top:1.5rem}
+.advisor-resp{padding:1rem;margin-bottom:0.75rem;border-left:3px solid;border-radius:0 10px 10px 0;background:rgba(255,255,255,0.02)}
+.advisor-resp:last-child{margin-bottom:0}
+.advisor-resp .name{font-size:0.8rem;font-weight:700;margin-bottom:0.3rem}
+.advisor-resp .text{font-size:0.88rem;color:#a1a1aa;line-height:1.6;font-style:italic}
+.c-finance{border-color:#22c55e}.c-finance .name{color:#22c55e}
+.c-health{border-color:#a855f7}.c-health .name{color:#a855f7}
+.c-media{border-color:#3b82f6}.c-media .name{color:#3b82f6}
+.c-strategy{border-color:#f59e0b}.c-strategy .name{color:#f59e0b}
+.c-innovation{border-color:#06b6d4}.c-innovation .name{color:#06b6d4}
+/* Tracker */
+.tracker-item{display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid #2a2a2e;font-size:0.9rem}
+.tracker-item:last-child{border-bottom:none}
+.tracker-label{color:#a1a1aa}
+.tracker-check{width:20px;height:20px;border-radius:5px;border:2px solid #3b3b3f;cursor:pointer;background:transparent;appearance:none;position:relative}
+.tracker-check:checked{border-color:#22c55e;background:rgba(34,197,94,0.2)}
+.tracker-check:checked::after{content:'✓';color:#22c55e;font-size:14px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+/* Progress */
+.progress-bar{height:6px;background:#2a2a2e;border-radius:3px;overflow:hidden;margin:0.5rem 0}
+.progress-fill{height:100%;border-radius:3px;transition:width 0.5s}
+/* Tags */
+.tag{display:inline-block;padding:0.2rem 0.6rem;border-radius:6px;font-size:0.75rem;font-weight:600}
+.tag-green{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2)}
+.tag-purple{background:rgba(168,85,247,0.1);color:#a855f7;border:1px solid rgba(168,85,247,0.2)}
+.tag-blue{background:rgba(59,130,246,0.1);color:#3b82f6;border:1px solid rgba(59,130,246,0.2)}
+.tag-orange{background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.2)}
+.tag-cyan{background:rgba(6,182,212,0.1);color:#06b6d4;border:1px solid rgba(6,182,212,0.2)}
+/* Status */
+.stat{text-align:center;padding:1.5rem}
+.stat-num{font-size:2rem;font-weight:700;background:linear-gradient(135deg,#22c55e,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:0.8rem;color:#71717a;margin-top:0.3rem}
+/* Empty state */
+.empty-state{text-align:center;padding:3rem;color:#71717a}
+.empty-state .icon{font-size:3rem;margin-bottom:1rem}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="container">
+    <h1>🏢 OPC Board</h1>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('board')">🏛️ Board</button>
+      <button class="nav-tab" onclick="switchTab('tracker')">📊 Tracker</button>
+      <button class="nav-tab" onclick="switchTab('status')">📈 Status</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== BOARD MEETING ===== -->
+<div id="panel-board" class="panel active">
+  <div class="card">
+    <h3>🎯 What's your challenge?</h3>
+    <p style="color:#71717a;font-size:0.85rem;margin-bottom:1rem">
+      Type any decision or problem. Your board will respond.
+    </p>
+    <input type="text" class="meeting-input" id="questionInput"
+      placeholder='e.g. "Should I freelance full-time or take a job?"'
+      onkeydown="if(event.key==='Enter') callBoard()">
+    <button class="meeting-btn" onclick="callBoard()">Call Board Meeting →</button>
+  </div>
+
+  <div id="responseArea" class="response-area">
+    <div class="empty-state">
+      <div class="icon">🏛️</div>
+      <p>Your board is waiting for a question.</p>
+      <p style="font-size:0.8rem;margin-top:0.3rem">Try: "我应该留在香港找工作还是回内地发展？"</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TRACKER ===== -->
+<div id="panel-tracker" class="panel">
+  <div class="card">
+    <h3>🌅 Daily OS</h3>
+    <p style="color:#71717a;font-size:0.85rem;margin-bottom:1rem">
+      <span id="todayDate"></span>
+    </p>
+    <div id="trackerList"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>📊 Today's Score</h3>
+      <div class="stat">
+        <div class="stat-num" id="scoreNum">0%</div>
+        <div class="stat-label">completed</div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="scoreBar"
+          style="width:0%;background:linear-gradient(90deg,#22c55e,#3b82f6)"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>⏱️ Deep Work Today</h3>
+      <div class="stat">
+        <div class="stat-num" id="deepWorkHours">0</div>
+        <div class="stat-label">hours</div>
+      </div>
+      <p style="font-size:0.8rem;color:#71717a;text-align:center">Target: 4 hours</p>
+      <div id="deepWorkControls" style="display:flex;gap:0.5rem;justify-content:center;margin-top:0.5rem">
+        <button class="meeting-btn" style="padding:0.4rem 0.8rem;font-size:0.8rem" onclick="addDeepWork(0.5)">+30m</button>
+        <button class="meeting-btn" style="padding:0.4rem 0.8rem;font-size:0.8rem" onclick="addDeepWork(1)">+1h</button>
+        <button class="meeting-btn" style="padding:0.4rem 0.8rem;font-size:0.8rem" onclick="addDeepWork(2)">+2h</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STATUS ===== -->
+<div id="panel-status" class="panel">
+  <div class="card">
+    <h3>🏛️ Board Status</h3>
+    <div class="grid-3" style="margin-top:0.5rem">
+      <div class="stat">
+        <div style="font-size:2rem">💼</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#22c55e">4</div>
+        <div class="stat-label">Finance SKILLs</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-green">Active</span></div>
+      </div>
+      <div class="stat">
+        <div style="font-size:2rem">🧬</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#a855f7">2</div>
+        <div class="stat-label">Health SKILLs</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-purple">Active</span></div>
+      </div>
+      <div class="stat">
+        <div style="font-size:2rem">📱</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#3b82f6">1</div>
+        <div class="stat-label">Media SKILLs</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-blue">Active</span></div>
+      </div>
+      <div class="stat">
+        <div style="font-size:2rem">🧠</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#f59e0b">2</div>
+        <div class="stat-label">Strategy SKILLs</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-orange">Active</span></div>
+      </div>
+      <div class="stat">
+        <div style="font-size:2rem">🚀</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#06b6d4">1</div>
+        <div class="stat-label">Innovation SKILLs</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-cyan">Active</span></div>
+      </div>
+      <div class="stat">
+        <div style="font-size:2rem">🐙</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#e4e4e7">0</div>
+        <div class="stat-label">GitHub Stars</div>
+        <div id="starStatus" style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">No data</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>📁 Repo</h3>
+      <p style="font-size:0.85rem">
+        <a href="https://github.com/Elimek/opc-board" style="color:#3b82f6">
+          github.com/Elimek/opc-board
+        </a>
+      </p>
+      <p style="font-size:0.8rem;color:#71717a;margin-top:0.5rem">MIT License · Open Source</p>
+    </div>
+    <div class="card">
+      <h3>🌐 Live</h3>
+      <p style="font-size:0.85rem">
+        <a href="https://opc-board.elimek.com" style="color:#3b82f6">
+          opc-board.elimek.com
+        </a>
+      </p>
+      <p style="font-size:0.8rem;color:#71717a;margin-top:0.5rem">GitHub Pages · Cloudflare DNS</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// === Tab Switching ===
+function switchTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// === Board Meeting Responses ===
+const responses = {
+  finance: [
+    '"问你自己：这件事有复利吗？十年后它还在增长吗？如果是，all in。如果不是，别浪费时间。" — Naval',
+    '"不懂不做。这个生意你懂吗？你能用一句话告诉我它怎么赚钱吗？" — 段永平',
+    '"如果市场关闭10年，你还愿意持有这个决定吗？" — 巴菲特',
+    '"营销要大聲。如果你不被批评，你做得不够大。" — 特朗普'
+  ],
+  health: [
+    '"这个决定会提高还是降低你的睡眠质量？睡眠是一切的基础。没有8小时，不要讨论其他。" — Bryan Johnson',
+    '"不要用健康换短期的钱。你的身体是你唯一的硬件。" — Bryan Johnson',
+    '"早上的光照决定了你一整天的表现。先看光，再喝咖啡。" — Andrew Huberman',
+    '"压力+恢复=成长。你给身体留恢复时间了吗？" — Andrew Huberman'
+  ],
+  media: [
+    '"你能从这件事里产出内容吗？如果不行，它的价值少了一半。" — Dan Koe',
+    '"你不必在专家和初学者之间选。你只需要比你的观众多走6个月。" — Dan Koe',
+    '"展示过程，而不是结果。人们连接的是struggle，不是完美。" — Dan Koe',
+    '"你的第一个产品，应该解决你两年前遇到的问题。" — Dan Koe'
+  ],
+  strategy: [
+    '"一个普通人家孩子，先算投入产出比。多久能回本？最坏情况是什么？扛得住吗？" — 张雪峰',
+    '"千万别拍脑袋做决定。数据说了算，情绪没有用。" — lidangzzz',
+    '"先活下来，再谈梦想。香港房租贵，别拿生存去赌。" — 张雪峰',
+    '"别问，问就是定投指数，学门技术。其他的都是智商税。" — lidangzzz'
+  ],
+  innovation: [
+    '"先不要想怎么优化。先问一个问题：这个东西该不该存在？" — 马斯克',
+    '"第一性原理：把问题分解到物理极限，然后重新搭建。" — 马斯克',
+    '"如果周末两天能做出来，就别花两个月。" — 马斯克',
+    '"别人都这么做，不代表你是对的。多数人往往错了。" — 马斯克'
+  ]
+};
+
+function callBoard() {
+  const q = document.getElementById('questionInput').value.trim();
+  const area = document.getElementById('responseArea');
+
+  if (!q) {
+    area.innerHTML = `<div class="empty-state"><div class="icon">🤔</div><p>Type a question first.</p></div>`;
+    return;
+  }
+
+  const r = [];
+  const advisors = [
+    {id:'finance', name:'💼 Finance CEO (Naval / 段永平 / 巴菲特 / 特朗普)', cls:'c-finance'},
+    {id:'health', name:'🧬 Health CEO (Bryan Johnson / Huberman)', cls:'c-health'},
+    {id:'media', name:'📱 Media CEO (Dan Koe)', cls:'c-media'},
+    {id:'strategy', name:'🧠 Strategy Advisor (张雪峰 / lidangzzz)', cls:'c-strategy'},
+    {id:'innovation', name:'🚀 Innovation CEO (Elon Musk)', cls:'c-innovation'}
+  ];
+
+  advisors.forEach(a => {
+    const pool = responses[a.id];
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    r.push(`<div class="advisor-resp ${a.cls}">
+      <div class="name">${a.name}</div>
+      <div class="text">${pick}</div>
+    </div>`);
+  });
+
+  area.innerHTML = `
+    <div class="card" style="margin-bottom:0.75rem">
+      <div style="font-size:0.8rem;color:#71717a">📋 Agenda: ${q}</div>
+    </div>
+    ${r.join('')}
+    <div class="card" style="margin-top:0.75rem;text-align:center">
+      <p style="font-size:0.8rem;color:#71717a">
+        💡 Now write down: <strong>One thing to START · One thing to STOP · One thing to CONTINUE</strong>
+      </p>
+    </div>`;
+}
+
+// === Tracker ===
+const trackerItems = [
+  {id:'sun', label:'☀️ Morning sunlight 10min'},
+  {id:'caffeine', label:'🚫 No caffeine for 90min'},
+  {id:'exercise', label:'🏋️ Exercise today'},
+  {id:'wholefoods', label:'🥗 Whole food meals'},
+  {id:'deepwork1', label:'🧠 Deep work block #1'},
+  {id:'deepwork2', label:'🧠 Deep work block #2'},
+  {id:'nofeed', label:'📵 No social media doomscrolling'},
+  {id:'sleep', label:'😴 Bed by target time'}
+];
+
+function renderTracker() {
+  const list = document.getElementById('trackerList');
+  const saved = JSON.parse(localStorage.getItem('opc_tracker_' + getDateKey()) || '{}');
+  list.innerHTML = trackerItems.map(item => `
+    <div class="tracker-item">
+      <span class="tracker-label">${item.label}</span>
+      <input type="checkbox" class="tracker-check"
+        ${saved[item.id] ? 'checked' : ''}
+        onchange="toggleTracker('${item.id}')">
+    </div>
+  `).join('');
+  updateScore();
+}
+
+function getDateKey() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function toggleTracker(id) {
+  const key = getDateKey();
+  const saved = JSON.parse(localStorage.getItem('opc_tracker_' + key) || '{}');
+  saved[id] = !saved[id];
+  localStorage.setItem('opc_tracker_' + key, JSON.stringify(saved));
+  updateScore();
+}
+
+function updateScore() {
+  const key = getDateKey();
+  const saved = JSON.parse(localStorage.getItem('opc_tracker_' + key) || '{}');
+  const done = trackerItems.filter(i => saved[i.id]).length;
+  const total = trackerItems.length;
+  const pct = Math.round(done / total * 100);
+  document.getElementById('scoreNum').textContent = pct + '%';
+  document.getElementById('scoreBar').style.width = pct + '%';
+}
+
+// === Deep Work ===
+function addDeepWork(hours) {
+  const key = getDateKey();
+  const dw = JSON.parse(localStorage.getItem('opc_deepwork_' + key) || '0');
+  const total = Math.round((dw + hours) * 10) / 10;
+  localStorage.setItem('opc_deepwork_' + key, total.toString());
+  document.getElementById('deepWorkHours').textContent = total;
+}
+
+function loadDeepWork() {
+  const key = getDateKey();
+  const dw = JSON.parse(localStorage.getItem('opc_deepwork_' + key) || '0');
+  document.getElementById('deepWorkHours').textContent = dw;
+}
+
+// === Date ===
+document.getElementById('todayDate').textContent = new Date().toLocaleDateString('zh-CN', {
+  weekday:'long', year:'numeric', month:'long', day:'numeric'
+});
+
+// === Init ===
+renderTracker();
+loadDeepWork();
+</script>
+</body>
+</html>
