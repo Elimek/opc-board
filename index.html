@@ -4,15 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OPC Board — One-Person Company Operating System</title>
-<meta name="description" content="Your board of directors for a one-person company. Naval, Buffett, Musk, Bryan Johnson, Dan Koe, Zhang Xuedong, Lidangzzz — distilled into deployable SKILLs.">
+<meta name="description" content="Your board of directors. Naval, Buffett, Trump, Bryan Johnson, Dan Koe, Zhang Xuedong, Lidangzzz, Musk — deployable SKILLs.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',system-ui,sans-serif;
-  background:#f8f9fa;
-  color:#1a1a2e;line-height:1.6;font-size:16px;min-height:100vh
-}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',system-ui,sans-serif;background:#f8f9fa;color:#1a1a2e;line-height:1.6;font-size:16px;min-height:100vh}
 .container{max-width:1120px;margin:0 auto;padding:0 24px}
 
 /* Nav */
@@ -27,49 +23,54 @@ body{
 .lang-btn.active{background:#1a1a2e;color:#fff;border-radius:6px}
 
 /* Language */
-[lang=en]{display:block}
-[lang=zh]{display:none}
+[lang=en]{display:block}[lang=zh]{display:none}
 html[data-lang=zh] [lang=en]{display:none}
 html[data-lang=zh] [lang=zh]{display:block}
 
 /* Hero */
-.hero{padding:72px 0 32px}
+.hero{padding:72px 0 32px;position:relative}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
 .hero h1{font-size:36px;font-weight:750;letter-spacing:-1px;line-height:1.15;margin-bottom:12px}
 .hero h1 .g{background:linear-gradient(135deg,#2563eb,#7c3aed,#0891b2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{font-size:16px;color:#52525b;margin-bottom:20px;line-height:1.6;max-width:480px}
 .badge{display:inline-flex;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;background:rgba(37,99,235,0.08);color:#2563eb;border:1px solid rgba(37,99,235,0.12);margin-bottom:16px}
 .ha{display:flex;gap:10px;flex-wrap:wrap}
-
 .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .15s}
-.btn-pri{background:#1a1a2e;color:#fff}
-.btn-pri:hover{background:#2563eb}
-.btn-sec{background:#fff;color:#1a1a2e;border:1px solid #e4e4e7}
-.btn-sec:hover{border-color:#cbd5e1}
+.btn-pri{background:#1a1a2e;color:#fff}.btn-pri:hover{background:#2563eb}
+.btn-sec{background:#fff;color:#1a1a2e;border:1px solid #e4e4e7}.btn-sec:hover{border-color:#cbd5e1}
 
-/* Kanban */
-.kanban{background:#fff;border:1px solid #e4e4e7;border-radius:14px;padding:16px}
-.kc{display:flex;gap:6px}
-.kcol{flex:1}
-.kch{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:6px;text-align:center}
-.kcard{border-left:3px solid #e4e4e7;padding:6px 8px;margin-bottom:4px;font-size:13px;background:#fafafa;border-radius:4px}
-.kcard .ki{font-size:14px}.kcard .kl{font-weight:600;color:#1a1a2e}.kcard .ks{font-size:11px;color:#71717a}
+/* Canvas for WebGPU glass backdrop */
+#glass-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+/* Kanban — taller cards with more vertical space usage */
+.kanban{position:relative;z-index:1;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:16px;padding:16px;box-shadow:0 8px 32px rgba(0,0,0,0.06)}
+.kc{display:flex;gap:8px;min-height:140px}
+.kcol{flex:1;display:flex;flex-direction:column}
+.kch{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;margin-bottom:8px;text-align:center}
+.kcard{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:3px solid #e4e4e7;padding:10px 6px;margin-bottom:6px;font-size:13px;background:rgba(255,255,255,0.7);border-radius:6px;min-height:44px}
+.kcard:last-child{margin-bottom:0}
+.kcard .ki{font-size:18px;margin-bottom:2px}.kcard .kl{font-weight:600;color:#1a1a2e;font-size:12px}.kcard .ks{font-size:10px;color:#64748b}
 .kd{border-left-color:#22c55e}.kp{border-left-color:#f59e0b}.kt{border-left-color:#94a3b8}
+.kcol-single .kcard{flex:1;min-height:92px}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:24px}.kanban{display:none}}
 
+/* Glass cards — fallback if WebGPU unavailable */
+.gl{background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,0.03),0 8px 32px rgba(0,0,0,0.04)}
+.gl-h{border:1px solid rgba(255,255,255,0.5);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.06)}
+
 /* Section */
-.s{padding:24px 0}
+.s{padding:24px 0;position:relative;z-index:1}
 .sh{text-align:center;margin-bottom:20px}
 .st{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#94a3b8;font-weight:700;margin-bottom:4px}
 .sh h2{font-size:22px;font-weight:700}
 
-/* Board cards */
+/* Board cards — glass */
 .bg{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
-.bc{background:#fff;border:1px solid #e4e4e7;border-radius:14px;padding:16px 12px;text-align:center;transition:all .2s;box-shadow:0 1px 2px rgba(0,0,0,0.03)}
-.bc:hover{border-color:#cbd5e1;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+.bc{padding:18px 10px;text-align:center;transition:all .25s;cursor:default}
+.bc:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.08)}
 .bc .bi{font-size:28px;display:block;margin-bottom:8px}
 .bc h3{font-size:14px;font-weight:700;margin-bottom:2px}
-.bc .mn{font-size:11px;color:#71717a;margin-bottom:8px;line-height:1.3}
+.bc .mn{font-size:11px;color:#64748b;margin-bottom:8px;line-height:1.3}
 .bc p{font-size:13px;color:#52525b;margin-bottom:10px;line-height:1.4}
 .bc .tp{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600;background:rgba(37,99,235,0.07);color:#2563eb;border:1px solid rgba(37,99,235,0.1)}
 @media(max-width:1000px){.bg{grid-template-columns:repeat(4,1fr)}}
@@ -77,21 +78,20 @@ html[data-lang=zh] [lang=zh]{display:block}
 
 /* Flow */
 .fl{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.fs{background:#fff;border:1px solid #e4e4e7;border-radius:14px;text-align:center;padding:20px 16px}
+.fs{text-align:center;padding:22px 16px}
 .fs .fn{display:inline-flex;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:700;font-size:14px;align-items:center;justify-content:center;margin-bottom:12px}
 .fs h3{font-size:15px;font-weight:700;margin-bottom:6px}
 .fs p{font-size:13px;color:#52525b;line-height:1.5;margin:0}
 @media(max-width:650px){.fl{grid-template-columns:1fr}}
 
 /* Demo */
-.dc{background:#fff;border:1px solid #e4e4e7;border-radius:14px;overflow:hidden}
-.dh{padding:12px 20px;font-size:13px;font-weight:600;color:#52525b;border-bottom:1px solid #e4e4e7}
-.db{padding:12px 20px}
-.al{display:flex;gap:10px;align-items:flex-start;padding:6px 0}
-.al:not(:last-child){border-bottom:1px solid #f1f5f9}
+.dc{overflow:hidden}
+.dh{padding:14px 20px;font-size:13px;font-weight:600;color:#52525b;border-bottom:1px solid rgba(255,255,255,0.3)}
+.db{padding:14px 20px}
+.al{display:flex;gap:10px;align-items:flex-start;padding:8px 0}
+.al:not(:last-child){border-bottom:1px solid rgba(0,0,0,0.04)}
 .ad{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
-.ac{flex:1;min-width:0}
-.ac .role{font-size:12px;font-weight:700;margin-bottom:2px}
+.ac{flex:1;min-width:0}.ac .role{font-size:12px;font-weight:700;margin-bottom:2px}
 .ac .tx{font-size:14px;color:#52525b;line-height:1.5;font-style:italic}
 .dfi{background:#dcfce7;color:#16a34a}.dhe{background:#f3e8ff;color:#9333ea}
 .dme{background:#dbeafe;color:#2563eb}.dst{background:#fef3c7;color:#d97706}
@@ -100,7 +100,7 @@ html[data-lang=zh] [lang=zh]{display:block}
 
 /* Features */
 .fg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.fc{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:16px 12px;text-align:center}
+.fc{text-align:center;padding:18px 12px}
 .fc .fi{font-size:24px;display:block;margin-bottom:6px}
 .fc h4{font-size:14px;font-weight:700;margin-bottom:4px}
 .fc p{font-size:13px;color:#52525b;line-height:1.4;margin:0}
@@ -108,9 +108,9 @@ html[data-lang=zh] [lang=zh]{display:block}
 
 /* Stats */
 .sb{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
-.si{background:#fff;border:1px solid #e4e4e7;border-radius:12px;text-align:center;padding:12px 6px}
+.si{text-align:center;padding:14px 6px}
 .sn{font-size:22px;font-weight:750;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sl{font-size:11px;color:#71717a}.si .emoji{font-size:18px;display:block;margin-bottom:4px}
+.sl{font-size:11px;color:#64748b}.si .emoji{font-size:18px;display:block;margin-bottom:4px}
 @media(max-width:900px){.sb{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:550px){.sb{grid-template-columns:repeat(2,1fr)}}
 
@@ -119,19 +119,19 @@ html[data-lang=zh] [lang=zh]{display:block}
 .cb .cm{color:#64748b}.cb .cd{color:#22c55e}
 
 /* CTA */
-.cta{text-align:center;padding:32px 0}
-.cta-inner{background:#fff;border:1px solid #e4e4e7;border-radius:16px;padding:32px;box-shadow:0 1px 2px rgba(0,0,0,0.03)}
+.cta{text-align:center;padding:32px 0;position:relative;z-index:1}
+.cta-inner{padding:32px}
 .cta h2{font-size:20px;margin-bottom:6px;font-weight:700}
 .cta p{font-size:14px;color:#52525b;margin-bottom:16px}
 
-footer{text-align:center;padding:16px;font-size:13px;color:#71717a;border-top:1px solid #e4e4e7}
-footer a{color:#52525b;text-decoration:none}
-footer a:hover{color:#2563eb}
+footer{text-align:center;padding:16px;font-size:13px;color:#71717a;border-top:1px solid #e4e4e7;position:relative;z-index:1}
+footer a{color:#52525b;text-decoration:none}footer a:hover{color:#2563eb}
 
 @media(max-width:650px){.hero h1{font-size:28px}.sh h2{font-size:18px}.container{padding:0 16px}}
 </style>
 </head>
 <body>
+<canvas id="glass-canvas"></canvas>
 
 <div class="nav">
   <div class="container nav-inner">
@@ -162,21 +162,21 @@ footer a:hover{color:#2563eb}
       <div class="kanban">
         <div class="kc">
           <div class="kcol"><div class="kch">Strategy</div>
-            <div class="kcard kd"><span class="ki">🧠</span><div class="kl">Zhang Xuedong</div><div class="ks">Direction</div></div></div>
+            <div class="kcard kd"><span class="ki">🧠</span><div class="kl">Zhang Xuedong</div><div class="ks">Direction · ROI</div></div></div>
           <div class="kcol"><div class="kch">Operations</div>
-            <div class="kcard kd"><span class="ki">⚡</span><div class="kl">Lidangzzz</div><div class="ks">Execution</div></div></div>
+            <div class="kcard kd"><span class="ki">⚡</span><div class="kl">Lidangzzz</div><div class="ks">Execution · Data</div></div></div>
           <div class="kcol"><div class="kch">Finance</div>
             <div class="kcard kp"><span class="ki">💼</span><div class="kl">Naval</div><div class="ks">Leverage</div></div>
             <div class="kcard kp"><span class="ki">🐂</span><div class="kl">Buffett</div><div class="ks">Moat</div></div></div>
           <div class="kcol"><div class="kch">Brand</div>
-            <div class="kcard kd"><span class="ki">🏢</span><div class="kl">Trump</div><div class="ks">Branding</div></div></div>
+            <div class="kcard kd"><span class="ki">🏢</span><div class="kl">Trump</div><div class="ks">Deal · Brand</div></div></div>
           <div class="kcol"><div class="kch">Health</div>
             <div class="kcard kt"><span class="ki">🧬</span><div class="kl">Bryan</div><div class="ks">Don't Die</div></div>
             <div class="kcard kt"><span class="ki">⚡</span><div class="kl">Huberman</div><div class="ks">Protocols</div></div></div>
           <div class="kcol"><div class="kch">Marketing</div>
             <div class="kcard kt"><span class="ki">📱</span><div class="kl">Dan Koe</div><div class="ks">Content</div></div></div>
-          <div class="kcol"><div class="kch">Vision</div>
-            <div class="kcard kt"><span class="ki">🚀</span><div class="kl">Musk</div><div class="ks">Vision</div></div></div>
+          <div class="kcol kcol-single"><div class="kch">Vision</div>
+            <div class="kcard kt" style="min-height:92px;border-left-color:#a855f7;background:rgba(168,85,247,0.06)"><span class="ki">🚀</span><div class="kl">Elon Musk</div><div class="ks">All-In · Vision · 1st Principles</div></div></div>
         </div>
       </div>
     </div>
@@ -189,13 +189,13 @@ footer a:hover{color:#2563eb}
       <h2 lang="en">Your Executive Team</h2><h2 lang="zh">你的管理层</h2>
     </div>
     <div class="bg">
-      <div class="bc"><span class="bi">💼</span><h3>CFO</h3><div class="mn">Naval · Buffett · Duan</div><p lang="en">Long-term compounding, value investing, capital leverage.</p><p lang="zh">长期复利、价值投资、资本杠杆。</p><span class="tp">Compounding</span></div>
-      <div class="bc"><span class="bi">🏢</span><h3>CBO</h3><div class="mn">Donald Trump</div><p lang="en">Personal branding, negotiation, attention, deal-making.</p><p lang="zh">个人品牌、谈判加价、注意力争夺。</p><span class="tp">Branding</span></div>
-      <div class="bc"><span class="bi">🧬</span><h3>CHO</h3><div class="mn">Bryan Johnson · Huberman</div><p lang="en">Health optimization, sleep protocols, energy management.</p><p lang="zh">健康优化、精力管理、数据驱动身体管理。</p><span class="tp">Don't Die</span></div>
-      <div class="bc"><span class="bi">📱</span><h3>CMO</h3><div class="mn">Dan Koe</div><p lang="en">Content marketing, product conversion, build in public.</p><p lang="zh">内容营销、产品转化、一人公司增长引擎。</p><span class="tp">Content → Product</span></div>
-      <div class="bc"><span class="bi">🧠</span><h3>CSO</h3><div class="mn">Zhang Xuedong</div><p lang="en">Macro strategy, ROI, career path, education planning.</p><p lang="zh">选方向、算ROI、教育职业路径、阶层流动。</p><span class="tp">Direction</span></div>
-      <div class="bc"><span class="bi">⚡</span><h3>COO</h3><div class="mn">Lidangzzz</div><p lang="en">Tactical execution, index fund strategy, anti-scam, data.</p><p lang="zh">具体战术、执行落地、反诈识别、数据驱动。</p><span class="tp">Execution</span></div>
-      <div class="bc"><span class="bi">🚀</span><h3>CVO</h3><div class="mn">Elon Musk</div><p lang="en">Long-term vision, all-in execution, first principles.</p><p lang="zh">方向感、All-In执行力、公司为什么存在。</p><span class="tp">Vision</span></div>
+      <div class="bc gl"><span class="bi">💼</span><h3>CFO</h3><div class="mn">Naval · Buffett · Duan</div><p lang="en">Long-term compounding, value investing, capital leverage.</p><p lang="zh">长期复利、价值投资、资本杠杆。</p><span class="tp">Compounding</span></div>
+      <div class="bc gl"><span class="bi">🏢</span><h3>CBO</h3><div class="mn">Donald Trump</div><p lang="en">Personal branding, negotiation, attention, deal-making.</p><p lang="zh">个人品牌、谈判加价、注意力争夺。</p><span class="tp">Branding</span></div>
+      <div class="bc gl"><span class="bi">🧬</span><h3>CHO</h3><div class="mn">Bryan Johnson · Huberman</div><p lang="en">Health optimization, sleep protocols, energy management.</p><p lang="zh">健康优化、精力管理、数据驱动身体管理。</p><span class="tp">Don't Die</span></div>
+      <div class="bc gl"><span class="bi">📱</span><h3>CMO</h3><div class="mn">Dan Koe</div><p lang="en">Content marketing, product conversion, build in public.</p><p lang="zh">内容营销、产品转化、一人公司增长引擎。</p><span class="tp">Content → Product</span></div>
+      <div class="bc gl"><span class="bi">🧠</span><h3>CSO</h3><div class="mn">Zhang Xuedong</div><p lang="en">Macro strategy, ROI, career path, education planning.</p><p lang="zh">选方向、算ROI、教育职业路径、阶层流动。</p><span class="tp">Direction</span></div>
+      <div class="bc gl"><span class="bi">⚡</span><h3>COO</h3><div class="mn">Lidangzzz</div><p lang="en">Tactical execution, index fund strategy, anti-scam, data.</p><p lang="zh">具体战术、执行落地、反诈识别、数据驱动。</p><span class="tp">Execution</span></div>
+      <div class="bc gl"><span class="bi">🚀</span><h3>CVO</h3><div class="mn">Elon Musk</div><p lang="en">Long-term vision, all-in execution, first principles.</p><p lang="zh">方向感、All-In执行力、公司为什么存在。</p><span class="tp">Vision</span></div>
     </div>
   </div>
 </section>
@@ -206,9 +206,9 @@ footer a:hover{color:#2563eb}
       <h2 lang="en">Three Modes, One System</h2><h2 lang="zh">三种模式，一个系统</h2>
     </div>
     <div class="fl">
-      <div class="fs"><div class="fn">1</div><h3 lang="en">Weekly Board Meeting</h3><h3 lang="zh">每周董事会</h3><p lang="en">30 minutes. Present your challenge. Each advisor responds with their framework. You synthesize.</p><p lang="zh">30分钟。提出当前挑战，每个部门用各自框架给出意见，你做决策。</p></div>
-      <div class="fs"><div class="fn">2</div><h3 lang="en">Daily OS Routine</h3><h3 lang="zh">每日操作系统</h3><p lang="en">Morning protocol (Huberman). Deep work blocks (Dan Koe). Evening review. Your body is the engine.</p><p lang="zh">早晨协议(Huberman) + 深工作(Dan Koe) + 晚间复盘。身体是公司的硬件。</p></div>
-      <div class="fs"><div class="fn">3</div><h3 lang="en">5-Filter Decision Protocol</h3><h3 lang="zh">五滤镜决策</h3><p lang="en">Run every decision through: Strategy → Finance → Health → Marketing → Vision. Never decide alone.</p><p lang="zh">每个决策过五关：战略→财务→健康→营销→愿景。一个人不做重大决定。</p></div>
+      <div class="fs gl"><div class="fn">1</div><h3 lang="en">Weekly Board Meeting</h3><h3 lang="zh">每周董事会</h3><p lang="en">30 minutes. Present your challenge. Each advisor responds with their framework. You synthesize.</p><p lang="zh">30分钟。提出当前挑战，每个部门用各自框架给出意见，你做决策。</p></div>
+      <div class="fs gl"><div class="fn">2</div><h3 lang="en">Daily OS Routine</h3><h3 lang="zh">每日操作系统</h3><p lang="en">Morning protocol (Huberman). Deep work blocks (Dan Koe). Evening review. Your body is the engine.</p><p lang="zh">早晨协议(Huberman) + 深工作(Dan Koe) + 晚间复盘。身体是公司的硬件。</p></div>
+      <div class="fs gl"><div class="fn">3</div><h3 lang="en">5-Filter Decision Protocol</h3><h3 lang="zh">五滤镜决策</h3><p lang="en">Run every decision through: Strategy → Finance → Health → Marketing → Vision. Never decide alone.</p><p lang="zh">每个决策过五关：战略→财务→健康→营销→愿景。一个人不做重大决定。</p></div>
     </div>
   </div>
 </section>
@@ -218,7 +218,7 @@ footer a:hover{color:#2563eb}
     <div class="sh"><div class="st">🎯 LIVE DEMO</div>
       <h2 lang="en">A Real Board Meeting</h2><h2 lang="zh">真实的董事会</h2>
     </div>
-    <div class="dc">
+    <div class="dc gl">
       <div class="dh">📋 <span lang="en">Agenda: Should I go full-time on my solo venture or take a job?</span><span lang="zh">议题：应该全职做一人公司还是先拿offer？</span></div>
       <div class="db">
         <div class="al"><div class="ad dfi">💼</div><div class="ac"><div class="role cfi">CFO (Naval)</div><div class="tx" lang="en">"Have you validated your product? Get a job for runway, build at night."</div><div class="tx" lang="zh">「产品验证过了吗？先拿offer保底，业余时间做。」</div></div></div>
@@ -234,14 +234,14 @@ footer a:hover{color:#2563eb}
 <section class="s">
   <div class="container">
     <div class="sb">
-      <div class="si"><span class="emoji">💰</span><div class="sn">3</div><div class="sl">Finance</div></div>
-      <div class="si"><span class="emoji">🏢</span><div class="sn">1</div><div class="sl">Brand</div></div>
-      <div class="si"><span class="emoji">🧬</span><div class="sn">2</div><div class="sl">Health</div></div>
-      <div class="si"><span class="emoji">📱</span><div class="sn">1</div><div class="sl">Marketing</div></div>
-      <div class="si"><span class="emoji">🧠</span><div class="sn">1</div><div class="sl">Strategy</div></div>
-      <div class="si"><span class="emoji">⚡</span><div class="sn">1</div><div class="sl">Operations</div></div>
-      <div class="si"><span class="emoji">🚀</span><div class="sn">1</div><div class="sl">Vision</div></div>
-      <div class="si"><span class="emoji">📦</span><div class="sn">10</div><div class="sl">Total</div></div>
+      <div class="si gl"><span class="emoji">💰</span><div class="sn">3</div><div class="sl">Finance</div></div>
+      <div class="si gl"><span class="emoji">🏢</span><div class="sn">1</div><div class="sl">Brand</div></div>
+      <div class="si gl"><span class="emoji">🧬</span><div class="sn">2</div><div class="sl">Health</div></div>
+      <div class="si gl"><span class="emoji">📱</span><div class="sn">1</div><div class="sl">Marketing</div></div>
+      <div class="si gl"><span class="emoji">🧠</span><div class="sn">1</div><div class="sl">Strategy</div></div>
+      <div class="si gl"><span class="emoji">⚡</span><div class="sn">1</div><div class="sl">Operations</div></div>
+      <div class="si gl"><span class="emoji">🚀</span><div class="sn">1</div><div class="sl">Vision</div></div>
+      <div class="si gl"><span class="emoji">📦</span><div class="sn">10</div><div class="sl">Total</div></div>
     </div>
   </div>
 </section>
@@ -249,12 +249,12 @@ footer a:hover{color:#2563eb}
 <section class="s">
   <div class="container">
     <div class="fg">
-      <div class="fc"><span class="fi">🧠</span><h4 lang="en">Not Quotes</h4><h4 lang="zh">不是语录</h4><p lang="en">Mental models + decision heuristics + expression DNA + honest limits.</p><p lang="zh">心智模型 + 决策启发式 + 表达DNA + 诚实边界。</p></div>
-      <div class="fc"><span class="fi">🔓</span><h4 lang="en">Open Source</h4><h4 lang="zh">完全开源</h4><p lang="en">MIT License. Fork it, modify it, sell it. Your board, your rules.</p><p lang="zh">MIT协议，随便改随便赚钱。</p></div>
-      <div class="fc"><span class="fi">🌐</span><h4 lang="en">Free Hosting</h4><h4 lang="zh">免费托管</h4><p lang="en">GitHub Pages. Zero hosting cost. Push to master = site goes live.</p><p lang="zh">GitHub Pages零成本托管，推送即上线。</p></div>
-      <div class="fc"><span class="fi">🧩</span><h4 lang="en">Extensible</h4><h4 lang="zh">可扩展</h4><p lang="en">Add new advisors. Write new skills. Community PRs welcome.</p><p lang="zh">增加导师、编写新Skill、社区PR欢迎。</p></div>
-      <div class="fc"><span class="fi">💼</span><h4 lang="en">Product Ready</h4><h4 lang="zh">产品就绪</h4><p lang="en">Free on GitHub. Premium templates and AI integration coming.</p><p lang="zh">GitHub免费版，付费模板和AI集成规划中。</p></div>
-      <div class="fc"><span class="fi">🇭🇰</span><h4 lang="en">Bilingual</h4><h4 lang="zh">中英双语</h4><p lang="en">English + Chinese. Built for Asia-based solopreneurs.</p><p lang="zh">英文+中文，面向亚洲一人创业者。</p></div>
+      <div class="fc gl"><span class="fi">🧠</span><h4 lang="en">Not Quotes</h4><h4 lang="zh">不是语录</h4><p lang="en">Mental models + decision heuristics + expression DNA + honest limits.</p><p lang="zh">心智模型 + 决策启发式 + 表达DNA + 诚实边界。</p></div>
+      <div class="fc gl"><span class="fi">🔓</span><h4 lang="en">Open Source</h4><h4 lang="zh">完全开源</h4><p lang="en">MIT License. Fork it, modify it, sell it. Your board, your rules.</p><p lang="zh">MIT协议，随便改随便赚钱。</p></div>
+      <div class="fc gl"><span class="fi">🌐</span><h4 lang="en">Free Hosting</h4><h4 lang="zh">免费托管</h4><p lang="en">GitHub Pages. Zero hosting cost. Push to master = site goes live.</p><p lang="zh">GitHub Pages零成本托管，推送即上线。</p></div>
+      <div class="fc gl"><span class="fi">🧩</span><h4 lang="en">Extensible</h4><h4 lang="zh">可扩展</h4><p lang="en">Add new advisors. Write new skills. Community PRs welcome.</p><p lang="zh">增加导师、编写新Skill、社区PR欢迎。</p></div>
+      <div class="fc gl"><span class="fi">💼</span><h4 lang="en">Product Ready</h4><h4 lang="zh">产品就绪</h4><p lang="en">Free on GitHub. Premium templates and AI integration coming.</p><p lang="zh">GitHub免费版，付费模板和AI集成规划中。</p></div>
+      <div class="fc gl"><span class="fi">🇭🇰</span><h4 lang="en">Bilingual</h4><h4 lang="zh">中英双语</h4><p lang="en">English + Chinese. Built for Asia-based solopreneurs.</p><p lang="zh">英文+中文，面向亚洲一人创业者。</p></div>
     </div>
   </div>
 </section>
@@ -277,7 +277,7 @@ footer a:hover{color:#2563eb}
 
 <section class="cta">
   <div class="container">
-    <div class="cta-inner">
+    <div class="cta-inner gl">
       <h2 lang="en">One Person. A Full Board. Zero Cost.</h2><h2 lang="zh">一个人。一个董事会。零成本。</h2>
       <p lang="en">Fork the repo, deploy for free, start your first board meeting today.</p><p lang="zh">Fork仓库、免费部署、今天就开始第一次董事会。</p>
       <div class="ha" style="justify-content:center">
@@ -300,6 +300,157 @@ function setLang(l){
 }
 var pref = navigator.language.startsWith('zh') ? 'zh' : 'en';
 setLang(pref);
+
+// === WebGPU Glass Renderer ===
+(async function(){
+  if(!navigator.gpu){ console.log('WebGPU not supported, using CSS glass fallback'); return; }
+
+  // Find glass elements
+  const glassEls = document.querySelectorAll('.gl');
+  if(!glassEls.length) return;
+
+  try{
+    const adapter = await navigator.gpu.requestAdapter();
+    if(!adapter) throw 'no adapter';
+    const device = await adapter.requestDevice();
+    const canvas = document.getElementById('glass-canvas');
+    const ctx = canvas.getContext('webgpu');
+    if(!ctx) throw 'no webgpu context';
+
+    // Size canvas to viewport
+    function resize(){
+      const w = window.innerWidth, h = window.innerHeight;
+      canvas.width = w; canvas.height = h;
+      ctx.configure({device, format: navigator.gpu.getPreferredCanvasFormat(), alphaMode: 'premultiplied'});
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // WGSL shader: refractive glass
+    const shaderCode = `
+      struct Uniforms { resolution: vec2<f32>, time: f32, pad: f32 };
+      @group(0) @binding(0) var<uniform> u: Uniforms;
+      @group(0) @binding(1) var bg: texture_2d<f32>;
+      @group(0) @binding(2) var samp: sampler;
+
+      struct FragOut { @location(0) color: vec4<f32> };
+      struct VertOut { @builtin(position) pos: vec4<f32>, @location(0) uv: vec2<f32> };
+
+      @vertex fn vert(@builtin(vertex_index) i: u32) -> VertOut {
+        var pos = array(vec2(-1,-1), vec2(3,-1), vec2(-1,3));
+        return VertOut(vec4(pos[i], 0, 1), pos[i] * 0.5 + 0.5);
+      }
+
+      // Simplex-like noise for refraction
+      fn hash(p: vec2<f32>) -> f32 {
+        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+      }
+
+      @fragment fn frag(v: VertOut) -> FragOut {
+        let aspect = u.resolution.x / u.resolution.y;
+        var uv = vec2(v.uv.x * aspect, v.uv.y);
+
+        // Refraction distortion
+        let t = u.time * 0.15;
+        let noise1 = hash(uv * 3.0 + t);
+        let noise2 = hash(uv * 5.0 - t * 0.7);
+        let distort = (noise1 - 0.5) * 0.008 + (noise2 - 0.5) * 0.005;
+
+        // Chromatic aberration
+        let r_uv = vec2(v.uv.x + distort * 1.5, v.uv.y + distort);
+        let g_uv = vec2(v.uv.x, v.uv.y);
+        let b_uv = vec2(v.uv.x - distort * 1.5, v.uv.y - distort);
+
+        // Sample background with mip-level blur
+        let r = textureSampleLevel(bg, samp, r_uv, 0.8).r;
+        let g = textureSampleLevel(bg, samp, g_uv, 0.6).g;
+        let b = textureSampleLevel(bg, samp, b_uv, 0.8).b;
+
+        // Edge glow
+        let edge = 1.0 - smoothstep(0.0, 0.15, min(v.uv.x, min(1.0-v.uv.x, min(v.uv.y, 1.0-v.uv.y))));
+        let glow = vec3(0.6, 0.7, 1.0) * edge * 0.15;
+
+        return FragOut(vec4(r * 0.85 + glow.r, g * 0.85 + glow.g, b * 0.85 + glow.b, 0.55));
+      }
+    `;
+
+    const shader = device.createShaderModule({code: shaderCode});
+    const pipeline = device.createRenderPipeline({
+      layout: 'auto',
+      vertex: {module: shader, entryPoint: 'vert'},
+      fragment: {module: shader, entryPoint: 'frag', targets: [{format: navigator.gpu.getPreferredCanvasFormat(), blend: {color: {srcFactor: 'src-alpha', dstFactor: 'one-minus-src-alpha'}}}]},
+      primitive: {topology: 'triangle-list'},
+    });
+
+    // Background texture: capture the page
+    function captureBG(){
+      return new Promise(resolve => {
+        // Create an offscreen canvas to capture the HTML
+        const offscreen = document.createElement('canvas');
+        offscreen.width = canvas.width;
+        offscreen.height = canvas.height;
+        resolve(null); // WEBGPU capture from HTML is complex; use gradient fallback
+      });
+    }
+
+    // Use a programmatic background texture
+    const bgSize = 512;
+    const bgData = new Uint8Array(bgSize * bgSize * 4);
+    for(let y=0; y<bgSize; y++){
+      for(let x=0; x<bgSize; x++){
+        const i = (y*bgSize + x)*4;
+        const cx = x/bgSize, cy = y/bgSize;
+        bgData[i] = Math.floor(200 + 55 * (1 - cy));   // R
+        bgData[i+1] = Math.floor(210 + 45 * (cx*0.6 + cy*0.4)); // G
+        bgData[i+2] = Math.floor(225 + 30 * cx);      // B
+        bgData[i+3] = 255;
+      }
+    }
+
+    const tex = device.createTexture({
+      size: [bgSize, bgSize], format: 'rgba8unorm', usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST
+    });
+    device.queue.writeTexture(
+      {texture: tex}, bgData, {bytesPerRow: bgSize*4, rowsPerImage: bgSize}, [bgSize, bgSize]
+    );
+
+    const sampler = device.createSampler({magFilter: 'linear', minFilter: 'linear', mipmapFilter: 'linear'});
+
+    const uniformBuf = device.createBuffer({
+      size: 16, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
+    });
+
+    const bindGroup = device.createBindGroup({
+      layout: pipeline.getBindGroupLayout(0),
+      entries: [
+        {binding: 0, resource: {buffer: uniformBuf}},
+        {binding: 1, resource: tex.createView()},
+        {binding: 2, resource: sampler}
+      ]
+    });
+
+    let start = performance.now();
+    function frame(){
+      const time = (performance.now() - start) / 1000;
+      const res = new Float32Array([canvas.width, canvas.height, time, 0]);
+      device.queue.writeBuffer(uniformBuf, 0, res.buffer);
+
+      const cmd = device.createCommandEncoder();
+      const pass = cmd.beginRenderPass({
+        colorAttachments: [{view: ctx.getCurrentTexture().createView(), loadOp: 'clear', storeOp: 'store', clearValue: {r:0,g:0,b:0,a:0}}]
+      });
+      pass.setPipeline(pipeline);
+      pass.setBindGroup(0, bindGroup);
+      pass.draw(3, 1, 0, 0);
+      pass.end();
+      device.queue.submit([cmd.finish()]);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }catch(e){
+    console.log('WebGPU init failed, using CSS fallback:', e);
+  }
+})();
 </script>
 </body>
 </html>
