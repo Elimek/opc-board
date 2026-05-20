@@ -1,341 +1,342 @@
-<!DOCTYPE html>
-<html lang="en" data-lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OPC Board — One-Person Company Operating System</title>
-<meta name="description" content="Your board of directors for a one-person company. Naval, Buffett, Musk, Bryan Johnson, Dan Koe, Zhang Xuedong, Lidangzzz — distilled into deployable SKILLs.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',system-ui,sans-serif;
-  background:linear-gradient(135deg,#f5f7fa 0%,#e8ecf1 50%,#f0f2f5 100%);
-  color:#1a1a2e;line-height:1.4;min-height:100vh;-webkit-font-smoothing:antialiased
-}
-.container{max-width:1120px;margin:0 auto;padding:0 1.25rem}
-
-/* === Language Toggle === */
-.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.05);height:40px}
-.lang-bar .container{display:flex;align-items:center;justify-content:space-between;height:40px;padding-top:0;padding-bottom:0}
-.lang-bar .logo{font-size:.88rem;font-weight:700;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.lang-toggle{display:flex;gap:0;background:rgba(0,0,0,0.04);border-radius:8px;overflow:hidden}
-.lang-btn{padding:.25rem .65rem;font-size:.72rem;font-weight:600;border:none;cursor:pointer;background:transparent;color:#71717a;transition:all .15s}
-.lang-btn.active{background:#1a1a2e;color:#fff;border-radius:6px}
-.lang-btn:hover:not(.active){color:#1a1a2e}
-.lang-btn-github{color:#52525b;text-decoration:none;font-size:.72rem;font-weight:600;padding:.25rem .5rem}
-.lang-btn-github:hover{color:#2563eb}
-
-/* === Language Content === */
-[lang="en"]{display:block}
-[lang="zh"]{display:none}
-html[data-lang="zh"] [lang="en"]{display:none}
-html[data-lang="zh"] [lang="zh"]{display:block}
-
-/* === Hero (compact) === */
-.hero{display:flex;align-items:center;padding:3.5rem 0 1.5rem;position:relative;overflow:hidden;min-height:0}
-.hero::before{content:'';position:absolute;top:-30%;left:-20%;width:140%;height:140%;background:radial-gradient(ellipse at 20% 50%,rgba(37,99,235,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 30%,rgba(124,58,237,0.04) 0%,transparent 50%);pointer-events:none}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
-.hero h1{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:750;letter-spacing:-.5px;line-height:1.2;margin-bottom:.5rem}
-.hero h1 .grad{background:linear-gradient(135deg,#2563eb,#7c3aed,#0891b2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{font-size:.85rem;color:#52525b;margin-bottom:.75rem;line-height:1.5}
-.badge{display:inline-flex;padding:.2rem .65rem;border-radius:999px;font-size:.65rem;font-weight:600;background:rgba(37,99,235,0.07);color:#2563eb;border:1px solid rgba(37,99,235,0.1);margin-bottom:.5rem}
-.hero-actions{display:flex;gap:.5rem;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.5rem 1rem;border-radius:8px;font-size:.78rem;font-weight:600;text-decoration:none;transition:all .15s;cursor:pointer;border:none}
-.btn-pri{background:#1a1a2e;color:#fff}
-.btn-pri:hover{background:#2563eb;transform:translateY(-1px)}
-.btn-sec{background:rgba(255,255,255,0.7);backdrop-filter:blur(12px);color:#1a1a2e;border:1px solid rgba(255,255,255,0.5)}
-.btn-sec:hover{background:rgba(255,255,255,0.9);transform:translateY(-1px)}
-
-/* === Kanban (compact) === */
-.kanban-columns{display:flex;gap:.35rem}
-.kanban-col{flex:1}
-.kanban-col-header{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:#71717a;margin-bottom:.25rem;text-align:center}
-.kanban-card{background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:.4rem .5rem;margin-bottom:.3rem;font-size:.65rem;transition:all .15s}
-.kanban-card .k-icon{font-size:.9rem}
-.kanban-card .k-label{font-weight:600;font-size:.62rem;color:#1a1a2e}
-.kanban-card .k-sub{font-size:.55rem;color:#71717a}
-.k-done{border-left:2px solid #22c55e}.k-prog{border-left:2px solid #f59e0b}.k-todo{border-left:2px solid #94a3b8}
-
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:1rem}.kanban-preview{display:none}}
-
-/* === Glass Card === */
-.glass{background:rgba(255,255,255,0.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.4);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.03),0 8px 24px rgba(0,0,0,0.03)}
-.g-s{background:rgba(255,255,255,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.5);border-radius:12px}
-
-/* === Sections (compact) === */
-.section{padding:1rem 0}
-.sec-header{margin-bottom:.75rem;text-align:center}
-.sec-tag{font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;color:#71717a;font-weight:600}
-.sec-header h2{font-size:1.05rem;font-weight:700;letter-spacing:-.2px;margin-top:.15rem}
-
-/* === Board Cards (compact grid) === */
-.bg{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem}
-.bc{padding:.6rem .5rem;text-align:center;cursor:default;transition:all .2s}
-.bc:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.06)}
-.bc .bi{font-size:1.3rem;display:block;margin-bottom:.2rem}
-.bc h3{font-size:.68rem;font-weight:700;margin-bottom:.05rem}
-.bc .mentors{font-size:.58rem;color:#71717a;margin-bottom:.2rem;line-height:1.2}
-.bc p{font-size:.62rem;color:#52525b;margin-bottom:.25rem;line-height:1.3}
-.bc .tag-p{display:inline-block;padding:.12rem .4rem;border-radius:5px;font-size:.58rem;font-weight:600;background:rgba(37,99,235,0.06);color:#2563eb;border:1px solid rgba(37,99,235,0.1)}
-
-@media(max-width:900px){.bg{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:600px){.bg{grid-template-columns:repeat(2,1fr)}}
-
-/* === Flow === */
-.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
-.fs{text-align:center;padding:.75rem .5rem}
-.fs .fn{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:700;font-size:.7rem;align-items:center;justify-content:center;margin-bottom:.35rem}
-.fs h3{font-size:.72rem;font-weight:700;margin-bottom:.1rem}
-.fs p{font-size:.65rem;color:#52525b;line-height:1.3;margin:0}
-@media(max-width:600px){.flow{grid-template-columns:1fr}}
-
-/* === Demo === */
-.dc{padding:0;overflow:hidden}
-.dh{padding:.5rem .85rem;font-size:.72rem;font-weight:600;color:#52525b;border-bottom:1px solid rgba(0,0,0,0.04);display:flex;align-items:center;gap:.3rem}
-.db{padding:.5rem .85rem}
-.al{display:flex;gap:.35rem;align-items:flex-start;padding:.25rem 0}
-.ad{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem}
-.ac{flex:1;min-width:0}
-.ac .role{font-size:.6rem;font-weight:600;margin-bottom:0}
-.ac .txt{font-size:.65rem;color:#52525b;line-height:1.3;font-style:italic}
-.d-fi{background:rgba(34,197,94,0.12);color:#16a34a}.d-he{background:rgba(168,85,247,0.12);color:#9333ea}
-.d-me{background:rgba(59,130,246,0.12);color:#2563eb}.d-st{background:rgba(245,158,11,0.12);color:#d97706}
-.d-in{background:rgba(6,182,212,0.12);color:#0891b2}.c-fi{color:#16a34a}.c-he{color:#9333ea}.c-me{color:#2563eb}.c-st{color:#d97706}.c-in{color:#0891b2}
-
-/* === Features Grid === */
-.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
-.fc{padding:.6rem .5rem;text-align:center}
-.fc .fi{font-size:1.1rem;display:block;margin-bottom:.15rem}
-.fc h4{font-size:.65rem;font-weight:700;margin-bottom:.05rem}
-.fc p{font-size:.6rem;color:#52525b;line-height:1.25;margin:0}
-@media(max-width:600px){.fg{grid-template-columns:1fr 1fr}}
-
-/* === Stats bar === */
-.sb{display:grid;grid-template-columns:repeat(8,1fr);gap:.4rem}
-.si{text-align:center;padding:.5rem .3rem}
-.sn{font-size:1.1rem;font-weight:750;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sl{font-size:.58rem;color:#71717a;margin-top:0}
-.si .emoji{font-size:.9rem;display:block;margin-bottom:.05rem}
-@media(max-width:900px){.sb{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:600px){.sb{grid-template-columns:repeat(2,1fr)}}
-
-/* === Code === */
-.cb{background:#0f172a;border-radius:8px;padding:.6rem .85rem;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;font-size:.65rem;line-height:1.5;overflow-x:auto;color:#94a3b8;margin:0}
-.cb .cm{color:#64748b}.cb .cd{color:#22c55e}
-
-/* === CTA === */
-.cta{text-align:center;padding:1.25rem}
-.cta h2{font-size:1rem;margin-bottom:.2rem;font-weight:700}
-.cta p{font-size:.75rem;color:#52525b;margin-bottom:.65rem}
-
-/* === Footer === */
-footer{text-align:center;padding:.75rem;font-size:.65rem;color:#71717a}
-footer a{color:#52525b;text-decoration:none}
-footer a:hover{color:#2563eb}
-
-/* === Utility === */
-.sb-gap{margin-bottom:.35rem}
-.section-last{padding-bottom:0}
-</style>
-</head>
-<body>
-
-<!-- Language Bar -->
-<div class="lang-bar">
-  <div class="container">
-    <div class="logo">🏢 OPC Board</div>
-    <div style="display:flex;align-items:center;gap:.35rem">
-      <a href="https://github.com/Elimek/opc-board" class="lang-btn-github">GitHub</a>
-      <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLang('en')" id="lben">EN</button>
-        <button class="lang-btn" onclick="setLang('zh')" id="lbzh">中文</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div>
-        <div class="badge">🏢 Open Source · MIT</div>
-        <h1 lang="en" class="active">Your <span class="grad">OPC Board</span></h1>
-        <h1 lang="zh">你的 <span class="grad">董事会</span></h1>
-        <p lang="en" class="active">Hire the world's best minds — Naval, Buffett, Musk, Bryan Johnson, Dan Koe, Zhang Xuedong, Lidangzzz — as your executive team. Deploy for free.</p>
-        <p lang="zh">把全世界最聪明的人装进你的董事会。免费部署，一人公司标配。</p>
-        <div class="hero-actions">
-          <a href="#board" class="btn btn-pri"><span lang="en" class="active">Meet the Board →</span><span lang="zh">认识董事会 →</span></a>
-          <a href="https://github.com/Elimek/opc-board" class="btn btn-sec">GitHub ★</a>
-        </div>
-      </div>
-      <div class="kanban-preview">
-        <div class="kanban-columns">
-          <div class="kanban-col"><div class="kanban-col-header">Strategy</div>
-            <div class="kanban-card k-done"><span class="k-icon">🧠</span><div class="k-label">Zhang Xuedong</div><div class="k-sub">Direction</div></div></div>
-          <div class="kanban-col"><div class="kanban-col-header">Operations</div>
-            <div class="kanban-card k-done"><span class="k-icon">⚡</span><div class="k-label">Lidangzzz</div><div class="k-sub">Execution</div></div></div>
-          <div class="kanban-col"><div class="kanban-col-header">Finance</div>
-            <div class="kanban-card k-prog"><span class="k-icon">💼</span><div class="k-label">Naval</div><div class="k-sub">Leverage</div></div>
-            <div class="kanban-card k-prog"><span class="k-icon">🐂</span><div class="k-label">Buffett</div><div class="k-sub">Moat</div></div></div>
-          <div class="kanban-col"><div class="kanban-col-header">Brand</div>
-            <div class="kanban-card k-done"><span class="k-icon">🏢</span><div class="k-label">Trump</div><div class="k-sub">Branding</div></div></div>
-          <div class="kanban-col"><div class="kanban-col-header">Health</div>
-            <div class="kanban-card k-todo"><span class="k-icon">🧬</span><div class="k-label">Bryan</div><div class="k-sub">Don't Die</div></div>
-            <div class="kanban-card k-todo"><span class="k-icon">⚡</span><div class="k-label">Huberman</div><div class="k-sub">Protocols</div></div></div>
-          <div class="kanban-col"><div class="kanban-col-header">Marketing</div>
-            <div class="kanban-card k-todo"><span class="k-icon">📱</span><div class="k-label">Dan Koe</div><div class="k-sub">Content</div></div></div>
-          <div class="kanban-col"><div class="kanban-col-header">Vision</div>
-            <div class="kanban-card k-todo"><span class="k-icon">🚀</span><div class="k-label">Musk</div><div class="k-sub">Vision</div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Board -->
-<section class="section" id="board">
-  <div class="container">
-    <div class="sec-header">
-      <div class="sec-tag">🏛️ BOARD</div>
-      <h2 lang="en" class="active">Your Executive Team</h2>
-      <h2 lang="zh">你的管理层</h2>
-    </div>
-    <div class="bg">
-      <div class="bc glass"><span class="bi">💼</span><h3>CFO</h3><div class="mentors">Naval · Buffett · Duan</div><p lang="en" class="active">Long-term compounding, value investing, capital leverage.</p><p lang="zh">长期复利、价值投资、资本杠杆。</p><span class="tag-p">Compounding</span></div>
-      <div class="bc glass"><span class="bi">🏢</span><h3>CBO</h3><div class="mentors">Donald Trump</div><p lang="en" class="active">Personal branding, negotiation, attention, risk management.</p><p lang="zh">个人品牌、谈判加价、注意力争夺。</p><span class="tag-p">Branding</span></div>
-      <div class="bc glass"><span class="bi">🧬</span><h3>CHO</h3><div class="mentors">Bryan Johnson · Huberman</div><p lang="en" class="active">Health optimization, sleep protocols, energy management.</p><p lang="zh">健康优化、精力管理、数据驱动身体管理。</p><span class="tag-p">Don't Die</span></div>
-      <div class="bc glass"><span class="bi">📱</span><h3>CMO</h3><div class="mentors">Dan Koe</div><p lang="en" class="active">Content marketing, product conversion, build in public.</p><p lang="zh">内容营销、产品转化、一人公司增长引擎。</p><span class="tag-p">Content → Product</span></div>
-      <div class="bc glass"><span class="bi">🧠</span><h3>CSO</h3><div class="mentors">Zhang Xuedong</div><p lang="en" class="active">Macro strategy, direction, ROI, career path selection.</p><p lang="zh">选方向、算ROI、教育职业路径、阶层流动。</p><span class="tag-p">Direction</span></div>
-      <div class="bc glass"><span class="bi">⚡</span><h3>COO</h3><div class="mentors">Lidangzzz</div><p lang="en" class="active">Tactical execution, index fund HOWTO, anti-scam, data ops.</p><p lang="zh">具体战术、执行落地、反诈识别、数据驱动。</p><span class="tag-p">Execution</span></div>
-      <div class="bc glass"><span class="bi">🚀</span><h3>CVO</h3><div class="mentors">Elon Musk</div><p lang="en" class="active">Long-term vision, all-in execution, first principles.</p><p lang="zh">方向感、All-In执行力、公司为什么存在。</p><span class="tag-p">Vision</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- How It Works -->
-<section class="section sb-gap">
-  <div class="container">
-    <div class="sec-header">
-      <div class="sec-tag">⚙️ HOW IT WORKS</div>
-      <h2 lang="en" class="active">Three Modes, One System</h2>
-      <h2 lang="zh">三种模式，一个系统</h2>
-    </div>
-    <div class="flow">
-      <div class="fs glass"><div class="fn">1</div>
-        <h3 lang="en" class="active">Weekly Board Meeting</h3><h3 lang="zh">每周董事会</h3>
-        <p lang="en" class="active">30 min. Present your challenge. Each advisor responds with their framework.</p><p lang="zh">30分钟。提出当前挑战，每个部门用各自框架给出意见。</p></div>
-      <div class="fs glass"><div class="fn">2</div>
-        <h3 lang="en" class="active">Daily OS</h3><h3 lang="zh">每日操作系统</h3>
-        <p lang="en" class="active">Morning protocol (Huberman). Deep work (Dan Koe). Evening review.</p><p lang="zh">早晨协议(Huberman) + 深工作(Dan Koe) + 晚间复盘。</p></div>
-      <div class="fs glass"><div class="fn">3</div>
-        <h3 lang="en" class="active">5-Filter Protocol</h3><h3 lang="zh">五滤镜决策</h3>
-        <p lang="en" class="active">Run decisions through: Strategy → Finance → Health → Marketing → Vision.</p><p lang="zh">每个决策过五关：战略→财务→健康→营销→愿景。</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- Demo -->
-<section class="section sb-gap">
-  <div class="container">
-    <div class="sec-header">
-      <div class="sec-tag">🎯 LIVE DEMO</div>
-      <h2 lang="en" class="active">Real Board Meeting</h2>
-      <h2 lang="zh">真实的董事会</h2>
-    </div>
-    <div class="dc g-s">
-      <div class="dh">📋 <span lang="en" class="active">Agenda: Should I go full-time on my solo venture or take a job?</span><span lang="zh">议题：应该全职做一人公司还是先拿offer？</span></div>
-      <div class="db">
-        <div class="al"><div class="ad d-fi">💼</div><div class="ac"><div class="role c-fi">CFO (Naval)</div><div class="txt" lang="en" class="active">"Have you validated your product? Get a job for runway, build at night."</div><div class="txt" lang="zh">「产品验证过了吗？先拿offer保底，业余时间做。」</div></div></div>
-        <div class="al"><div class="ad d-he">🧬</div><div class="ac"><div class="role c-he">CHO (Bryan Johnson)</div><div class="txt" lang="en" class="active">"Going all-in with no safety net spikes cortisol, ruins sleep, accelerates aging."</div><div class="txt" lang="zh">「没有安全网的All-In会升高皮质醇、毁掉睡眠、加速衰老。」</div></div></div>
-        <div class="al"><div class="ad d-me">📱</div><div class="ac"><div class="role c-me">CMO (Dan Koe)</div><div class="txt" lang="en" class="active">"Day job =素材. Build in public. Your content IS your product prototype."</div><div class="txt" lang="zh">「全职工作就是素材，公开构建，你的内容就是产品原型。」</div></div></div>
-        <div class="al"><div class="ad d-st">🧠</div><div class="ac"><div class="role c-st">CSO (Zhang Xuedong)</div><div class="txt" lang="en" class="active">"普通人家孩子，先拿offer保底。拿offer同时搞副业，ROI最高。"</div><div class="txt" lang="zh">「普通人家孩子，先拿offer保底。拿offer同时搞副业，ROI最高。」</div></div></div>
-        <div class="al"><div class="ad d-in">🚀</div><div class="ac"><div class="role c-in">CVO (Elon Musk)</div><div class="txt" lang="en" class="active">"Weekend MVP. If you can't get 10 users in 48 hours, keep the day job."</div><div class="txt" lang="zh">「周末做个MVP。48小时拿不到10个用户就继续上班。」</div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Stats + Features (combined) -->
-<section class="section sb-gap">
-  <div class="container">
-    <div class="sb">
-      <div class="si glass"><span class="emoji">💰</span><div class="sn">3</div><div class="sl">Finance</div></div>
-      <div class="si glass"><span class="emoji">🏢</span><div class="sn">1</div><div class="sl">Brand</div></div>
-      <div class="si glass"><span class="emoji">🧬</span><div class="sn">2</div><div class="sl">Health</div></div>
-      <div class="si glass"><span class="emoji">📱</span><div class="sn">1</div><div class="sl">Marketing</div></div>
-      <div class="si glass"><span class="emoji">🧠</span><div class="sn">1</div><div class="sl">Strategy</div></div>
-      <div class="si glass"><span class="emoji">⚡</span><div class="sn">1</div><div class="sl">Operations</div></div>
-      <div class="si glass"><span class="emoji">🚀</span><div class="sn">1</div><div class="sl">Vision</div></div>
-      <div class="si glass"><span class="emoji">📦</span><div class="sn">10</div><div class="sl">Total</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="section sb-gap">
-  <div class="container">
-    <div class="fg">
-      <div class="fc glass"><span class="fi">🧠</span><h4 lang="en" class="active">Not Quotes</h4><h4 lang="zh">不是语录</h4><p lang="en" class="active">Mental models + heuristics + DNA + honest limits.</p><p lang="zh">心智模型+决策启发式+表达DNA+诚实边界。</p></div>
-      <div class="fc glass"><span class="fi">🔓</span><h4 lang="en" class="active">Open Source</h4><h4 lang="zh">完全开源</h4><p lang="en" class="active">MIT License. Fork, modify, sell. Your board, your rules.</p><p lang="zh">MIT协议，随便改随便赚钱。</p></div>
-      <div class="fc glass"><span class="fi">🌐</span><h4 lang="en" class="active">Free to Deploy</h4><h4 lang="zh">免费部署</h4><p lang="en" class="active">GitHub Pages. Zero hosting cost. One push = live.</p><p lang="zh">GitHub Pages零成本托管，一次推送即上线。</p></div>
-      <div class="fc glass"><span class="fi">🧩</span><h4 lang="en" class="active">Extensible</h4><h4 lang="zh">可扩展</h4><p lang="en" class="active">Add advisors. Write new skills. PRs welcome.</p><p lang="zh">增加导师、编写新Skill、欢迎PR。</p></div>
-      <div class="fc glass"><span class="fi">💼</span><h4 lang="en" class="active">Lead Magnet</h4><h4 lang="zh">引流产品</h4><p lang="en" class="active">Free on GitHub. Premium templates as paid tier.</p><p lang="zh">GitHub免费版+付费模板层。</p></div>
-      <div class="fc glass"><span class="fi">🇭🇰</span><h4 lang="en" class="active">Bilingual</h4><h4 lang="zh">中英双语</h4><p lang="en" class="active">English + Chinese. Built for Asia-based solopreneurs.</p><p lang="zh">英文+中文。面向亚洲一人创业者。</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- Quick Start -->
-<section class="section sb-gap section-last">
-  <div class="container">
-    <div class="sec-header">
-      <div class="sec-tag">🚀 QUICK START</div>
-      <h2 lang="en" class="active">Deploy in 2 Minutes</h2>
-      <h2 lang="zh">两分钟部署</h2>
-    </div>
-    <div class="g-s" style="padding:0;overflow:hidden">
-      <div class="cb">
-        <span class="cm"># Clone your board of directors</span><br>
-        <span class="cd">$</span> git clone https://github.com/Elimek/opc-board.git<br>
-        <span class="cd">$</span> cd opc-board<br><br>
-        <span class="cm"># Deploy for free</span><br>
-        <span class="cd">$</span> git push origin master<br>
-        <span class="cm"># → GitHub Pages auto-deploys. Live in 2 min.</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta">
-  <div class="container">
-    <div class="g-s" style="padding:1.25rem">
-      <h2 lang="en" class="active">One Person. A Full Board. Zero Cost.</h2>
-      <h2 lang="zh">一个人。一个董事会。零成本。</h2>
-      <p lang="en" class="active">Fork the repo, deploy for free, start your first board meeting today.</p>
-      <p lang="zh">Fork仓库、免费部署、今天就开始第一次董事会。</p>
-      <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap">
-        <a href="https://github.com/Elimek/opc-board" class="btn btn-pri">★ Star on GitHub</a>
-        <a href="#board" class="btn btn-sec"><span lang="en" class="active">Meet the Board</span><span lang="zh">认识董事会</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p>OPC Board — <a href="https://github.com/Elimek/opc-board">Open Source</a> · MIT · <span lang="en" class="active">One person, one board, one OS.</span><span lang="zh">一个人，一个董事会，一个操作系统。</span></p>
-</footer>
-
-<script>
-function setLang(l){
-  document.documentElement.setAttribute('data-lang', l);
-  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('lb'+l).classList.add('active');
-}
-// Default to user's browser language
-const preferred = navigator.language.startsWith('zh') ? 'zh' : 'en';
-setLang(preferred);
-</script>
-</body>
-</html>
+     1|<!DOCTYPE html>
+     2|<html lang="en" data-lang="en">
+     3|<head>
+     4|<meta charset="UTF-8">
+     5|<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6|<title>OPC Board — One-Person Company Operating System</title>
+     7|<meta name="description" content="Your board of directors for a one-person company. Naval, Buffett, Musk, Bryan Johnson, Dan Koe, Zhang Xuedong, Lidangzzz — distilled into deployable SKILLs.">
+     8|<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
+     9|<style>
+    10|*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    11|body{
+    12|  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',system-ui,sans-serif;
+    13|  background:linear-gradient(135deg,#f5f7fa 0%,#e8ecf1 50%,#f0f2f5 100%);
+    14|  color:#1a1a2e;line-height:1.4;min-height:100vh;-webkit-font-smoothing:antialiased
+    15|}
+    16|.container{max-width:1120px;margin:0 auto;padding:0 1.25rem}
+    17|
+    18|/* === Language Toggle === */
+    19|.lang-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:#ffffff;border-bottom:1px solid rgba(0,0,0,0.05);height:40px}
+    20|.lang-bar .container{display:flex;align-items:center;justify-content:space-between;height:40px;padding-top:0;padding-bottom:0}
+    21|.lang-bar .logo{font-size:.88rem;font-weight:700;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    22|.lang-toggle{display:flex;gap:0;background:rgba(0,0,0,0.04);border-radius:8px;overflow:hidden}
+    23|.lang-btn{padding:.25rem .65rem;font-size:.72rem;font-weight:600;border:none;cursor:pointer;background:transparent;color:#71717a;transition:all .15s}
+    24|.lang-btn.active{background:#1a1a2e;color:#fff;border-radius:6px}
+    25|.lang-btn:hover:not(.active){color:#1a1a2e}
+    26|.lang-btn-github{color:#52525b;text-decoration:none;font-size:.72rem;font-weight:600;padding:.25rem .5rem}
+    27|.lang-btn-github:hover{color:#2563eb}
+    28|
+    29|/* === Language Content === */
+    30|[lang="en"]{display:block}
+    31|[lang="zh"]{display:none}
+    32|html[data-lang="zh"] [lang="en"]{display:none}
+    33|html[data-lang="zh"] [lang="zh"]{display:block}
+    34|
+    35|/* === Hero (compact) === */
+    36|.hero{display:flex;align-items:center;padding:3.5rem 0 1.5rem;position:relative;overflow:hidden;min-height:0}
+    37|.hero::before{content:'';position:absolute;top:-30%;left:-20%;width:140%;height:140%;background:radial-gradient(ellipse at 20% 50%,rgba(37,99,235,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 30%,rgba(124,58,237,0.04) 0%,transparent 50%);pointer-events:none}
+    38|.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+    39|.hero h1{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:750;letter-spacing:-.5px;line-height:1.2;margin-bottom:.5rem}
+    40|.hero h1 .grad{background:linear-gradient(135deg,#2563eb,#7c3aed,#0891b2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    41|.hero p{font-size:.85rem;color:#52525b;margin-bottom:.75rem;line-height:1.5}
+    42|.badge{display:inline-flex;padding:.2rem .65rem;border-radius:999px;font-size:.65rem;font-weight:600;background:rgba(37,99,235,0.07);color:#2563eb;border:1px solid rgba(37,99,235,0.1);margin-bottom:.5rem}
+    43|.hero-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+    44|.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.5rem 1rem;border-radius:8px;font-size:.78rem;font-weight:600;text-decoration:none;transition:all .15s;cursor:pointer;border:none}
+    45|.btn-pri{background:#1a1a2e;color:#fff}
+    46|.btn-pri:hover{background:#2563eb;transform:translateY(-1px)}
+    47|.btn-sec{background:#f8f9fa;color:#1a1a2e;border:1px solid rgba(255,255,255,0.5)}
+    48|.btn-sec:hover{background:rgba(255,255,255,0.9);transform:translateY(-1px)}
+    49|
+    50|/* === Kanban (compact) === */
+    51|.kanban-columns{display:flex;gap:.35rem}
+    52|.kanban-col{flex:1}
+    53|.kanban-col-header{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:#71717a;margin-bottom:.25rem;text-align:center}
+    54|.kanban-card{background:#ffffff;border:1px solid rgba(255,255,255,0.5);border-radius:8px;padding:.4rem .5rem;margin-bottom:.3rem;font-size:.65rem;transition:all .15s}
+    55|.kanban-card .k-icon{font-size:.9rem}
+    56|.kanban-card .k-label{font-weight:600;font-size:.62rem;color:#1a1a2e}
+    57|.kanban-card .k-sub{font-size:.55rem;color:#71717a}
+    58|.k-done{border-left:2px solid #22c55e}.k-prog{border-left:2px solid #f59e0b}.k-todo{border-left:2px solid #94a3b8}
+    59|
+    60|@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:1rem}.kanban-preview{display:none}}
+    61|
+    62|/* === Glass Card === */
+    63|.glass{background:#ffffff;-webkit-border:1px solid rgba(255,255,255,0.4);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.03),0 8px 24px rgba(0,0,0,0.03)}
+    64|.g-s{background:#ffffff;-webkit-border:1px solid rgba(255,255,255,0.5);border-radius:12px}
+    65|
+    66|/* === Sections (compact) === */
+    67|.section{padding:1rem 0}
+    68|.sec-header{margin-bottom:.75rem;text-align:center}
+    69|.sec-tag{font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;color:#71717a;font-weight:600}
+    70|.sec-header h2{font-size:1.05rem;font-weight:700;letter-spacing:-.2px;margin-top:.15rem}
+    71|
+    72|/* === Board Cards (compact grid) === */
+    73|.bg{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem}
+    74|.bc{padding:.6rem .5rem;text-align:center;cursor:default;transition:all .2s}
+    75|.bc:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+    76|.bc .bi{font-size:1.3rem;display:block;margin-bottom:.2rem}
+    77|.bc h3{font-size:.68rem;font-weight:700;margin-bottom:.05rem}
+    78|.bc .mentors{font-size:.58rem;color:#71717a;margin-bottom:.2rem;line-height:1.2}
+    79|.bc p{font-size:.62rem;color:#52525b;margin-bottom:.25rem;line-height:1.3}
+    80|.bc .tag-p{display:inline-block;padding:.12rem .4rem;border-radius:5px;font-size:.58rem;font-weight:600;background:rgba(37,99,235,0.06);color:#2563eb;border:1px solid rgba(37,99,235,0.1)}
+    81|
+    82|@media(max-width:900px){.bg{grid-template-columns:repeat(4,1fr)}}
+    83|@media(max-width:600px){.bg{grid-template-columns:repeat(2,1fr)}}
+    84|
+    85|/* === Flow === */
+    86|.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+    87|.fs{text-align:center;padding:.75rem .5rem}
+    88|.fs .fn{display:inline-flex;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:700;font-size:.7rem;align-items:center;justify-content:center;margin-bottom:.35rem}
+    89|.fs h3{font-size:.72rem;font-weight:700;margin-bottom:.1rem}
+    90|.fs p{font-size:.65rem;color:#52525b;line-height:1.3;margin:0}
+    91|@media(max-width:600px){.flow{grid-template-columns:1fr}}
+    92|
+    93|/* === Demo === */
+    94|.dc{padding:0;overflow:hidden}
+    95|.dh{padding:.5rem .85rem;font-size:.72rem;font-weight:600;color:#52525b;border-bottom:1px solid rgba(0,0,0,0.04);display:flex;align-items:center;gap:.3rem}
+    96|.db{padding:.5rem .85rem}
+    97|.al{display:flex;gap:.35rem;align-items:flex-start;padding:.25rem 0}
+    98|.ad{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem}
+    99|.ac{flex:1;min-width:0}
+   100|.ac .role{font-size:.6rem;font-weight:600;margin-bottom:0}
+   101|.ac .txt{font-size:.65rem;color:#52525b;line-height:1.3;font-style:italic}
+   102|.d-fi{background:rgba(34,197,94,0.12);color:#16a34a}.d-he{background:rgba(168,85,247,0.12);color:#9333ea}
+   103|.d-me{background:rgba(59,130,246,0.12);color:#2563eb}.d-st{background:rgba(245,158,11,0.12);color:#d97706}
+   104|.d-in{background:rgba(6,182,212,0.12);color:#0891b2}.c-fi{color:#16a34a}.c-he{color:#9333ea}.c-me{color:#2563eb}.c-st{color:#d97706}.c-in{color:#0891b2}
+   105|
+   106|/* === Features Grid === */
+   107|.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+   108|.fc{padding:.6rem .5rem;text-align:center}
+   109|.fc .fi{font-size:1.1rem;display:block;margin-bottom:.15rem}
+   110|.fc h4{font-size:.65rem;font-weight:700;margin-bottom:.05rem}
+   111|.fc p{font-size:.6rem;color:#52525b;line-height:1.25;margin:0}
+   112|@media(max-width:600px){.fg{grid-template-columns:1fr 1fr}}
+   113|
+   114|/* === Stats bar === */
+   115|.sb{display:grid;grid-template-columns:repeat(8,1fr);gap:.4rem}
+   116|.si{text-align:center;padding:.5rem .3rem}
+   117|.sn{font-size:1.1rem;font-weight:750;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+   118|.sl{font-size:.58rem;color:#71717a;margin-top:0}
+   119|.si .emoji{font-size:.9rem;display:block;margin-bottom:.05rem}
+   120|@media(max-width:900px){.sb{grid-template-columns:repeat(4,1fr)}}
+   121|@media(max-width:600px){.sb{grid-template-columns:repeat(2,1fr)}}
+   122|
+   123|/* === Code === */
+   124|.cb{background:#0f172a;border-radius:8px;padding:.6rem .85rem;font-family:'JetBrains Mono','Fira Code','Consolas',monospace;font-size:.65rem;line-height:1.5;overflow-x:auto;color:#94a3b8;margin:0}
+   125|.cb .cm{color:#64748b}.cb .cd{color:#22c55e}
+   126|
+   127|/* === CTA === */
+   128|.cta{text-align:center;padding:1.25rem}
+   129|.cta h2{font-size:1rem;margin-bottom:.2rem;font-weight:700}
+   130|.cta p{font-size:.75rem;color:#52525b;margin-bottom:.65rem}
+   131|
+   132|/* === Footer === */
+   133|footer{text-align:center;padding:.75rem;font-size:.65rem;color:#71717a}
+   134|footer a{color:#52525b;text-decoration:none}
+   135|footer a:hover{color:#2563eb}
+   136|
+   137|/* === Utility === */
+   138|.sb-gap{margin-bottom:.35rem}
+   139|.section-last{padding-bottom:0}
+   140|</style>
+   141|</head>
+   142|<body>
+   143|
+   144|<!-- Language Bar -->
+   145|<div class="lang-bar">
+   146|  <div class="container">
+   147|    <div class="logo">🏢 OPC Board</div>
+   148|    <div style="display:flex;align-items:center;gap:.35rem">
+   149|      <a href="https://github.com/Elimek/opc-board" class="lang-btn-github">GitHub</a>
+   150|      <div class="lang-toggle">
+   151|        <button class="lang-btn active" onclick="setLang('en')" id="lben">EN</button>
+   152|        <button class="lang-btn" onclick="setLang('zh')" id="lbzh">中文</button>
+   153|      </div>
+   154|    </div>
+   155|  </div>
+   156|</div>
+   157|
+   158|<!-- Hero -->
+   159|<section class="hero">
+   160|  <div class="container">
+   161|    <div class="hero-grid">
+   162|      <div>
+   163|        <div class="badge">🏢 Open Source · MIT</div>
+   164|        <h1 lang="en" class="active">Your <span class="grad">OPC Board</span></h1>
+   165|        <h1 lang="zh">你的 <span class="grad">董事会</span></h1>
+   166|        <p lang="en" class="active">Hire the world's best minds — Naval, Buffett, Musk, Bryan Johnson, Dan Koe, Zhang Xuedong, Lidangzzz — as your executive team. Deploy for free.</p>
+   167|        <p lang="zh">把全世界最聪明的人装进你的董事会。免费部署，一人公司标配。</p>
+   168|        <div class="hero-actions">
+   169|          <a href="#board" class="btn btn-pri"><span lang="en" class="active">Meet the Board →</span><span lang="zh">认识董事会 →</span></a>
+   170|          <a href="https://github.com/Elimek/opc-board" class="btn btn-sec">GitHub ★</a>
+   171|        </div>
+   172|      </div>
+   173|      <div class="kanban-preview">
+   174|        <div class="kanban-columns">
+   175|          <div class="kanban-col"><div class="kanban-col-header">Strategy</div>
+   176|            <div class="kanban-card k-done"><span class="k-icon">🧠</span><div class="k-label">Zhang Xuedong</div><div class="k-sub">Direction</div></div></div>
+   177|          <div class="kanban-col"><div class="kanban-col-header">Operations</div>
+   178|            <div class="kanban-card k-done"><span class="k-icon">⚡</span><div class="k-label">Lidangzzz</div><div class="k-sub">Execution</div></div></div>
+   179|          <div class="kanban-col"><div class="kanban-col-header">Finance</div>
+   180|            <div class="kanban-card k-prog"><span class="k-icon">💼</span><div class="k-label">Naval</div><div class="k-sub">Leverage</div></div>
+   181|            <div class="kanban-card k-prog"><span class="k-icon">🐂</span><div class="k-label">Buffett</div><div class="k-sub">Moat</div></div></div>
+   182|          <div class="kanban-col"><div class="kanban-col-header">Brand</div>
+   183|            <div class="kanban-card k-done"><span class="k-icon">🏢</span><div class="k-label">Trump</div><div class="k-sub">Branding</div></div></div>
+   184|          <div class="kanban-col"><div class="kanban-col-header">Health</div>
+   185|            <div class="kanban-card k-todo"><span class="k-icon">🧬</span><div class="k-label">Bryan</div><div class="k-sub">Don't Die</div></div>
+   186|            <div class="kanban-card k-todo"><span class="k-icon">⚡</span><div class="k-label">Huberman</div><div class="k-sub">Protocols</div></div></div>
+   187|          <div class="kanban-col"><div class="kanban-col-header">Marketing</div>
+   188|            <div class="kanban-card k-todo"><span class="k-icon">📱</span><div class="k-label">Dan Koe</div><div class="k-sub">Content</div></div></div>
+   189|          <div class="kanban-col"><div class="kanban-col-header">Vision</div>
+   190|            <div class="kanban-card k-todo"><span class="k-icon">🚀</span><div class="k-label">Musk</div><div class="k-sub">Vision</div></div></div>
+   191|        </div>
+   192|      </div>
+   193|    </div>
+   194|  </div>
+   195|</section>
+   196|
+   197|<!-- Board -->
+   198|<section class="section" id="board">
+   199|  <div class="container">
+   200|    <div class="sec-header">
+   201|      <div class="sec-tag">🏛️ BOARD</div>
+   202|      <h2 lang="en" class="active">Your Executive Team</h2>
+   203|      <h2 lang="zh">你的管理层</h2>
+   204|    </div>
+   205|    <div class="bg">
+   206|      <div class="bc glass"><span class="bi">💼</span><h3>CFO</h3><div class="mentors">Naval · Buffett · Duan</div><p lang="en" class="active">Long-term compounding, value investing, capital leverage.</p><p lang="zh">长期复利、价值投资、资本杠杆。</p><span class="tag-p">Compounding</span></div>
+   207|      <div class="bc glass"><span class="bi">🏢</span><h3>CBO</h3><div class="mentors">Donald Trump</div><p lang="en" class="active">Personal branding, negotiation, attention, risk management.</p><p lang="zh">个人品牌、谈判加价、注意力争夺。</p><span class="tag-p">Branding</span></div>
+   208|      <div class="bc glass"><span class="bi">🧬</span><h3>CHO</h3><div class="mentors">Bryan Johnson · Huberman</div><p lang="en" class="active">Health optimization, sleep protocols, energy management.</p><p lang="zh">健康优化、精力管理、数据驱动身体管理。</p><span class="tag-p">Don't Die</span></div>
+   209|      <div class="bc glass"><span class="bi">📱</span><h3>CMO</h3><div class="mentors">Dan Koe</div><p lang="en" class="active">Content marketing, product conversion, build in public.</p><p lang="zh">内容营销、产品转化、一人公司增长引擎。</p><span class="tag-p">Content → Product</span></div>
+   210|      <div class="bc glass"><span class="bi">🧠</span><h3>CSO</h3><div class="mentors">Zhang Xuedong</div><p lang="en" class="active">Macro strategy, direction, ROI, career path selection.</p><p lang="zh">选方向、算ROI、教育职业路径、阶层流动。</p><span class="tag-p">Direction</span></div>
+   211|      <div class="bc glass"><span class="bi">⚡</span><h3>COO</h3><div class="mentors">Lidangzzz</div><p lang="en" class="active">Tactical execution, index fund HOWTO, anti-scam, data ops.</p><p lang="zh">具体战术、执行落地、反诈识别、数据驱动。</p><span class="tag-p">Execution</span></div>
+   212|      <div class="bc glass"><span class="bi">🚀</span><h3>CVO</h3><div class="mentors">Elon Musk</div><p lang="en" class="active">Long-term vision, all-in execution, first principles.</p><p lang="zh">方向感、All-In执行力、公司为什么存在。</p><span class="tag-p">Vision</span></div>
+   213|    </div>
+   214|  </div>
+   215|</section>
+   216|
+   217|<!-- How It Works -->
+   218|<section class="section sb-gap">
+   219|  <div class="container">
+   220|    <div class="sec-header">
+   221|      <div class="sec-tag">⚙️ HOW IT WORKS</div>
+   222|      <h2 lang="en" class="active">Three Modes, One System</h2>
+   223|      <h2 lang="zh">三种模式，一个系统</h2>
+   224|    </div>
+   225|    <div class="flow">
+   226|      <div class="fs glass"><div class="fn">1</div>
+   227|        <h3 lang="en" class="active">Weekly Board Meeting</h3><h3 lang="zh">每周董事会</h3>
+   228|        <p lang="en" class="active">30 min. Present your challenge. Each advisor responds with their framework.</p><p lang="zh">30分钟。提出当前挑战，每个部门用各自框架给出意见。</p></div>
+   229|      <div class="fs glass"><div class="fn">2</div>
+   230|        <h3 lang="en" class="active">Daily OS</h3><h3 lang="zh">每日操作系统</h3>
+   231|        <p lang="en" class="active">Morning protocol (Huberman). Deep work (Dan Koe). Evening review.</p><p lang="zh">早晨协议(Huberman) + 深工作(Dan Koe) + 晚间复盘。</p></div>
+   232|      <div class="fs glass"><div class="fn">3</div>
+   233|        <h3 lang="en" class="active">5-Filter Protocol</h3><h3 lang="zh">五滤镜决策</h3>
+   234|        <p lang="en" class="active">Run decisions through: Strategy → Finance → Health → Marketing → Vision.</p><p lang="zh">每个决策过五关：战略→财务→健康→营销→愿景。</p></div>
+   235|    </div>
+   236|  </div>
+   237|</section>
+   238|
+   239|<!-- Demo -->
+   240|<section class="section sb-gap">
+   241|  <div class="container">
+   242|    <div class="sec-header">
+   243|      <div class="sec-tag">🎯 LIVE DEMO</div>
+   244|      <h2 lang="en" class="active">Real Board Meeting</h2>
+   245|      <h2 lang="zh">真实的董事会</h2>
+   246|    </div>
+   247|    <div class="dc g-s">
+   248|      <div class="dh">📋 <span lang="en" class="active">Agenda: Should I go full-time on my solo venture or take a job?</span><span lang="zh">议题：应该全职做一人公司还是先拿offer？</span></div>
+   249|      <div class="db">
+   250|        <div class="al"><div class="ad d-fi">💼</div><div class="ac"><div class="role c-fi">CFO (Naval)</div><div class="txt" lang="en" class="active">"Have you validated your product? Get a job for runway, build at night."</div><div class="txt" lang="zh">「产品验证过了吗？先拿offer保底，业余时间做。」</div></div></div>
+   251|        <div class="al"><div class="ad d-he">🧬</div><div class="ac"><div class="role c-he">CHO (Bryan Johnson)</div><div class="txt" lang="en" class="active">"Going all-in with no safety net spikes cortisol, ruins sleep, accelerates aging."</div><div class="txt" lang="zh">「没有安全网的All-In会升高皮质醇、毁掉睡眠、加速衰老。」</div></div></div>
+   252|        <div class="al"><div class="ad d-me">📱</div><div class="ac"><div class="role c-me">CMO (Dan Koe)</div><div class="txt" lang="en" class="active">"Day job =素材. Build in public. Your content IS your product prototype."</div><div class="txt" lang="zh">「全职工作就是素材，公开构建，你的内容就是产品原型。」</div></div></div>
+   253|        <div class="al"><div class="ad d-st">🧠</div><div class="ac"><div class="role c-st">CSO (Zhang Xuedong)</div><div class="txt" lang="en" class="active">"普通人家孩子，先拿offer保底。拿offer同时搞副业，ROI最高。"</div><div class="txt" lang="zh">「普通人家孩子，先拿offer保底。拿offer同时搞副业，ROI最高。」</div></div></div>
+   254|        <div class="al"><div class="ad d-in">🚀</div><div class="ac"><div class="role c-in">CVO (Elon Musk)</div><div class="txt" lang="en" class="active">"Weekend MVP. If you can't get 10 users in 48 hours, keep the day job."</div><div class="txt" lang="zh">「周末做个MVP。48小时拿不到10个用户就继续上班。」</div></div></div>
+   255|      </div>
+   256|    </div>
+   257|  </div>
+   258|</section>
+   259|
+   260|<!-- Stats + Features (combined) -->
+   261|<section class="section sb-gap">
+   262|  <div class="container">
+   263|    <div class="sb">
+   264|      <div class="si glass"><span class="emoji">💰</span><div class="sn">3</div><div class="sl">Finance</div></div>
+   265|      <div class="si glass"><span class="emoji">🏢</span><div class="sn">1</div><div class="sl">Brand</div></div>
+   266|      <div class="si glass"><span class="emoji">🧬</span><div class="sn">2</div><div class="sl">Health</div></div>
+   267|      <div class="si glass"><span class="emoji">📱</span><div class="sn">1</div><div class="sl">Marketing</div></div>
+   268|      <div class="si glass"><span class="emoji">🧠</span><div class="sn">1</div><div class="sl">Strategy</div></div>
+   269|      <div class="si glass"><span class="emoji">⚡</span><div class="sn">1</div><div class="sl">Operations</div></div>
+   270|      <div class="si glass"><span class="emoji">🚀</span><div class="sn">1</div><div class="sl">Vision</div></div>
+   271|      <div class="si glass"><span class="emoji">📦</span><div class="sn">10</div><div class="sl">Total</div></div>
+   272|    </div>
+   273|  </div>
+   274|</section>
+   275|
+   276|<section class="section sb-gap">
+   277|  <div class="container">
+   278|    <div class="fg">
+   279|      <div class="fc glass"><span class="fi">🧠</span><h4 lang="en" class="active">Not Quotes</h4><h4 lang="zh">不是语录</h4><p lang="en" class="active">Mental models + heuristics + DNA + honest limits.</p><p lang="zh">心智模型+决策启发式+表达DNA+诚实边界。</p></div>
+   280|      <div class="fc glass"><span class="fi">🔓</span><h4 lang="en" class="active">Open Source</h4><h4 lang="zh">完全开源</h4><p lang="en" class="active">MIT License. Fork, modify, sell. Your board, your rules.</p><p lang="zh">MIT协议，随便改随便赚钱。</p></div>
+   281|      <div class="fc glass"><span class="fi">🌐</span><h4 lang="en" class="active">Free to Deploy</h4><h4 lang="zh">免费部署</h4><p lang="en" class="active">GitHub Pages. Zero hosting cost. One push = live.</p><p lang="zh">GitHub Pages零成本托管，一次推送即上线。</p></div>
+   282|      <div class="fc glass"><span class="fi">🧩</span><h4 lang="en" class="active">Extensible</h4><h4 lang="zh">可扩展</h4><p lang="en" class="active">Add advisors. Write new skills. PRs welcome.</p><p lang="zh">增加导师、编写新Skill、欢迎PR。</p></div>
+   283|      <div class="fc glass"><span class="fi">💼</span><h4 lang="en" class="active">Lead Magnet</h4><h4 lang="zh">引流产品</h4><p lang="en" class="active">Free on GitHub. Premium templates as paid tier.</p><p lang="zh">GitHub免费版+付费模板层。</p></div>
+   284|      <div class="fc glass"><span class="fi">🇭🇰</span><h4 lang="en" class="active">Bilingual</h4><h4 lang="zh">中英双语</h4><p lang="en" class="active">English + Chinese. Built for Asia-based solopreneurs.</p><p lang="zh">英文+中文。面向亚洲一人创业者。</p></div>
+   285|    </div>
+   286|  </div>
+   287|</section>
+   288|
+   289|<!-- Quick Start -->
+   290|<section class="section sb-gap section-last">
+   291|  <div class="container">
+   292|    <div class="sec-header">
+   293|      <div class="sec-tag">🚀 QUICK START</div>
+   294|      <h2 lang="en" class="active">Deploy in 2 Minutes</h2>
+   295|      <h2 lang="zh">两分钟部署</h2>
+   296|    </div>
+   297|    <div class="g-s" style="padding:0;overflow:hidden">
+   298|      <div class="cb">
+   299|        <span class="cm"># Clone your board of directors</span><br>
+   300|        <span class="cd">$</span> git clone https://github.com/Elimek/opc-board.git<br>
+   301|        <span class="cd">$</span> cd opc-board<br><br>
+   302|        <span class="cm"># Deploy for free</span><br>
+   303|        <span class="cd">$</span> git push origin master<br>
+   304|        <span class="cm"># → GitHub Pages auto-deploys. Live in 2 min.</span>
+   305|      </div>
+   306|    </div>
+   307|  </div>
+   308|</section>
+   309|
+   310|<!-- CTA -->
+   311|<section class="cta">
+   312|  <div class="container">
+   313|    <div class="g-s" style="padding:1.25rem">
+   314|      <h2 lang="en" class="active">One Person. A Full Board. Zero Cost.</h2>
+   315|      <h2 lang="zh">一个人。一个董事会。零成本。</h2>
+   316|      <p lang="en" class="active">Fork the repo, deploy for free, start your first board meeting today.</p>
+   317|      <p lang="zh">Fork仓库、免费部署、今天就开始第一次董事会。</p>
+   318|      <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap">
+   319|        <a href="https://github.com/Elimek/opc-board" class="btn btn-pri">★ Star on GitHub</a>
+   320|        <a href="#board" class="btn btn-sec"><span lang="en" class="active">Meet the Board</span><span lang="zh">认识董事会</span></a>
+   321|      </div>
+   322|    </div>
+   323|  </div>
+   324|</section>
+   325|
+   326|<footer>
+   327|  <p>OPC Board — <a href="https://github.com/Elimek/opc-board">Open Source</a> · MIT · <span lang="en" class="active">One person, one board, one OS.</span><span lang="zh">一个人，一个董事会，一个操作系统。</span></p>
+   328|</footer>
+   329|
+   330|<script>
+   331|function setLang(l){
+   332|  document.documentElement.setAttribute('data-lang', l);
+   333|  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+   334|  document.getElementById('lb'+l).classList.add('active');
+   335|}
+   336|// Default to user's browser language
+   337|const preferred = navigator.language.startsWith('zh') ? 'zh' : 'en';
+   338|setLang(preferred);
+   339|</script>
+   340|</body>
+   341|</html>
+   342|
