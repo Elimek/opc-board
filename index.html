@@ -186,7 +186,7 @@ nav .nav-actions{display:flex;gap:0.5rem}
 .c-finance{color:#16a34a}.c-health{color:#9333ea}.c-media{color:#2563eb}.c-strategy{color:#d97706}.c-innovation{color:#0891b2}
 
 /* === Stats Bar === */
-.stats-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:0.75rem}
+.stats-bar{display:grid;grid-template-columns:repeat(8,1fr);gap:0.75rem}
 .stat-item{text-align:center;padding:1rem 0.5rem}
 .stat-num{font-size:1.6rem;font-weight:750;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .stat-label{font-size:0.68rem;color:#71717a;margin-top:0.1rem}
@@ -227,8 +227,8 @@ footer a:hover{color:#2563eb}
 
 /* === Responsive === */
 @media(max-width:1024px){
-  .board-grid{grid-template-columns:repeat(3,1fr)}
-  .stats-bar{grid-template-columns:repeat(3,1fr)}
+  .board-grid{grid-template-columns:repeat(4,1fr)}
+  .stats-bar{grid-template-columns:repeat(4,1fr)}
   .hero-grid{grid-template-columns:1fr;gap:2rem}
   .kanban-preview{display:none}
 }
@@ -236,14 +236,14 @@ footer a:hover{color:#2563eb}
   .board-grid{grid-template-columns:repeat(2,1fr)}
   .flow{grid-template-columns:1fr}
   .features{grid-template-columns:1fr}
-  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .stats-bar{grid-template-columns:repeat(4,1fr)}
   nav .nav-links{display:none}
   .section{padding:1.5rem 0}
   .hero{padding:4rem 0 2rem;min-height:auto}
 }
 @media(max-width:480px){
   .board-grid{grid-template-columns:1fr}
-  .stats-bar{grid-template-columns:1fr 1fr}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -288,10 +288,13 @@ footer a:hover{color:#2563eb}
               <div class="k-label">Zhang Xuedong</div>
               <div class="k-sub">ROI Filter</div>
             </div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-header">Data</div>
             <div class="kanban-card k-finished">
               <span class="k-icon">📊</span>
               <div class="k-label">Lidangzzz</div>
-              <div class="k-sub">Data Check</div>
+              <div class="k-sub">Anti-Scam</div>
             </div>
           </div>
           <div class="kanban-col">
@@ -305,6 +308,14 @@ footer a:hover{color:#2563eb}
               <span class="k-icon">🐂</span>
               <div class="k-label">Buffett</div>
               <div class="k-sub">Moat</div>
+            </div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-col-header">Brand</div>
+            <div class="kanban-card k-finished">
+              <span class="k-icon">🏢</span>
+              <div class="k-label">Trump</div>
+              <div class="k-sub">Deal</div>
             </div>
           </div>
           <div class="kanban-col">
@@ -354,9 +365,16 @@ footer a:hover{color:#2563eb}
       <div class="board-card glass">
         <span class="b-icon">💼</span>
         <h3>Finance CEO</h3>
-        <div class="mentors">Naval · Buffett · Duan Yongping · Trump</div>
+        <div class="mentors">Naval · Buffett · Duan Yongping</div>
         <p>Long-term compounding, leverage, moats, brand amplification. Productize yourself.</p>
         <span class="principle">Productize Yourself</span>
+      </div>
+      <div class="board-card glass">
+        <span class="b-icon">🏢</span>
+        <h3>Brand & Negotiation</h3>
+        <div class="mentors">Donald Trump</div>
+        <p>Bold negotiation, brand amplification, cash flow first, leverage games. Make noise.</p>
+        <span class="principle">Brand Amplification</span>
       </div>
       <div class="board-card glass">
         <span class="b-icon">🧬</span>
@@ -375,9 +393,16 @@ footer a:hover{color:#2563eb}
       <div class="board-card glass">
         <span class="b-icon">🧠</span>
         <h3>Strategy Advisor</h3>
-        <div class="mentors">Zhang Xuedong · Lidangzzz</div>
-        <p>ROI-first realism. Data-driven decisions. Anti-fluff. Survival-first for ordinary people.</p>
+        <div class="mentors">Zhang Xuedong</div>
+        <p>ROI-first realism. Survival-first for ordinary people. Data over emotion.</p>
         <span class="principle">ROI First</span>
+      </div>
+      <div class="board-card glass">
+        <span class="b-icon">📊</span>
+        <h3>Data & Anti-Scam</h3>
+        <div class="mentors">Lidangzzz</div>
+        <p>Data-driven decisions. Index fund conviction. Anti-scam radar. Pragmatism above all.</p>
+        <span class="principle">Data Over Emotion</span>
       </div>
       <div class="board-card glass">
         <span class="b-icon">🚀</span>
@@ -477,6 +502,11 @@ footer a:hover{color:#2563eb}
         <div class="stat-label">Finance SKILLs</div>
       </div>
       <div class="stat-item glass">
+        <span class="emoji">🏢</span>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Brand SKILL</div>
+      </div>
+      <div class="stat-item glass">
         <span class="emoji">🧬</span>
         <div class="stat-num">2</div>
         <div class="stat-label">Health SKILLs</div>
@@ -492,13 +522,18 @@ footer a:hover{color:#2563eb}
         <div class="stat-label">Strategy SKILLs</div>
       </div>
       <div class="stat-item glass">
+        <span class="emoji">📊</span>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Data SKILL</div>
+      </div>
+      <div class="stat-item glass">
         <span class="emoji">🚀</span>
         <div class="stat-num">1</div>
         <div class="stat-label">Innovation SKILLs</div>
       </div>
       <div class="stat-item glass">
         <span class="emoji">📦</span>
-        <div class="stat-num">10</div>
+        <div class="stat-num">9</div>
         <div class="stat-label">Total SKILLs</div>
       </div>
     </div>
