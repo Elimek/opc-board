@@ -298,7 +298,7 @@ function setLang(l){
   document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active')});
   document.getElementById('lb'+l).classList.add('active');
 }
-var pref = navigator.language.startsWith('zh') ? 'zh' : 'en';
+var pref = 'en';
 setLang(pref);
 
 // === WebGPU Glass Renderer ===
