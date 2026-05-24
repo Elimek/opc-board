@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPC Board — Board Meeting</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pencil-grey:   #e8e4dc;
+      --pencil-dark:   #3a3530;
+      --pencil-mid:    #7a7268;
+      --paper:         #fdfcf9;
+      --paper-shadow:  #e0dbd1;
+      --pass-green:    #4e8c6e;
+      --fail-red:      #c0392b;
+      --review-yellow: #b8860b;
+      --rule:          rgba(58,53,48,.12);
+
+      /* Crews */
+      --finance:  #5b8c9a;
+      --brand:    #8b6b9a;
+      --health:   #5a9a6b;
+      --strategy: #8c7a4f;
+      --cv:       #4f8c9a;
+    }
+
+    body {
+      background: #f0ece6;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: var(--pencil-dark);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      font-size: 15px;
+      line-height: 1.6;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, var(--rule) 28px, var(--rule) 29px),
+        url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+    }
+
+    /* ── Title ────────────────────────────────────── */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .page-header h1 {
+      font-size: 2.4rem;
+      font-weight: 400;
+      letter-spacing: -.02em;
+      color: var(--pencil-dark);
+    }
+    .page-header p {
+      color: var(--pencil-mid);
+      font-style: italic;
+      margin-top: .4rem;
+      font-size: 1rem;
+    }
+
+    /* ── Input Section ────────────────────────────── */
+    .input-section {
+      background: var(--paper);
+      border: 1px solid var(--pencil-grey);
+      border-radius: 6px;
+      padding: 2rem 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 1px 3px 12px rgba(0,0,0,.06);
+      position: relative;
+    }
+    .input-section::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px dashed rgba(58,53,48,.08);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .input-section label {
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--pencil-mid);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+    .topic-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid var(--pencil-grey);
+      font-size: 1.5rem;
+      font-family: inherit;
+      color: var(--pencil-dark);
+      padding: .5rem 0;
+      margin: .6rem 0 1.2rem;
+      transition: border-color .2s;
+    }
+    .topic-input:focus { outline: none; border-color: var(--pencil-mid); }
+    .context-textarea {
+      width: 100%;
+      min-height: 80px;
+      border: 1px dashed var(--pencil-grey);
+      background: transparent;
+      font-family: 'Courier New', monospace;
+      font-size: .85rem;
+      padding: .8rem;
+      border-radius: 3px;
+      color: var(--pencil-mid);
+      resize: vertical;
+    }
+    .toolbar {
+      display: flex;
+      gap: .8rem;
+      margin-top: 1.2rem;
+      align-items: center;
+    }
+    .btn {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .82rem;
+      padding: .6rem 1.4rem;
+      border: 1.5px solid var(--pencil-mid);
+      background: var(--paper);
+      color: var(--pencil-dark);
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all .15s;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .btn:hover { background: var(--pencil-grey); }
+    .btn-primary { background: var(--pencil-dark); color: var(--paper); border-color: var(--pencil-dark); }
+    .btn-primary:hover { opacity: .85; }
+    .btn:disabled { opacity: .4; cursor: not-allowed; }
+    .status-badge {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .75rem;
+      color: var(--pencil-mid);
+      margin-left: auto;
+    }
+
+    /* ── Crew groups ──────────────────────────────── */
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .crew-section {
+      background: var(--paper);
+      border: 1px solid var(--pencil-grey);
+      border-radius: 5px;
+      padding: 1.3rem 1.5rem 1rem;
+      box-shadow: 1px 2px 8px rgba(0,0,0,.05);
+      opacity: .55;
+      transition: opacity .3s;
+    }
+    .crew-section.voted { opacity: 1; }
+    .crew-section:hover { box-shadow: 2px 4px 16px rgba(0,0,0,.09); }
+
+    .crew-header {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .9rem;
+      padding-bottom: .6rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .crew-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .crew-title {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--pencil-mid);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 600;
+    }
+    .crew-count {
+      margin-left: auto;
+      font-size: .7rem;
+      color: var(--pencil-mid);
+      font-family: 'Helvetica Neue', monospace;
+    }
+
+    /* ── Agent card ───────────────────────────────── */
+    .agent-card {
+      padding: .5rem 0;
+      display: flex;
+      gap: .8rem;
+      align-items: flex-start;
+      min-height: 60px;
+    }
+    .agent-card + .agent-card { border-top: 1px dashed var(--rule); }
+
+    .agent-name {
+      font-weight: 600;
+      font-size: .9rem;
+      width: 130px;
+      flex-shrink: 0;
+      padding-top: .15rem;
+    }
+    .agent-role-tag {
+      font-size: .6rem;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--pencil-mid);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: var(--pencil-grey);
+      padding: 1px 5px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-left: .3rem;
+      font-style: normal;
+    }
+
+    /* ── Vote score badge ─────────────────────────── */
+    .vote-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      font-weight: bold;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      flex-shrink: 0;
+      border: 1.5px solid transparent;
+      background: #f5f0e8;
+      transition: all .3s cubic-bezier(.4,0,.2,1);
+    }
+    .vote-badge.voted {
+      transform: scale(1);
+    }
+    .vote-badge.score-passed { background: #eaf5ef; border-color: var(--pass-green); color: var(--pass-green); }
+    .vote-badge.score-failed { background: #fcecea; border-color: var(--fail-red); color: var(--fail-red); }
+    .vote-badge.score-review { background: #fef3e2; border-color: var(--review-yellow); color: var(--review-yellow); }
+
+    .vote-badge.pending {
+      border: 1.5px dashed var(--pencil-grey);
+      color: transparent;
+      position: relative;
+    }
+    .vote-badge.pending::after {
+      content: '?';
+      color: #ccc;
+      font-size: .9rem;
+    }
+
+    /* ── Reasoning ────────────────────────────────── */
+    .vote-reasoning {
+      flex: 1;
+      min-width: 0;
+      font-size: .82rem;
+      color: var(--pencil-mid);
+      font-style: italic;
+      line-height: 1.45;
+      display: none;
+    }
+    .vote-badge.voted + .vote-reasoning {
+      display: block;
+    }
+
+    /* ── Conditions / concerns ────────────────────── */
+    .vote-conditions {
+      font-size: .72rem;
+      color: var(--review-yellow);
+      margin-top: .2rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      display: none;
+    }
+    .vote-badge.voted ~ .vote-conditions.visible { display: block; }
+
+    /* ── Verdict Banner ───────────────────────────── */
+    .verdict-banner {
+      text-align: center;
+      padding: 1.4rem 2rem;
+      margin: 1.5rem 0;
+      border-radius: 5px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      display: none;
+      opacity: 0;
+      transition: opacity .5s;
+    }
+    .verdict-banner.visible { display: block; opacity: 1; }
+    .verdict-passed  { background: #eaf5ef; border: 1.5px solid var(--pass-green);  color: var(--pass-green); }
+    .verdict-failed  { background: #fcecea; border: 1.5px solid var(--fail-red);  color: var(--fail-red); }
+    .verdict-revised { background: #fef3e2; border: 1.5px solid var(--review-yellow); color: var(--review-yellow); }
+
+    /* ── Loading skeleton ─────────────────────────── */
+    .skel {
+      background: linear-gradient(90deg, var(--pencil-grey) 25%, #f0ece6 50%, var(--pencil-grey) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.6s infinite;
+      border-radius: 3px;
+      height: 14px;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .vote-badge.loading .skel-inner { display: block; }
+
+    /* ── Pencil signature ─────────────────────────── */
+    .pencil-sig {
+      text-align: right;
+      font-size: .7rem;
+      color: #bbb;
+      margin-top: 1.5rem;
+      font-style: italic;
+    }
+
+    /* --- Mobile: stack cards vertically --- */
+    @media (max-width: 600px) {
+      .board-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>OPC Board · Board Meeting</h1>
+  <p>Your One-Person Company Board of Directors — 10 voices, 1 verdict.</p>
+</div>
+
+<!-- ─── INPUT ──────────────────────────────────── -->
+<div class="input-section" id="inputSection">
+  <label>Decision / Topic</label>
+  <input class="topic-input" id="topicInput"
+    placeholder="e.g. Should I DCA QQQM + SOXQ + TQQQ starting July 2026?" />
+  <label style="margin-top:1rem;display:block">Context (optional JSON)</label>
+  <textarea class="context-textarea" id="contextInput" placeholder='{"monthly_amount": 1000, "salary": 4000, "risk_tolerance": "high"}'></textarea>
+
+  <div class="toolbar">
+    <button class="btn btn-primary" id="btnStart">▶  Start Board Meeting</button>
+    <button class="btn" id="btnDemo">⚡ Demo Mode</button>
+    <span class="status-badge" id="statusBadge">Ready — 10 agents standing by</span>
+  </div>
+</div>
+
+<!-- ─── BOARD GRID ─────────────────────────────── -->
+<div class="board-grid" id="boardGrid">
+  <!-- Cards injected by JS -->
+</div>
+
+<!-- ─── VERDICT ─────────────────────────────────── -->
+<div class="verdict-banner" id="verdictBanner"></div>
+
+<div class="pencil-sig">— signed, OPC Board · Powered by Hermes Agent</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// Crew config (mirrors registry.yaml)
+// ══════════════════════════════════════════════════
+const AGENTS = [
+  { id: "naval",    name: "Naval Ravikant",     role: "CFO", crew: "finance",    color: "#5b8c9a" },
+  { id: "buffett",  name: "Warren Buffett",      role: "CFO", crew: "finance",    color: "#5b8c9a" },
+  { id: "duan",     name: "Duan Yongping",       role: "CFO", crew: "finance",    color: "#5b8c9a" },
+  { id: "trump",    name: "Donald Trump",        role: "CBO", crew: "brand",      color: "#8b6b9a" },
+  { id: "dan_koe",  name: "Dan Koe",             role: "CMO", crew: "brand",      color: "#8b6b9a" },
+  { id: "bryan",    name: "Bryan Johnson",       role: "CHO", crew: "health",     color: "#5a9a6b" },
+  { id: "huberman", name: "Andrew Huberman",     role: "CHO", crew: "health",     color: "#5a9a6b" },
+  { id: "zhang",    name: "Zhang Xuedong",       role: "CSO", crew: "strategy",   color: "#8c7a4f" },
+  { id: "lidang",   name: "Lidangzzz",           role: "COO", crew: "strategy",   color: "#8c7a4f" },
+  { id: "musk",     name: "Elon Musk",           role: "CVO", crew: "innovation", color: "#4f8c9a" },
+];
+
+const CREW_COLOR = {
+  finance:   "#5b8c9a",
+  brand:     "#8b6b9a",
+  health:    "#5a9a6b",
+  strategy:  "#8c7a4f",
+  innovation:"#4f8c9a",
+};
+
+// ══════════════════════════════════════════════════
+// DOM Build
+// ══════════════════════════════════════════════════
+
+function buildBoard() {
+  const grid = document.getElementById("boardGrid");
+  grid.innerHTML = "";
+
+  // Group by crew
+  const crews = {};
+  AGENTS.forEach(a => { (crews[a.crew] ||= []).push(a); });
+
+  Object.entries(crews).forEach(([crew, agents]) => {
+    const section = document.createElement("div");
+    section.className = "crew-section";
+    section.dataset.crew = crew;
+    section.innerHTML = `
+      <div class="crew-header">
+        <div class="crew-dot" style="background:${CREW_COLOR[crew]}"></div>
+        <span class="crew-title">${crew.toUpperCase()}</span>
+        <span class="crew-count">${agents.length} ${
+          agents.length > 1 ? `agents` : `agent`}</span>
+      </div>
+    `;
+
+    agents.forEach(a => {
+      const card = document.createElement("div");
+      card.className = "agent-card";
+      card.dataset.agentId = a.id;
+      card.id = `card-${a.id}`;
+      card.innerHTML = `
+        <div class="vote-badge pending" id="badge-${a.id}">
+          <div class="skel-inner" style="display:none">
+            <div class="skel" style="width:24px;height:24px;border-radius:50%;margin:0 auto"></div>
+          </div>
+        </div>
+        <div>
+          <div class="agent-name">
+            ${a.name}<span class="agent-role-tag">${a.role}</span>
+          </div>
+          <div class="vote-reasoning" id="reason-${a.id}"></div>
+          <div class="vote-conditions" id="conditions-${a.id}"></div>
+        </div>
+      `;
+      section.appendChild(card);
+    });
+
+    grid.appendChild(section);
+  });
+}
+
+// ══════════════════════════════════════════════════
+// State helpers
+// ══════════════════════════════════════════════════
+
+function setBadge(id, score, reasoning, keyConcerns) {
+  const badge = document.getElementById(`badge-${id}`);
+  const reasonEl = document.getElementById(`reason-${id}`);
+  const condEl = document.getElementById(`conditions-${id}`);
+  const card = badge.closest(".agent-card");
+  const section = card.closest(".crew-section");
+
+  badge.className = "vote-badge voted";
+  badge.textContent = score;
+
+  let cls = "score-passed";
+  if (score < 6) cls = "score-failed";
+  else if (score < 7) cls = "score-review";
+  badge.classList.add(cls);
+
+  const concernStr = (keyConcerns || []).slice(0, 2).join(" · ");
+  reasonEl.textContent = reasoning + (concernStr ? ("  " + concernStr) : "");
+  reasonEl.style.display = "block";
+
+  section.classList.add("voted");
+}
+
+function showVerdict(verdict, avgScore) {
+  const banner = document.getElementById("verdictBanner");
+  banner.className = `verdict-banner ${verdict === 'passed' ? 'verdict-passed' : verdict === 'failed' ? 'verdict-failed' : 'verdict-revised'} visible`;
+  const emoji = verdict === 'passed' ? '✅' : verdict === 'failed' ? '❌' : '⚡';
+  banner.innerHTML = `${emoji}  ${verdict.toUpperCase()} · Avg ${avgScore}/10 across 10 agents`;
+}
+
+function setStatus(msg, active) {
+  document.getElementById("statusBadge").textContent = msg;
+  document.getElementById("statusBadge").style.color = active ? "var(--pass-green)" : "var(--pencil-mid)";
+}
+
+// ══════════════════════════════════════════════════
+// Demo Mode — deterministic simulated votes
+// ══════════════════════════════════════════════════
+
+const DEMO_VOTES = [
+  // (id, score, reasoning, concerns)
+  ["naval",    8, "QQQM 0.15% low fee. SOXQ has structural AI story. TQQQ leverage decay real. Overall: optionality high, compound pathway clear.", []],
+  ["buffett",  7, "Circle of competence: NASDAQ 100 business models are understandable. SOXQ concentration acceptable. TQQQ 25% is leverage risk — acceptable within tolerance.", ["TQQQ leverage decay risk"]],
+  ["duan",     7, "I understand this portfolio. DCA into quality names at current valuation = reasonable. TQQQ is small enough to be a 'play' position, not core.", []],
+  ["trump",    8, "Strong narrative: core + semiconductor + aggression. People would love to follow this story. Negotiation upside healthy. NAFTA—excuse me—FINRA fine.", []],
+  ["dan_koe",  7, "Content angle: 3x leverage DCA is viral. NASDAQ + AI semiconductor narrative aligns with personal brand. Would document publicly.", ["QQQM+TQQQ overlap = same story twice"]],
+  ["bryan",    7, "DCA into volatile positions = insomnia risk. But 25% TQQQ over 12 months = spread stress over year. Sleep protocol compatible if checked monthly.", []],
+  ["huberman", 6, "This will trigger dopamine reward prediction errors. Quarterly rule: check price only after rewards confirmation happens. Not-daily viewing mandatory.", ["may trigger FOMO arousal"]],
+  ["zhang",    7, "Q3 2026 structural inflection potential. DCA spreads entry cost over volatile window. Cash position ongoing Q4 2026 evaluation warranted.", []],
+  ["lidang",   7, "Numbers verified. QQQM 0.15% fee + SOXQ 0.19% + TQQQ 0.82% combo = $37.5/yr on $12,000. Acceptable. Max DD -35% < 50% user threshold. Proceed.", []],
+  ["musk",     7, "Physics check: TQQQ leverage is real. 25% size acceptable. 3x is for conviction, not DCA — but user has runway. Execute.", []],
+];
+
+function runDemo() {
+  const topic = document.getElementById("topicInput").value || "Demo: DCA Investment Plan (2026)";
+  document.getElementById("btnDemo").disabled = true;
+  setStatus("Demo mode — 10 agents voting...", true);
+  setBadge("demo-placeholder", "-", "", "");
+  buildBoard();
+
+  // Stagger agent appearance (simulate live deliberation)
+  DEMO_VOTES.forEach(([id, score, reasoning, concerns], idx) => {
+    setTimeout(() => {
+      setBadge(id, score, reasoning, concerns);
+      const section = document.querySelector(`#card-${id}`).closest(".crew-section");
+      // Highlight the crew
+      section.style.boxShadow = `0 3px 20px rgba(0,0,0,.12)`;
+    }, (idx + 1) * 600);
+  });
+
+  // Show verdict after all votes in
+  setTimeout(() => {
+    const avgScore = (DEMO_VOTES.reduce((s, [,v]) => s + v, 0) / DEMO_VOTES.length).toFixed(2);
+    const verdict = DEMO_VOTES.every(([,v]) => v >= 6) ? "passed" : "failed";
+    showVerdict(verdict, avgScore);
+    setStatus(`Demo complete — ${verdict.toUpperCase()}  Avg: ${avgScore}/10`, true);
+    document.getElementById("btnDemo").disabled = false;
+  }, DEMO_VOTES.length * 600 + 200);
+}
+
+// ══════════════════════════════════════════════════
+// API — Real crew mode via Hermes / hermes_tools
+// ══════════════════════════════════════════════════
+
+async function runRealMeeting(topic, ctxJson) {
+  document.getElementById("btnStart").disabled = true;
+  setStatus("🤖 Crew deliberation in progress ...", true);
+  buildBoard();
+
+  try {
+    const resp = await fetch("/opc-api/board-meeting", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ topic, context: ctxJson ? JSON.parse(ctxJson) : {} }),
+    });
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const result = await resp.json();
+
+    result.vote_detail?.forEach((v, i) => {
+      setTimeout(() => setBadge(v.agent, v.score, v.reasoning, v.key_concerns), (i+1) * 500);
+    });
+
+    setTimeout(() => {
+      showVerdict(result.verdict, result.final_score);
+      setStatus(`${result.verdict.toUpperCase()} · Avg: ${result.final_score}/10 · ${result.rounds} round(s)`, true);
+      document.getElementById("btnStart").disabled = false;
+    }, result.vote_detail?.length * 500 + 200);
+
+  } catch (err) {
+    setStatus(`⚠️  API unavailable — ${err.message}. Try Demo Mode.`, false);
+    document.getElementById("btnStart").disabled = false;
+  }
+}
+
+// ══════════════════════════════════════════════════
+// Events
+// ══════════════════════════════════════════════════
+
+document.getElementById("btnStart").addEventListener("click", () => {
+  const topic = document.getElementById("topicInput").value.trim();
+  if (!topic) { alert("Enter a topic first."); return; }
+  runRealMeeting(topic, document.getElementById("contextInput").value);
+});
+
+document.getElementById("btnDemo").addEventListener("click", runDemo);
+
+// Init
+buildBoard();
+</script>
+</body>
+</html>

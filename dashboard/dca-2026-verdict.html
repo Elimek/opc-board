@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPC Board — DCA 2026 Verdict</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:Georgia,'Times New Roman',serif; background:#f0ece6; color:#2c2820; padding:2rem 1rem; font-size:15px; line-height:1.65; }
+body::after { content:''; position:fixed; inset:0; background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(58,53,48,.08)28px,rgba(58,53,48,.08)29px); pointer-events:none; z-index:-1; }
+h1 { text-align:center; font-size:2rem; font-weight:400; margin-bottom:.3rem; }
+.subtitle { text-align:center; color:#7a7268; font-style:italic; margin-bottom:2rem; font-size:1rem; }
+.banner { text-align:center; padding:1rem 2.5rem; border-radius:5px; font-family:Helvetica,Arial,sans-serif; font-size:1rem; text-transform:uppercase; letter-spacing:.15em; margin:1.5rem auto; width:fit-content; }
+.banner-fail { background:#fcecea; border:2px solid #c0392b; color:#c0392b; }
+.score-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin:1.5rem 0; }
+.section-title { font-size:1rem; font-weight:600; margin:2rem 0 .8rem; padding-bottom:.4rem; border-bottom:1.5px solid #e8e4dc; font-family:Helvetica,Arial,sans-serif; letter-spacing:.04em; text-transform:uppercase; }
+.concern-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1rem; margin:1rem 0; }
+.conds-section { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:1.2rem; margin:1rem 0; }
+.cond-col { background:#fdfcf9; border:1px dashed #d0c9be; border-radius:4px; padding:1rem; }
+.cond-col b { font-size:.82rem; font-family:Helvetica,Arial,sans-serif; color:#2c2820; margin-bottom:.3rem; display:block; }
+.cond-col li { font-size:.78rem; color:#4a4a4a; margin:.15rem 0; }
+.meta { font-family:Consolas,monospace; color:#bbb; font-size:.75rem; text-align:center; margin:.8rem 0; }
+.footer { text-align:right; font-size:.72rem; color:#bbb; font-style:italic; margin-top:2.5rem; }
+</style>
+</head>
+<body>
+
+<h1>OPC Board · DCA 2026 Final Verdict</h1>
+<p class="subtitle">50% QQQM · 25% SOXQ · 25% TQQQ · $1,000/mo · July 2026 start</p>
+
+<p class="meta">10/10 LLM Director Votes · Hermes Agent Multi-Agent Crew · Wall time: 61.9s · 2026-05-25</p>
+
+<div class="banner banner-fail">❌ Group Verdict: FAIL · 3.2/10</div>
+
+<div class="section-title">Agents & Scores</div>
+<div class="score-grid">
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Warren Buffett</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#5b8c9a">CFO · finance</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#c0392b">2/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">This plan fails on all three filters. Circle of competence: the CEO has zero finance experience and cannot explain a 10-…</div>
+  <div style="border-top:1px dashed rgba(58,53,48,.12);padding-top:.4rem;margin-top:.4rem;font-size:.72rem;font-family:Helvetica,Arial,sans-serif;color:#5a7a8a;text-transform:uppercase;letter-spacing:.07em;">Key concerns<div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· TQQQ (3x leveraged Nasdaq ETF) guarantees catastrophic drawdown in any flat/bear market — a 33% Nasdaq drop wipes TQQQ to zero; this is not theory, it has happened</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Overlapping concentration: QQQM and SOXQ share top holdings (NVDA, AAPL, MSFT) — the 25%/25% split is a mirage, you own the same stocks twice</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Zero savings buffer signal: dividing $1000 across TQQQ on a $4000/month salary leaves almost nothing as real moat against a margin call scenario</div></div>
+</div>
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Elon Musk</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#4f8c9a">CVO · innovation</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#c0392b">2/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">First principles: physics of the portfolio is a volatility bomb. QQQM and SOXQ are tech-heavy and highly correlated — no…</div>
+  <div style="border-top:1px dashed rgba(58,53,48,.12);padding-top:.4rem;margin-top:.4rem;font-size:.72rem;font-family:Helvetica,Arial,sans-serif;color:#5a7a8a;text-transform:uppercase;letter-spacing:.07em;">Key concerns<div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· TQQQ 25% allocation guarantees catastrophic drawdown in any significant correction — 80-95% loss is physics, not theory</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· QQQM + SOXQ = no real diversification, double-down on same sector/cycle</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Salary-swallowing 25% DCA into high-beta names leaves zero dry powder when black swan hits</div></div>
+</div>
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Naval Ravikant</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#5b8c9a">CFO · finance</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#c0392b">2/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">A 25% allocation to TQQQ in a 100% equity portfolio signals a gambling mindset, not a leveraged investing one. TQQQ is a…</div>
+  <div style="border-top:1px dashed rgba(58,53,48,.12);padding-top:.4rem;margin-top:.4rem;font-size:.72rem;font-family:Helvetica,Arial,sans-serif;color:#5a7a8a;text-transform:uppercase;letter-spacing:.07em;">Key concerns<div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· TQQQ is structurally designed to lose to QQQ over any 12+ month period outside a relentless one-way bull market — the fund has lost 80%+ on multiple occasions</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· SOXQ doubles down on a single volatile sector; you have no bonds, international, or value offset</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· 25% salary to a 100% tech-heavy equity portfolio with no stated emergency fund is fragile; a single drawdown event can derail the habit entirely</div></div>
+</div>
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Bryan Johnson</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#5a9a6b">CHO · health</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#c0392b">3/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">TQQQ (3x leverage) introduces a structural drawdown that is biologically incompatible with a 'zero finance experience' u…</div>
+  <div style="border-top:1px dashed rgba(58,53,48,.12);padding-top:.4rem;margin-top:.4rem;font-size:.72rem;font-family:Helvetica,Arial,sans-serif;color:#5a7a8a;text-transform:uppercase;letter-spacing:.07em;">Key concerns<div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· TQQQ 3x leverage violates max 50% drawdown constraint: a single Nasdaq-30%+ drop can put TQQQ down 70-90% before any structural margin call of a long-term investor — i.e., leverage is not calibrated against stated risk tolerance</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Zero finance experience means no built-in drawdown coping protocol: red month visibility triggers anxiety → cortisol → sleep disruption → compounding performance degradation outside the portfolio</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· SOXQ adds unilateral semiconductor sector concentration outside TQQQ's Nasdaq exposure: doubling down on the same high-beta regime (tech/semi) no diversification benefit is hidden in the composition</div></div>
+</div>
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Lidangzzz</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#8c7a4f">COO · strategy</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#c0392b">3/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">Monthly DCA into a 25% TQQQ allocation is a time-bomb for a zero-experience investor. TQQQ had an 82% peak-to-trough dra…</div>
+  <div style="border-top:1px dashed rgba(58,53,48,.12);padding-top:.4rem;margin-top:.4rem;font-size:.72rem;font-family:Helvetica,Arial,sans-serif;color:#5a7a8a;text-transform:uppercase;letter-spacing:.07em;">Key concerns<div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· TQQQ 3x daily leverage resets monthly: DCA embeds DETERIORATION risk, not smoothing. Volatility drag is real and accelerates on the downside.</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Zero max-drawdown boundary defined. 50% 'risk tolerance' means nothing without a concrete stop/hedge protocol.</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Portfolio overlap: QQQM, SOXQ, and TQQQ share heavy exposure to AAPL, MSFT, NVDA, AVGO, META — one NASDAQ event impacts all three legs simultaneously.</div></div>
+</div>
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Donald Trump</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#8b6b9a">CBO · brand</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#c0392b">3/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">The DCA mechanic and $1000/month discipline are solid — that's the deal-making part I can sell. But the allocation break…</div>
+  <div style="border-top:1px dashed rgba(58,53,48,.12);padding-top:.4rem;margin-top:.4rem;font-size:.72rem;font-family:Helvetica,Arial,sans-serif;color:#5a7a8a;text-transform:uppercase;letter-spacing:.07em;">Key concerns<div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· TQQQ 3x leverage in DCA = amplified decay compounded monthly — bad structure, not just bad pick</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· QQQM 50% + SOXQ 25% = heavy concentrated tech/semiconductor double-down, thin diversification</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Zero experience + triple-leverage = one honest conversation with a finance person destroys this narrative</div></div>
+</div>
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Duan Yongping</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#5b8c9a">CFO · finance</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#b8860b">4/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">这个问题核心在TQQQ。50% QQQM + 25% SOXQ  NovoTech和美国半导体指数的基本面可以理解，但25% TQQQ的3倍杠杆是你能力圈之外的东西。真正懂TQQQ的人会告诉你：2022年TQQQ从最高点跌了96%，2020…</div>
+  <div style="border-top:1px dashed rgba(58,53,48,.12);padding-top:.4rem;margin-top:.4rem;font-size:.72rem;font-family:Helvetica,Arial,sans-serif;color:#5a7a8a;text-transform:uppercase;letter-spacing:.07em;">Key concerns<div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· TQQQ grasped as a normal 'more QQQ' — it is not; single-day -35% events destroy 3x leverage permanently</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· 0 financial experience means no ability to hold through crash, no ability to estimate tail loss, no ability to exit at right time</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· 50% max drawdown constraint is incompatible with 25% TQQQ in practice — drawdown is not controlled by allocation when leverage decays</div></div>
+</div>
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Andrew Huberman</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#5a9a6b">CHO · health</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#b8860b">4/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">TQQQ (leverage 3x) amplifies the brain's reward prediction error signal. Every drawdown encodes as stress, not normal va…</div>
+  <div style="border-top:1px dashed rgba(58,53,48,.12);padding-top:.4rem;margin-top:.4rem;font-size:.72rem;font-family:Helvetica,Arial,sans-serif;color:#5a7a8a;text-transform:uppercase;letter-spacing:.07em;">Key concerns<div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· TQQQ leverage turns normal drawdowns into amygdala-scaling events (30-40% drops are routine)</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Zero finance experience means every price move is interpreted personally, not as market variance</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· 25% salary commitment creates a daily distraction sink that competes with sleep and focus windows</div></div>
+</div>
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Zhang Xuedong</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#8c7a4f">CSO · strategy</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#b8860b">4/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">DCA $1000/mo (2.5% of monthly salary) is responsible sizing and the QQQM + SOXQ core captures secular trends at reasonab…</div>
+  <div style="border-top:1px dashed rgba(58,53,48,.12);padding-top:.4rem;margin-top:.4rem;font-size:.72rem;font-family:Helvetica,Arial,sans-serif;color:#5a7a8a;text-transform:uppercase;letter-spacing:.07em;">Key concerns<div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· TQQQ 3x daily leverage ежекumpounding in drawdowns — a 25% single-cause position can wipe out 90% of its value and breach the stated 50% portfolio tolerance</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Concentration: ~95% of capital lives in Nasdaq-adjacent assets (QQQM + SOXQ + TQQQ). Black-swan sector rotation is unhedged.</div><div style="font-size:.78rem;color:#5a5a5a;margin:.15rem 0 .1rem .8rem;">· Timing is a black box — we have no read on where the Nasdaq sits in the macro cycle at July 2026. Entry may be late-cycle euphoria or early bull; only one is defensible at this allocation.</div></div>
+</div>
+<div style="background:#fdfcf9;border:1px solid #e8e4dc;border-radius:5px;padding:1rem 1.2rem;box-shadow:1px 2px 8px rgba(0,0,0,.06);">
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;">
+    <span style="font-weight:600;font-size:1rem;">Dan Koe</span>
+    <span style="font-size:.72rem;font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;letter-spacing:.07em;background:#e8e4dc;padding:1px 7px;border-radius:2px;color:#8b6b9a">CMO · brand</span>
+    <span style="font-size:1.6rem;font-weight:bold;font-family:Helvetica,Arial,sans-serif;margin-left:auto;color:#b8860b">5/10</span>
+  </div>
+  <div style="font-size:.83rem;color:#7a7268;font-style:italic;margin-bottom:.4rem;">:content that means whether the strategy can be publicly documented, taught, and built upon as part of a brand narrative…</div>
+  
+</div>
+</div>
+
+<div class="section-title">Unanimous Concerns (by Director)</div>
+<div class="concern-grid">
+<div style="background:#fdfcf9;border:1px dashed #d0c9be;border-radius:4px;padding:.7rem 1rem;"><b style="color:#c0392b;font-size:.85rem;">Warren Buffett</b><span style="font-size:.75rem;color:#aaa;margin-left:.5rem;">CFO</span><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· TQQQ (3x leveraged Nasdaq ETF) guarantees catastrophic drawdown in any flat/bear market — a 33% Nasdaq drop wipes TQQQ to zero; this is not theory, it has happened</p><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· Overlapping concentration: QQQM and SOXQ share top holdings (NVDA, AAPL, MSFT) — the 25%/25% split is a mirage, you own the same stocks twice</p></div>
+<div style="background:#fdfcf9;border:1px dashed #d0c9be;border-radius:4px;padding:.7rem 1rem;"><b style="color:#c0392b;font-size:.85rem;">Elon Musk</b><span style="font-size:.75rem;color:#aaa;margin-left:.5rem;">CVO</span><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· TQQQ 25% allocation guarantees catastrophic drawdown in any significant correction — 80-95% loss is physics, not theory</p><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· QQQM + SOXQ = no real diversification, double-down on same sector/cycle</p></div>
+<div style="background:#fdfcf9;border:1px dashed #d0c9be;border-radius:4px;padding:.7rem 1rem;"><b style="color:#c0392b;font-size:.85rem;">Naval Ravikant</b><span style="font-size:.75rem;color:#aaa;margin-left:.5rem;">CFO</span><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· TQQQ is structurally designed to lose to QQQ over any 12+ month period outside a relentless one-way bull market — the fund has lost 80%+ on multiple occasions</p><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· SOXQ doubles down on a single volatile sector; you have no bonds, international, or value offset</p></div>
+<div style="background:#fdfcf9;border:1px dashed #d0c9be;border-radius:4px;padding:.7rem 1rem;"><b style="color:#c0392b;font-size:.85rem;">Bryan Johnson</b><span style="font-size:.75rem;color:#aaa;margin-left:.5rem;">CHO</span><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· TQQQ 3x leverage violates max 50% drawdown constraint: a single Nasdaq-30%+ drop can put TQQQ down 70-90% before any structural margin call of a long-term investor — i.e., leverage is not calibrated against stated risk tolerance</p><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· Zero finance experience means no built-in drawdown coping protocol: red month visibility triggers anxiety → cortisol → sleep disruption → compounding performance degradation outside the portfolio</p></div>
+<div style="background:#fdfcf9;border:1px dashed #d0c9be;border-radius:4px;padding:.7rem 1rem;"><b style="color:#c0392b;font-size:.85rem;">Lidangzzz</b><span style="font-size:.75rem;color:#aaa;margin-left:.5rem;">COO</span><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· TQQQ 3x daily leverage resets monthly: DCA embeds DETERIORATION risk, not smoothing. Volatility drag is real and accelerates on the downside.</p><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· Zero max-drawdown boundary defined. 50% 'risk tolerance' means nothing without a concrete stop/hedge protocol.</p></div>
+<div style="background:#fdfcf9;border:1px dashed #d0c9be;border-radius:4px;padding:.7rem 1rem;"><b style="color:#c0392b;font-size:.85rem;">Donald Trump</b><span style="font-size:.75rem;color:#aaa;margin-left:.5rem;">CBO</span><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· TQQQ 3x leverage in DCA = amplified decay compounded monthly — bad structure, not just bad pick</p><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· QQQM 50% + SOXQ 25% = heavy concentrated tech/semiconductor double-down, thin diversification</p></div>
+<div style="background:#fdfcf9;border:1px dashed #d0c9be;border-radius:4px;padding:.7rem 1rem;"><b style="color:#c0392b;font-size:.85rem;">Duan Yongping</b><span style="font-size:.75rem;color:#aaa;margin-left:.5rem;">CFO</span><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· TQQQ grasped as a normal 'more QQQ' — it is not; single-day -35% events destroy 3x leverage permanently</p><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· 0 financial experience means no ability to hold through crash, no ability to estimate tail loss, no ability to exit at right time</p></div>
+<div style="background:#fdfcf9;border:1px dashed #d0c9be;border-radius:4px;padding:.7rem 1rem;"><b style="color:#c0392b;font-size:.85rem;">Andrew Huberman</b><span style="font-size:.75rem;color:#aaa;margin-left:.5rem;">CHO</span><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· TQQQ leverage turns normal drawdowns into amygdala-scaling events (30-40% drops are routine)</p><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· Zero finance experience means every price move is interpreted personally, not as market variance</p></div>
+<div style="background:#fdfcf9;border:1px dashed #d0c9be;border-radius:4px;padding:.7rem 1rem;"><b style="color:#c0392b;font-size:.85rem;">Zhang Xuedong</b><span style="font-size:.75rem;color:#aaa;margin-left:.5rem;">CSO</span><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· TQQQ 3x daily leverage ежекumpounding in drawdowns — a 25% single-cause position can wipe out 90% of its value and breach the stated 50% portfolio tolerance</p><p style='margin:.2rem 0 .1rem .8rem;font-size:.83rem;color:#5a5a5a;'>· Concentration: ~95% of capital lives in Nasdaq-adjacent assets (QQQM + SOXQ + TQQQ). Black-swan sector rotation is unhedged.</p></div>
+</div>
+
+<div class="section-title">Each Agent's Conditions for Score ≥ 6</div>
+<div class="conds-section">
+<div class="cond-col"><b>Warren Buffett</b><span style="font-size:.7rem;color:#aaa;">CFO</span><ul style="margin:.2rem 0 0 1.2rem;"><li>Replace TQQQ with VT or VOO (broad market, no leverage) and rerate to 6+</li><li>Consolidate QQQM + SOXQ overlap into a single positions — stop paying double fees for overlapping exposure</li><li>CEO must be able to describe, in their own words, what happens to TQQQ if Nasdaq drops 20% over 6 months — before any trade executes</li><li>Portfolio director (Hermes + skills) must confirm understanding of volatility drag and leveraged ETF decay in writing</li></ul></div>
+<div class="cond-col"><b>Elon Musk</b><span style="font-size:.7rem;color:#aaa;">CVO</span><ul style="margin:.2rem 0 0 1.2rem;"><li>Remove TQQQ entirely — any math that passes through a retirement account reduces leverage, not increases it</li><li>Cap semiconductor exposure to 10-15% max; the rest goes broad market (SPY/VTI) and non-correlated assets</li><li>Monthly contribution must be a % of salary that the user genuinely does not need for 3 years minimum (coherence test)</li><li>User must pass a 10-question quiz on ETF mechanics, volatility decay, and drawdown math before the first dollar is deployed</li></ul></div>
+<div class="cond-col"><b>Naval Ravikant</b><span style="font-size:.7rem;color:#aaa;">CFO</span><ul style="margin:.2rem 0 0 1.2rem;"><li>Replace TQQQ with QQQM and add a broad bond ETF (BND or AGG) at 20–30%; if you refuse, cap TQQQ at ≤5% and only after you can mathematically explain daily reset decay</li><li>Add a global equity component (VXUS/VT) to remove single-region concentration</li><li>Show me a 10-year backtest comparing this portfolio to VTI/VOO before you put real money in — if you can't run that, you're not ready to invest</li></ul></div>
+<div class="cond-col"><b>Bryan Johnson</b><span style="font-size:.7rem;color:#aaa;">CHO</span><ul style="margin:.2rem 0 0 1.2rem;"><li>User must complete Bryan Johnson Protocol Baseline — 30-day sleep score + HRV + resting heart rate data — before any capital deployment; pause DCA if average sleep score falls below protocol threshold for 3 consecutive nights</li><li>Portfolio drawdown must be capped at hard-stop: if total balance drops below initial capital (i.e., contributions lost), DCA pauses automatically for 90 days, no exceptions — this is a health protocol not a market-timing rule</li><li>TQQQ position must be individually capped at 10% of portfolio max, not 25%: the skill-weighted all-else-equal McCulloch rule overrides CBO allocation oversight</li><li>A 'cortisol budget' protocol must be documented: maximum acceptable hours of daily portfolio/health data review per week (estimate 2-3 hrs below which cortisol should stay stable), and threshold triggers for when to stop checking</li></ul></div>
+<div class="cond-col"><b>Lidangzzz</b><span style="font-size:.7rem;color:#aaa;">COO</span><ul style="margin:.2rem 0 0 1.2rem;"><li>TQQQ capped at ≤10% of portfolio (max $100/mo); weighted leverage allocation matches declared 50% max drawdown tolerance mathematically, not verbally.</li><li>Add a drawdown-trigger rule: if the total portfolio drops 20%, TQQQ allocation freezes and review is convened within 7 days.</li><li>User completes (not skips) a 2-hour educational sequence on leveraged fund decay mechanics and volatility drag before first deposit clears.</li><li>Portfolio allocates ≥10% to a cash/bond buffer (min $100/mo) explicitly reserved for buying the dip — separates DCA capital from dry powder.</li></ul></div>
+<div class="cond-col"><b>Donald Trump</b><span style="font-size:.7rem;color:#aaa;">CBO</span><ul style="margin:.2rem 0 0 1.2rem;"><li>Remove TQQQ entirely — replace with BND or VTI for core stability</li><li>QQQM/SOXQ overlap resolved: pick one (QQQM wins as the broad tech play)</li><li>Add at least 20% allocation to ultra-short bonds or money market for the 2026 July start buffer</li><li>Total monthly outlay scaled to 15-20% of income, not 25%, until account survives a real drawdown cycle</li></ul></div>
+<div class="cond-col"><b>Duan Yongping</b><span style="font-size:.7rem;color:#aaa;">CFO</span><ul style="margin:.2rem 0 0 1.2rem;"><li>Replace TQQQ with unleveraged position (QQQM or broad market), or cap leveraged portion at a genuine risk budget (≤10% max per position limit from zero baseline)</li><li>Add at least one non-correlated asset class — bond ETF (BIL/SHY) or all-weather basket — so drawdown constraint is actually achievable</li><li>Demonstrate understanding of TQQQ decay: can you explain 2022-style scenario and still say this allocation makes sense?</li><li>If and only if those three conditions hold, reconsider score toward 7–8 range; until then, Duan does not approve</li></ul></div>
+<div class="cond-col"><b>Andrew Huberman</b><span style="font-size:.7rem;color:#aaa;">CHO</span><ul style="margin:.2rem 0 0 1.2rem;"><li>Minimum understanding that TQQQ can lose >60% in a single market drop (dotcom/COVID-level)</li><li>Writing a pre-commitment emotional protocol: when drawdowns occur, what is the action rule before looking at the portfolio</li><li>Sleep audit active during the first 90 days to detect cortisol-magnified pre-sleep financial rumination</li><li>TQQQ capped at max 10% of portfolio until DCA experience exceeds 12 months of consistent execution</li></ul></div>
+<div class="cond-col"><b>Zhang Xuedong</b><span style="font-size:.7rem;color:#aaa;">CSO</span><ul style="margin:.2rem 0 0 1.2rem;"><li>User proves understanding of leveraged-ETF daily-reset math and confirms they can tolerate TQQQ touching $0 in a Nasdaq crash (a condition no diversified portfolio should ever accept)</li><li>Macro context established: is July 2026 after a +40% YTD Nasdaq run (overweight signal) or following a -40% correction (accumulation signal)? Score moves to minimum 6 if confirmed entry post-correction with same user conditions.</li><li>Reduce TQQQ to 5–10% and reallocate to broad market or factor diversification (mid-cap/value/crypto/commodities); Score moves to 7 under lean TQQQ + corrected timing read.</li></ul></div>
+</div>
+
+<p class="meta">Threading: 10 parallel hermes chat -q calls · 61.9s wall · ~528s saved over serial</p>
+<div class="footer">— OPC Board · Powered by Hermes Agent Crew · Dashboard → dashboard/dca-2026-verdict.html</div>
+</body>
+</html>

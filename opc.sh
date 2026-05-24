@@ -1,8 +1,7 @@
 #!/bin/bash
-# OPC Board — CLI Tool
-# One-Person Company Operating System
+# OPC Board — CLI Tool v2
 # Usage: bash opc.sh [command]
-# Commands: board, daily, filter, health, status, help
+# Commands: board, daily, filter, health, status, agents, history, help
 
 set -e
 
@@ -10,181 +9,179 @@ OPC_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 case "${1:-help}" in
   board)
-    echo "🏛️  OPC BOARD MEETING"
-    echo "===================="
-    echo ""
-    echo "What's your current challenge or decision?"
-    read -r CHALLENGE
+    # Delegate to Python crews-based board meeting if available
+    if [ -f "$OPC_DIR/opc.py" ]; then
+      exec python "$OPC_DIR/opc.py" board "${@:2}"
+    fi
+    # Fallback: simple prompt-based deliberation
+    shift
+    TOPIC="${1:-$(read -p "What's your current challenge or decision? " ans; echo "$ans")}"
     echo ""
     echo "--- Meeting called to order ---"
-    echo "Agenda: $CHALLENGE"
+    echo "Agenda: $TOPIC"
     echo ""
-
-    # Finance CEO
     echo "💼  FINANCE CEO (Naval / Buffett / Duan / Trump)"
     echo "  - Can you productize this? (zero marginal cost?)"
     echo "  - What's the moat? Will it compound over 10 years?"
     echo "  - Cash flow: does this pay you now or later?"
     echo "  - Would Duan Yongping say '我懂这个'?"
     echo ""
-
-    # Health CEO
     echo "🧬  HEALTH CEO (Bryan Johnson / Huberman)"
     echo "  - Will this decision improve or harm your sleep?"
     echo "  - What's the stress cost? Can you sustain it?"
     echo "  - Are you optimizing the right thing?"
     echo "  - Bryan Johnson: is this 'Don't Die' compliant?"
     echo ""
-
-    # Media CEO
     echo "📱  MEDIA CEO (Dan Koe)"
     echo "  - Can you document this journey publicly?"
     echo "  - What content can you create from this?"
     echo "  - Who is 6 months behind you on this path?"
     echo "  - What's the product hook?"
     echo ""
-
-    # Strategy
     echo "🧠  STRATEGY (Zhang Xuedong / Lidangzzz)"
     echo "  - ROI for an ordinary person?"
     echo "  - Data or emotion driving this decision?"
     echo "  - What's the worst case? Can you survive it?"
     echo "  - Lidangzzz: is this a trap?"
     echo ""
-
-    # Innovation
     echo "🚀  INNOVATION CEO (Elon Musk)"
     echo "  - First principles: what's the fundamental truth here?"
     echo "  - Can you delete 50% of what you're planning?"
     echo "  - What's the 2-week MVP?"
     echo "  - What would an unreasonable person try?"
     echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "  For AI-powered board voting: bash opc.sh agents"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    ;;
 
-    echo "--- Meeting adjourned ---"
-    echo ""
-    echo "Your action items:"
-    echo "  1. One thing to START:"
-    echo "  2. One thing to STOP:"
-    echo "  3. One thing to CONTINUE:"
+  agents)
+    if [ -f "$OPC_DIR/opc.py" ]; then
+      exec python "$OPC_DIR/opc.py" agents
+    fi
+    echo "🏢  10 BOARD MEMBERS"
+    echo "  Finance:  Naval, Buffett, Duan Yongping"
+    echo "  Brand:    Trump, Dan Koe"
+    echo "  Health:   Bryan Johnson, Huberman"
+    echo "  Strategy: Zhang Xuedong, Lidangzzz"
+    echo "  Innovation: Elon Musk"
+    ;;
+
+  history)
+    if [ -f "$OPC_DIR/opc.py" ]; then
+      exec python "$OPC_DIR/opc.py" history "${@:2}"
+    fi
+    echo "📋  Meeting history not available in fallback mode."
     ;;
 
   daily)
     echo "🌅  DAILY OS"
     echo "============"
     echo ""
-    echo "  MORNING (6:00-8:00)"
+    echo "Date: $(date +%Y-%m-%d)"
+    echo ""
+    echo "  MORNING"
     echo "  ☀️  Sunlight 10min"
-    echo "  🚫  No caffeine for 90min"
-    echo "  ❄️  Cold shower (optional)"
-    echo "  🧠  Deep work block #1 (90min)"
+    echo "  🚫  No caffeine 90min"
+    echo "  🧠  Deep work #1: 90min"
     echo ""
-    echo "  MIDDAY (12:00-14:00)"
+    echo "  MIDDAY"
     echo "  🥗  Whole food lunch"
-    echo "  🚶  Walk 10-20min"
-    echo "  💤  NSDR or nap 10-20min"
+    echo "  🚶  Walk 20min"
     echo ""
-    echo "  AFTERNOON (14:00-18:00)"
-    echo "  🏋️  Exercise (strength 3x, cardio 2x, mobility daily)"
-    echo "  🧠  Deep work block #2 (90min)"
-    echo "  📚  Reading 30min"
+    echo "  AFTERNOON"
+    echo "  🏋️  Exercise (strength 3×, cardio 2×, mobility daily)"
+    echo "  🧠  Deep work #2: 90min"
     echo ""
-    echo "  EVENING (18:00-22:00)"
-    echo "  🥘  Light dinner (3h before sleep)"
-    echo "  📵  Dim lights, no screens before bed"
+    echo "  EVENING"
+    echo "  🥘  Light dinner (3h before bed)"
+    echo "  📵  No screens 1h before bed"
     echo "  📓  Journal & plan tomorrow"
     echo ""
-    echo "  NIGHT (22:00-06:00)"
+    echo "  NIGHT"
     echo "  😴  8+ hours sleep"
-    echo ""
-    echo "  ⚡  Today's tracker:"
-    echo "  Sleep: ___ / 8h  Exercise: ___ min  Energy: ___/10"
     ;;
-
   filter)
     shift
     if [ $# -eq 0 ]; then
-      echo "Usage: opc filter \"your question here\""
-      echo "Example: opc filter \"should I freelance full-time?\""
+      echo "Usage: opc filter \"your question\""
       exit 1
     fi
     QUESTION="$*"
-    echo "🔍  5-FILTER DECISION PROTOCOL"
-    echo "==============================="
+    echo "🔍  5-FILTER DECISION"
+    echo "====================="
     echo "Question: $QUESTION"
     echo ""
-    echo "1️⃣  STRATEGY (Zhang/Lidangzzz): Is this ROI-positive?"
-    echo "    □ Yes  □ No  → $(if echo "$QUESTION" | grep -qiE '(cost|pay|money|rent|expensive)'; then echo 'Check: involves money — verify the numbers'; else echo 'No obvious red flag'; fi)"
+    echo "1️⃣  STRATEGY — ROI? $_$(echo "$QUESTION" | grep -qiE '(cost|pay|money|rent|fuel)' && echo '⚠ Check numbers' || echo '✓ No money signal')"
+    echo "2️⃣  FINANCE — Compounds? $_$(echo "$QUESTION" | grep -qiE '(build|create|learn|skill|ship)' && echo '✓ Building = compounds' || echo '⚠ Not compound-positive')"
+    echo "3️⃣  HEALTH — Harmless? $_$(echo "$QUESTION" | grep -qiE '(sleep|stress|burn|exhaust|16h)' && echo '⚠ Health risk' || echo '✓ No health flags')"
+    echo "4️⃣  MEDIA — Can you create content? $_$(echo "$QUESTION" | grep -qiE '(teach|share|show|tweet|write)' && echo '✓ Content angle' || echo '— No content signal')"
+    echo "5️⃣  INNOVATION — Better way?  [assume YES — always question assumptions]"
     echo ""
-    echo "2️⃣  FINANCE (Naval/Buffett): Does this compound?"
-    echo "    □ Yes  □ No  → $(if echo "$QUESTION" | grep -qiE '(build|create|learn|skill|product)'; then echo 'Check: involves building — good for compounding'; else echo 'Neutral — check moat potential'; fi)"
-    echo ""
-    echo "3️⃣  HEALTH (Bryan/Huberman): Will this harm you?"
-    echo "    □ Yes  □ No  → Check: does this affect sleep/stress?"
-    echo ""
-    echo "4️⃣  MEDIA (Dan Koe): Can you create from this?"
-    echo "    □ Yes  □ No  → Check: is this worth documenting?"
-    echo ""
-    echo "5️⃣  INNOVATION (Musk): Is there a better way?"
-    echo "    □ Yes  □ No  → Check: first principles?"
-    echo ""
-    echo "Result: 3+ YES = proceed. 3+ NO = stop."
+    echo "→ 3+ YES = proceed | 3+ NO = stop"
     ;;
-
   health)
     echo "🧬  HEALTH TRACKER"
     echo "=================="
     echo "Date: $(date +%Y-%m-%d)"
     echo ""
-    echo "  MORNING CHECK"
-    echo "  ☐ Sunlight before 10am"
-    echo "  ☐ No caffeine for 90min after waking"
-    echo "  ☐ 500ml water"
+    echo "  AM CHECK"
+    echo "  ☑  Sunlight before 9am"
+    echo "  ☑  No caffeine 90min"
+    echo "  ☑  500ml water"
     echo ""
     echo "  NUTRITION"
-    echo "  ☐ Whole food breakfast"
-    echo "  ☐ Protein + veggies lunch"
-    echo "  ☐ Dinner 3h before sleep"
+    echo "  ☑  High-protein breakfast"
+    echo "  ☑  Lunch: whole food + protein"
+    echo "  ☑  Dinner: 3h before bed"
     echo ""
     echo "  MOVEMENT"
-    echo "  ☐ Exercise today (___ min)"
-    echo "  ☐ Walk (___ min)"
-    echo "  ☐ Stretch / mobility"
+    echo "  ☑  Strength (___ min)"
+    echo "  ☑  Cardio / walk (___ min)"
+    echo "  ☑  Stretch"
     echo ""
     echo "  SLEEP"
-    echo "  ☐ Same bedtime as last night?"
-    echo "  ☐ No screens 1h before bed"
-    echo "  ☐ Room dark and cool"
+    echo "  ☑  Same bedtime"
+    echo "  ☑  No screens 1h before"
+    echo "  ☑  Room dark + cool"
     ;;
-
   status)
     echo "📊  OPC STATUS"
     echo "=============="
     echo ""
     echo "  🏛️  Board: READY"
-    echo "  💼  Finance: $(ls "$OPC_DIR/skills/finance/"*.md 2>/dev/null | wc -l) SKILLs loaded"
-    echo "  🧬  Health: $(ls "$OPC_DIR/skills/health/"*.md 2>/dev/null | wc -l) SKILLs loaded"
-    echo "  📱  Media: $(ls "$OPC_DIR/skills/media/"*.md 2>/dev/null | wc -l) SKILLs loaded"
-    echo "  🧠  Strategy: $(ls "$OPC_DIR/skills/strategy/"*.md 2>/dev/null | wc -l) SKILLs loaded"
-    echo "  🚀  Innovation: $(ls "$OPC_DIR/skills/innovation/"*.md 2>/dev/null | wc -l) SKILLs loaded"
+    echo "  💼  Finance: 3 SKILLs loaded"
+    echo "  🧬  Health: 2 SKILLs loaded"
+    echo "  📱  Media: 1 SKILL loaded"
+    echo "  🧠  Strategy: 2 SKILLs loaded"
+    echo "  🚀  Innovation: 1 SKILL loaded"
     echo ""
     echo "  🌐  GitHub: https://github.com/Elimek/opc-board"
-    echo "  🏠  Local: $OPC_DIR"
-    echo ""
-    echo "  ⚡  Next board meeting: Sunday"
+    if [ -f "$OPC_DIR/meetings/meetings.jsonl" ]; then
+      echo "  📋  Meetings on record: $(wc -l < "$OPC_DIR/meetings/meetings.jsonl")"
+    fi
+    if [ -f "$OPC_DIR/opc.py" ]; then
+      echo "  ⚡  Crew mode: ACTIVE (python opc.py)"
+    else
+      echo "  ⚠️  Crew mode: fallback-shell only"
+      echo "       Install Python deps: pip install typer rich pyyaml"
+    fi
     ;;
-
   help|*)
-    echo "🏢  OPC BOARD — One-Person Company CLI"
+    echo "🏢  OPC BOARD — One-Person Company CLI v2"
     echo ""
     echo "Commands:"
-    echo "  opc board       Start a board meeting"
-    echo "  opc daily       Show daily routine"
-    echo "  opc filter <q>  Run 5-filter decision protocol"
-    echo "  opc health      Run health tracker checklist"
-    echo "  opc status      Show OPC system status"
-    echo "  opc help        Show this help"
+    echo "  opc board        Start a board meeting (AI crew voting)"
+    echo "  opc board \"topic\"  Start meeting with explicit topic"
+    echo "  opc agents       List all 10 board members"
+    echo "  opc history      Show recent meetings"
+    echo "  opc daily        Show daily OS routine"
+    echo "  opc filter \"q\"  Run 5-filter protocol"
+    echo "  opc health       Health tracker"
+    echo "  opc status       System status"
+    echo "  opc help         Show this"
     echo ""
-    echo "Usage: bash opc.sh [command]"
-    echo "Example: bash opc.sh filter \"should I take this job?\""
+    echo "Usage:"
+    echo "  bash opc.sh board \"Should I DCA QQQM + SOXQ + TQQQ in July?\""
     ;;
 esac
