@@ -1,197 +1,166 @@
 #!/usr/bin/env python3
-"""
-OPC Board — CLI v2
-One-Person Company Operating System, Crew-powered edition.
+"""OPC Board v3 — Universal multi-agent board platform CLI.
 
 Usage:
-    python opc.py                          # Interactive menu
-    python opc.py board                    # Start a new board meeting (prompts for topic)
-    python opc.py board --topic "..."      # Non-interactive: topic as argument
-    python opc.py board --topic "..." --context '{"amount":1000}'
-    python opc.py votes [meeting_id]       # Print DCA July plan voting results
-    python opc.py agents                   # List all 10 board members
-    python opc.py history [N]              # Last N meetings
+    python opc.py                           # Interactive — explains the protocol
+    python opc.py board "我的议题"           # Start a board meeting
+    python opc.py plan "我的议题"            # Preview which advisors will be called
+    python opc.py agents                    # List all 10 board members
 """
 from __future__ import annotations
 
-import json
 import sys
-from datetime import datetime
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
 
 import typer
 from rich.console import Console
-from rich.json import JSON
-from rich.panel import Panel
 from rich.table import Table
+from rich.panel import Panel
+from rich.markdown import Markdown
 
-sys.path.insert(0, str(Path(__file__).parent))
-from crews.coordinator import BoardCoordinator
-from crews.memory import MeetingMemory
-from crews.registry_loader import load_registry, list_all_agents
-
-app = typer.Typer(
-    name="opc",
-    help="🏢 OPC Board — Your One-Person Company Board of Directors",
-    no_args_is_help=False,
+from engine.models import BOARD, Domain, TOPIC_VOTERS, Verdict
+from engine.router import classify, get_voters, get_reference, format_summary
+from engine.orchestrator import (
+    format_meeting_plan,
+    domain_emoji,
 )
+
+app = typer.Typer(no_args_is_help=False)
 console = Console()
 
 
-# ────────────────────────────────────────────────────────────────────────────
-# helpers
-# ────────────────────────────────────────────────────────────────────────────
-
-def _print_header(text: str):
+def _header(text: str):
     console.print(f"\n[bold cyan]{'═'*60}[/bold cyan]")
     console.print(f"[bold cyan]{text.center(60)}[/bold cyan]")
-    console.print(f"[bold cyan]{'═'*60}[/bold cyan]\n")
+    console.print(f"[bold cyan]{'═'*60}[/bold cyan]")
 
 
-def _result_table(result: dict) -> None:
-    t = Table(title=f"Meeting: {result['topic']}", show_header=True, header_style="bold magenta")
-    t.add_column("Agent", style="cyan", min_width=20)
-    t.add_column("Role", min_width=12)
-    t.add_column("Score", justify="center")
-    t.add_column("Round", justify="center")
-    t.add_column("Concerns", min_width=30)
-    t.add_column("Pass?", justify="center")
-
-    for v in result["vote_detail"]:
-        passed = "✅" if v["score"] >= 6 else "❌"
-        score_style = "green" if v["score"] >= 6 else "red"
-        t.add_row(
-            v["agent"],
-            v["role"],
-            f"[{score_style}]{v['score']}/10[/{score_style}]",
-            str(v.get("round", 1)),
-            "; ".join(v.get("key_concerns", [])[:2]) or "-",
-            passed,
-        )
-    console.print(t)
-
-    # Summary line
-    verdict = result["verdict"]
-    verdict_style = "bold green" if verdict == "passed" else "bold red"
-    console.print(f"\n[{verdict_style}]Final Verdict: {verdict.upper()}[/{verdict_style}]  "
-                  f"Avg Score: [bold]{result['final_score']}/10[/bold]  "
-                  f"Rounds: {result['rounds']}\n")
-
-
-# ────────────────────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────
 # commands
-# ────────────────────────────────────────────────────────────────────────────
+# ────────────────────────────────────────────────────────────
 
 @app.command()
 def board(
-    topic: str = typer.Argument(None, help="The decision topic to vote on"),
-    context: str = typer.Option("{}", "--context", "-c", help="JSON context for the meeting"),
-    json_output: bool = typer.Option(False, "--json", "-j", help="Output raw JSON"),
+    topic: str = typer.Argument(None, help="Decision topic"),
+    context: str = typer.Option("{}", "--context", "-c", help="JSON context"),
 ):
-    """Start a board meeting — gather 10 agent votes and issue verdict."""
-    ctx = json.loads(context) if context else {}
+    """Start a board meeting. The Hermes agent orchestrates via delegate_task."""
+    ctx = _parse_context(context)
 
     if not topic:
         topic = typer.prompt("What's the topic or decision for today's board meeting?")
         if not topic:
-            console.print("[yellow]No topic provided. Aborting.[/yellow]")
+            console.print("[yellow]No topic. Aborting.[/yellow]")
             raise typer.Exit(1)
 
-    console.print(f"\n[yellow]Calling board meeting:[/yellow] {topic}")
-    console.print(f"[dim]Context: {json.dumps(ctx, ensure_ascii=False)[:200]}[/dim]\n")
-    console.print("[yellow]Agents are deliberating...[/yellow]\n")
+    # Show meeting plan
+    console.print(format_meeting_plan(topic, ctx))
+    console.print()
 
-    coord = BoardCoordinator()
-    result = coord.start_meeting(topic, ctx)
+    # --- NEW v3: The Hermes agent IS the orchestrator ---
+    # When this message is sent to Hermes, the agent follows the PROTOCOL
+    # in engine/orchestrator.py, using delegate_task to call perspective agents.
+    console.print(Panel(
+        "[bold green]v3 Engine ready[/bold green]\n\n"
+        "Send this topic to Hermes as a chat message. "
+        "The agent will:\n"
+        "1. Classify the topic → determine domain\n"
+        "2. Call relevant perspective advisors via delegate_task\n"
+        "3. Collect votes → detect dissent → re-vote if needed\n"
+        "4. Issue final verdict\n\n"
+        "Or just type your question directly in the chat.",
+        title="Next Step",
+        border_style="green",
+    ))
 
-    if json_output:
-        console.print(JSON(json.dumps(result, indent=2, ensure_ascii=False, default=str)))
-    else:
-        _result_table(result)
-        console.print(Panel(
-            result.get("execution", {}).get("executive_summary", ""),
-            title="Executive Summary",
-            border_style="cyan",
-        ))
-        if result["execution"].get("action_items"):
-            console.print("\n[bold]Action Items:[/bold]")
-            for item in result["execution"]["action_items"]:
-                console.print(f"  [{item.get('priority','-').upper()}] {item.get('owner','?')}: {item.get('action','')}")
-        if result["execution"].get("suggested_cron"):
-            console.print("\n[bold]Suggested cron jobs:[/bold]")
-            for cmd in result["execution"]["suggested_cron"]:
-                console.print(f"  {cmd}")
+
+@app.command()
+def plan(
+    topic: str = typer.Argument(..., help="Topic to analyze"),
+):
+    """Preview which advisors will be called for a topic."""
+    domains = classify(topic)
+    voters = get_voters(domains)
+    refs = get_reference(domains)
+
+    _header("BOARD MEETING PLAN PREVIEW")
+    console.print(f"\n[bold]Topic:[/bold] {topic}")
+    console.print(f"[bold]Domains:[/bold] {' '.join(f'{domain_emoji(d)}{d.value}' for d in domains)}\n")
+
+    # Voting team table
+    t = Table(show_header=True, header_style="bold cyan", title="🗳️ Voting Team")
+    t.add_column("Agent", style="cyan", min_width=22)
+    t.add_column("Role", min_width=8)
+    t.add_column("Domain", min_width=12)
+    t.add_column("SKILL", min_width=22)
+    for a in voters:
+        t.add_row(a.name, a.role, a.domain.value, a.skill_name)
+    console.print(t)
+
+    # Reference table
+    if refs:
+        t2 = Table(show_header=True, header_style="dim cyan", title="🗣️ Reference Only")
+        t2.add_column("Agent", style="dim", min_width=22)
+        t2.add_column("Role", min_width=8)
+        t2.add_column("Domain", min_width=12)
+        for a in refs:
+            t2.add_row(a.name, a.role, a.domain.value)
+        console.print(f"\n")
+        console.print(t2)
+
+    console.print(f"\n[dim]Total: {len(voters)} voting + {len(refs)} reference = "
+                  f"{len(voters) + len(refs)}/{len(BOARD)} advisors[/dim]")
 
 
 @app.command()
 def agents():
-    """List all 10 board members."""
-    _print_header("OPC BOARD — 10 DIRECTORS")
+    """List all 10 board members with their SKILL sources."""
+    _header("OPC BOARD — 10 DIRECTORS")
+
     t = Table(show_header=True, header_style="bold cyan")
-    t.add_column("ID", min_width=10)
+    t.add_column("ID", min_width=10, style="dim")
     t.add_column("Name", style="cyan", min_width=22)
     t.add_column("Role", min_width=8)
-    t.add_column("Crew", min_width=12)
-    t.add_column("Tools", min_width=24)
+    t.add_column("Domain", min_width=12)
+    t.add_column("SKILL", min_width=24)
 
-    for a in list_all_agents():
-        t.add_row(
-            a["id"],
-            a["name"],
-            a["role"],
-            a["crew"],
-            ", ".join(a.get("toolsets", ["none"])),
-        )
+    for a in BOARD:
+        t.add_row(a.id, a.name, a.role, domain_emoji(a.domain) + a.domain.value, a.skill_name)
     console.print(t)
 
 
 @app.command()
-def history(n: int = typer.Option(10, "--limit", "-n", help="Last N meetings")):
-    """Show recent board meetings."""
-    mem = MeetingMemory()
-    meetings = mem.load_meetings(limit=n)
-    _print_header(f"RECENT BOARD MEETINGS (last {n})")
-    if not meetings:
-        console.print("[dim]No meetings on record yet.[/dim]")
-        return
-    t = Table(show_header=True, header_style="dim cyan")
-    t.add_column("Date", min_width=12)
-    t.add_column("ID", min_width=28)
-    t.add_column("Topic", max_width=40)
-    t.add_column("Score", justify="center")
-    t.add_column("Verdict", justify="center")
-    for m in reversed(meetings):
-        verdict_style = {"passed": "green", "failed": "red", "revised": "yellow"}.get(
-            m.get("final_verdict", ""), "white"
-        )
+def domains():
+    """Show topic→domain routing rules."""
+    _header("TOPIC ROUTING RULES")
+    t = Table(show_header=True, header_style="bold cyan")
+    t.add_column("Topic Keywords", min_width=16)
+    t.add_column("→ Domains", min_width=30)
+    t.add_column("Advisors", min_width=30)
+    for keyword, doms in TOPIC_VOTERS.items():
+        agents = [a.name for a in BOARD if a.domain in doms]
         t.add_row(
-            m.get("timestamp", "?")[:10],
-            m.get("id", "?")[-20:],
-            m.get("topic", "?")[:38],
-            str(m.get("final_score", "?")),
-            f"[{verdict_style}]{m.get('final_verdict', '?')}[/{verdict_style}]",
+            keyword,
+            ", ".join(d.value for d in doms),
+            ", ".join(agents[:4]) + ("…" if len(agents) > 4 else ""),
         )
     console.print(t)
 
+    console.print("\n[dim]Default (unclassified): all 10 advisors[/dim]")
 
-@app.command()
-def votes(topic_pattern: str = typer.Argument(None, help="Search pattern for topic")):
-    """Show voting history for a specific topic."""
-    import re
-    mem = MeetingMemory()
-    meetings = mem.load_meetings(200)
-    if topic_pattern:
-        meetings = [m for m in meetings if re.search(topic_pattern.lower(), m.get("topic", "").lower())]
-    if not meetings:
-        console.print(f"[dim]No meetings found matching '{topic_pattern}'.[/dim]")
-        return
-    for m in meetings:
-        console.print(f"\n[cyan]── {m['topic']} ({m.get('final_verdict','?')}) " + 
-                      f"score={m.get('final_score','?')}[/cyan]")
-        for v in m.get("votes", []):
-            style = "green" if v.get("score", 0) >= 6 else "red"
-            console.print(f"  [{style}]{v.get('agent_name','?')}: {v.get('score',0)}/10 — "
-                          f"{v.get('reasoning','')[:60]}[/{style}]")
+
+# ────────────────────────────────────────────────────────────
+# helpers
+# ────────────────────────────────────────────────────────────
+
+def _parse_context(ctx_str: str) -> dict:
+    import json
+    try:
+        return json.loads(ctx_str) if ctx_str and ctx_str != "{}" else {}
+    except json.JSONDecodeError:
+        return {}
 
 
 if __name__ == "__main__":

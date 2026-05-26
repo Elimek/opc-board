@@ -1,0 +1,23 @@
+{
+  "id": "board-20260526",
+  "topic": "如何做到知行合一？多线任务人生规划",
+  "timestamp": "2026-05-26T23:38:00",
+  "total_agents": 10,
+  "average_score": 4.8,
+  "passed_count": 3,
+  "failed_count": 7,
+  "verdict": "FAILED",
+  "threshold": 6.0,
+  "votes": [
+    {"agent": "Naval Ravikant", "role": "CFO", "domain": "finance", "score": 4},
+    {"agent": "Warren Buffett", "role": "CFO", "domain": "finance", "score": 4},
+    {"agent": "段永平", "role": "CFO", "domain": "finance", "score": 4},
+    {"agent": "Donald Trump", "role": "CBO", "domain": "brand", "score": 6},
+    {"agent": "Dan Koe", "role": "CMO", "domain": "brand", "score": 4},
+    {"agent": "Bryan Johnson", "role": "CHO", "domain": "health", "score": 4},
+    {"agent": "Andrew Huberman", "role": "CHO", "domain": "health", "score": 5},
+    {"agent": "张雪峰", "role": "CSO", "domain": "strategy", "score": 6},
+    {"agent": "Lidangzzz", "role": "COO", "domain": "strategy", "score": 6},
+    {"agent": "Elon Musk", "role": "CVO", "domain": "innovation", "score": 5}
+  ]
+}

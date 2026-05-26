@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPC Boardroom</title>
+<script src="https://cdn.tailwindcss.com">
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset & Base ─────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #f5f3f0;
+    color: #2c2820;
+    min-height: 100vh;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(58,53,48,.06) 28px, rgba(58,53,48,.06) 29px),
+      url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+  }
+
+  /* ── Glassmorphism ─────────────── */
+  .glass {
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02), 0 8px 32px rgba(0,0,0,0.04);
+    transition: all .35s ease;
+  }
+  .glass-strong {
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 12px 40px rgba(0,0,0,0.05);
+  }
+
+  /* ── Name: Georgia ─────────────── */
+  .name { font-family: Georgia, 'Times New Roman', serif; }
+
+  /* ── Agent Card ────────────────── */
+  .agent-card {
+    position: relative;
+    transition: all .5s cubic-bezier(.22,1,.36,1);
+    opacity: 0;
+    transform: translateY(12px) scale(.97);
+  }
+  .agent-card.reveal {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .agent-card.thinking {
+    border-color: rgba(100,140,255,0.3);
+    box-shadow: 0 0 24px rgba(100,140,255,0.12), 0 8px 32px rgba(0,0,0,0.04);
+  }
+  .agent-card.thinking .pulse-dot {
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  .agent-card.done {
+    border-color: rgba(78,140,110,0.25);
+  }
+  .agent-card.done .score-bar-fill {
+    transition: width .8s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ── Score bar ─────────────────── */
+  .score-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(44,40,32,0.08);
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    width: 0%;
+    transition: width .8s cubic-bezier(.22,1,.36,1);
+  }
+  .score-bar-fill.pass { background: linear-gradient(90deg, #4e8c6e, #6aaa7e); }
+  .score-bar-fill.fail { background: linear-gradient(90deg, #c0392b, #d65a4a); }
+
+  /* ── Animations ────────────────── */
+  @keyframes pulse {
+    0%, 100% { opacity: .4; }
+    50% { opacity: 1; }
+  }
+  @keyframes breathe-glow {
+    0%, 100% { box-shadow: 0 0 0px rgba(100,140,255,0); }
+    50% { box-shadow: 0 0 20px rgba(100,140,255,0.15); }
+  }
+  .breathe {
+    animation: breathe-glow 2s ease-in-out infinite;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-slide-up {
+    animation: slideUp .7s ease-out forwards;
+  }
+  @keyframes countUp {
+    from { opacity: 0; transform: scale(.6); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .animate-count {
+    animation: countUp .4s ease-out forwards;
+  }
+
+  /* ── Reveal stagger ────────────── */
+  .stagger-1 { transition-delay: .0s; }
+  .stagger-2 { transition-delay: .15s; }
+  .stagger-3 { transition-delay: .3s; }
+
+  /* ── Expanded reasoning ────────── */
+  .reasoning-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .5s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+    opacity: 0;
+  }
+  .reasoning-content.open {
+    max-height: 600px;
+    opacity: 1;
+  }
+
+  /* ── Synthesis timeline ────────── */
+  .synth-item {
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all .5s ease;
+  }
+  .synth-item.reveal {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── Input ─────────────────────── */
+  .topic-input {
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: all .25s ease;
+  }
+  .topic-input:focus {
+    background: rgba(255,255,255,0.8);
+    border-color: rgba(100,140,255,0.3);
+    box-shadow: 0 0 0 3px rgba(100,140,255,0.08);
+    outline: none;
+  }
+
+  /* ── Mobile ────────────────────── */
+  @media (max-width: 640px) {
+    .agent-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .agent-card { font-size: 13px; }
+    .name { font-size: 13px !important; }
+  }
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .agent-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  }
+  @media (min-width: 1025px) {
+    .agent-grid { grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  }
+
+  /* ── Scrollbar ─────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(44,40,32,0.15); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div id="app" class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+
+  <!-- ═══ Header ═══ -->
+  <header class="text-center mb-8">
+    <h1 class="name text-3xl sm:text-4xl font-normal tracking-tight text-[#2c2820] mb-1">
+      🏢 OPC Boardroom
+    </h1>
+    <p class="text-sm text-[#8a8278] italic">One-Person Company · 10 Directors · Every Topic</p>
+  </header>
+
+  <!-- ═══ Topic Input ═══ -->
+  <div id="topic-section" class="glass rounded-2xl p-5 sm:p-7 mb-8">
+    <label class="block text-xs uppercase tracking-widest text-[#8a8278] mb-2 font-medium">议题 Topic</label>
+    <div class="flex gap-3">
+      <input id="topicInput" type="text"
+        class="topic-input flex-1 rounded-xl px-4 py-3 text-sm text-[#2c2820] placeholder:text-[#b0a89e]"
+        placeholder="输入你的决策议题… e.g. 定投$1000/mo 买什么">
+      <button id="startBtn"
+        class="glass-strong rounded-xl px-5 py-3 text-sm font-medium text-[#2c2820] hover:bg-white/85 transition whitespace-nowrap">
+        开始会议
+      </button>
+    </div>
+    <p id="topicDisplay" class="hidden mt-3 text-sm text-[#6a6258] italic">
+      📋 当前议题: <span id="topicText" class="font-medium not-italic"></span>
+    </p>
+  </div>
+
+  <!-- ═══ Board Grid ═══ -->
+  <div id="board-section" class="mb-8">
+    <div class="agent-grid grid" id="agentGrid">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+
+  <!-- ═══ Synthesis ═══ -->
+  <div id="synth-section" class="hidden">
+    <div class="glass-strong rounded-2xl p-5 sm:p-7 animate-slide-up">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="text-xl">🎯</span>
+        <h2 class="name text-xl font-normal">董事会统一裁决</h2>
+      </div>
+
+      <!-- Verdict Banner -->
+      <div id="verdictBanner" class="rounded-xl px-4 py-3 mb-5 text-center text-sm font-medium">
+      </div>
+
+      <!-- Score Summary -->
+      <div class="grid grid-cols-3 gap-3 mb-5 text-center text-xs">
+        <div class="glass rounded-xl p-3">
+          <div class="text-lg font-bold" id="avgScore">-</div>
+          <div class="text-[#8a8278] mt-1">平均分</div>
+        </div>
+        <div class="glass rounded-xl p-3">
+          <div class="text-lg font-bold" id="passCount">-</div>
+          <div class="text-[#8a8278] mt-1">通过</div>
+        </div>
+        <div class="glass rounded-xl p-3">
+          <div class="text-lg font-bold" id="failCount">-</div>
+          <div class="text-[#8a8278] mt-1">未通过</div>
+        </div>
+      </div>
+
+      <!-- Domain Scores -->
+      <div id="domainScores" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-5">
+      </div>
+
+      <!-- Fusion Timeline -->
+      <div id="synthTimeline" class="space-y-3">
+      </div>
+
+      <!-- Action Timeline -->
+      <div id="actionTimeline" class="mt-5 pt-4 border-t border-[rgba(44,40,32,0.08)]">
+        <h3 class="text-xs uppercase tracking-widest text-[#8a8278] mb-3 font-medium">📋 行动时间表</h3>
+        <div id="actionItems" class="space-y-2">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Controls ═══ -->
+  <div class="text-center mt-6 space-x-3">
+    <button id="resetBtn"
+      class="glass rounded-xl px-5 py-2.5 text-sm text-[#6a6258] hover:bg-white/80 transition hidden">
+      新议题
+    </button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════
+
+const BOARD = [
+  { id: 'naval',    name: 'Naval Ravikant',   role: 'CFO', domain: 'finance',    emoji: '💰', domainColor: 'rgba(91,140,154,0.08)' },
+  { id: 'buffett',  name: 'Warren Buffett',   role: 'CFO', domain: 'finance',    emoji: '💰', domainColor: 'rgba(91,140,154,0.08)' },
+  { id: 'duan',     name: '段永平',             role: 'CFO', domain: 'finance',    emoji: '💰', domainColor: 'rgba(91,140,154,0.08)' },
+  { id: 'trump',    name: 'Donald Trump',     role: 'CBO', domain: 'brand',      emoji: '📱', domainColor: 'rgba(139,107,154,0.08)' },
+  { id: 'dankoe',   name: 'Dan Koe',          role: 'CMO', domain: 'brand',      emoji: '📱', domainColor: 'rgba(139,107,154,0.08)' },
+  { id: 'bryan',    name: 'Bryan Johnson',    role: 'CHO', domain: 'health',     emoji: '🧬', domainColor: 'rgba(90,154,107,0.08)' },
+  { id: 'huberman', name: 'Andrew Huberman',  role: 'CHO', domain: 'health',     emoji: '🧬', domainColor: 'rgba(90,154,107,0.08)' },
+  { id: 'zhang',    name: '张雪峰',             role: 'CSO', domain: 'strategy',  emoji: '🧠', domainColor: 'rgba(140,122,79,0.08)' },
+  { id: 'lidang',   name: 'Lidangzzz',        role: 'COO', domain: 'strategy',  emoji: '🧠', domainColor: 'rgba(140,122,79,0.08)' },
+  { id: 'musk',     name: 'Elon Musk',        role: 'CVO', domain: 'innovation', emoji: '🚀', domainColor: 'rgba(79,140,154,0.08)' },
+];
+
+const BATCHES = [
+  [0,1,2],   // Naval, Buffett, Duan
+  [3,4,5],   // Trump, Dan Koe, Bryan
+  [6,7,8],   // Huberman, Zhang, Lidang
+  [9],       // Musk
+];
+
+// Sample meeting data (last run)
+const SAMPLE_MEETING = {
+  topic: "如何做到知行合一？多线任务人生规划",
+  avgScore: 5.3,
+  passedCount: 5,
+  failedCount: 5,
+  threshold: 6.0,
+  domainScores: [
+    { domain: 'finance',    label: '💰 财务', score: 4.3, pass: 0, total: 3 },
+    { domain: 'brand',      label: '📱 品牌', score: 7.0, pass: 2, total: 2 },
+    { domain: 'health',     label: '🧬 健康', score: 4.5, pass: 0, total: 2 },
+    { domain: 'strategy',   label: '🧠 战略', score: 6.3, pass: 2, total: 2 },
+    { domain: 'innovation', label: '🚀 创新', score: 4.0, pass: 0, total: 1 },
+  ],
+  agents: {
+    naval:    { score: 4,  passed: false, reasoning: "Your savings goal ($200k in 7 months) is mathematically impossible on your current income and expenses. Attention fragmentation across 5+ simultaneous projects violates the power law of leverage. Cantonese immersion and new job ramp already max out brain capacity.", concerns: ["目标不现实","注意力碎片化","通勤时间成本"], advice: ["调整目标到$360K","延迟自媒体6个月","卖手机一天内搞定","母亲签证延到8月","每天90分钟深度学习主业"] },
+    buffett:  { score: 6,  passed: true,  reasoning: "The plan has a solid core — her AI engineering job is a genuine moat with high earning potential. Cutting rent is a clear margin-of-safety move. However the target of +$200k in 7 months is mathematically unrealistic without side income.", concerns: ["净收入和储蓄率有缺口","自媒体和粤语是低护城河活动","屯门通勤时间伤害主业"], advice: ["调整目标到$400K","90%精力投资主业技能提升","立刻卖坏手机","延迟母亲签证和粤语课"] },
+    duan:     { score: 3,  passed: false, reasoning: "多线并行导致每件事都做不透，效率和结果双差。被焦虑驱动而非理性规划，容易做出冲动决策。自媒体和学粤语与存钱目标弱相关，消耗大量时间精力。", concerns: ["多线并行效率差","被焦虑驱动","缺乏优先级"], advice: ["砍掉自媒体和粤语到年底","本分做事：一周搞定搬家","母亲签证排到搬家后","每天只列三件事"] },
+    trump:    { score: 7,  passed: true,  reasoning: "You have $300k cash and AI skills as trumps, but in HK $30k/month is just passable. Hitting $500k by year-end needs maximum leverage — personal brand, rent negotiation, fixing the iPhone before selling. Anxiety is your biggest liability — it makes you show weakness in negotiations.", concerns: ["情绪影响谈判气场","资源分散","坏手机不修直接卖亏钱"], advice: ["立刻启动AI技术自媒体每周2条","谈判屯门租房年付换降价","修好iPhone再卖多赚2-3k","母亲签证等自媒体有2000粉后递交"] },
+    dankoe:   { score: 7,  passed: true,  reasoning: "Strong foundation — AI skills, $300k savings, creative drive. But anxiety stems from skipping to the final product before building the system. Start with a single repeatable content loop, not a full roadmap. The new job and move are perfect constraints to force focus.", concerns: ["错把交易当资产","认知带宽已满","缺乏微型反馈循环"], advice: ["前90天每天拍一条40秒AI工程师日常短视频","用$5k买二手iPhone做拍摄设备","建立一人公司迭代日志","3个月内0销售","粤语学习录成内容系列"] },
+    bryan:    { score: 4,  passed: false, reasoning: "6 simultaneous life transitions on a physiology already running a deficit. Anxiety means sympathetic nervous system chronically elevated — crushes HRV, impairs sleep, raises cortisol. Operating 6 concurrent stressors without foundational protocol is like running a server at 95% CPU with no cooling.", concerns: ["焦虑模式消耗生理储备","无任何健康协议","久坐AI工作+城市环境"], advice: ["固定22:30-06:30睡眠窗口不可打破","晨间10分钟自然光照+500ml盐水","最后一餐离睡前至少3小时","开始追踪睡眠评分/HRV/静息心率","搬家前预装好环境减少决策"] },
+    huberman: { score: 5,  passed: false, reasoning: "HPA axis running at elevated baseline cortisol from 6 concurrent stressors. Chronically impairs prefrontal cortex executive function via cortisol-induced D1 receptor downregulation. The 'can't enjoy the process' pattern is a classic dopamine anticipatory-loop trap.", concerns: ["皮质醇基线偏高","多巴胺系统在预期模式","无刻意恢复窗口","咖啡因加重焦虑"], advice: ["起床30分钟内户外自然光照10分钟","每天最多2个90分钟深度工作块","咖啡因延迟90分钟","每完成一个任务移动一根火柴(多巴胺注册)","箱式呼吸4-4-4-4在压力边界时刻"] },
+    zhang:    { score: 6,  passed: true,  reasoning: "有一定经济基础与职业起点，但多任务并行导致精力分散。核心瓶颈不是钱，是决策权重排序。你的焦虑来自'都想做'，战略就是'选择不做'的能力。", concerns: ["精力碎片化影响主业输出","自媒体粤语回报周期太长","母亲签证可能反复跑腿"], advice: ["本周卖手机+搬家公司报价","母亲签证花2小时一次搞定","自媒体暂停到年底","每月强制储蓄25k","列焦虑清单贴墙上每天只做2项"] },
+    lidang:   { score: 7,  passed: true,  reasoning: "Overall feasibility is moderate. Prioritize immediate cashflow stability (rent deposit, iPhone sale) and skill-building (Cantonese, content). Timeline is tight but achievable with disciplined execution leveraging AI skills for freelance income alongside main job.", concerns: ["搬家+手机+签证可能耗尽存款","多任务并行burnout风险","副业收入不确定"], advice: ["6月:卖手机+开始粤语课","7-8月:搬家+建立AI自由职业作品集","9-11月:副业目标$15k/月","12月:复盘全年"] },
+    musk:     { score: 4,  passed: false, reasoning: "First principles: core constraint is time — 168 hours/week. Target of +$200k in 7 months requires ~$28.5k/month savings, nearly full take-home pay — physically impossible. Six simultaneous change vectors dilutes focus. Highest leverage point is mastering the cost-reduction role for bonus/promotion.", concerns: ["目标数学上不可能","太多变化向量同时发生","副业太投机","焦虑来自想跳步"], advice: ["砍掉粤语和自媒体90天","现在卖手机+找近的便宜公寓","母亲签证一次搞定","调整目标到$400K","找经理定Q1 OKR争取奖金"] },
+  },
+  synthesis: {
+    contradictions: [
+      { icon: "⚡", topic: "自媒体时机", viewA: "Trump: 立刻启动", viewB: "Naval/Buffett: 等6个月", resolution: "调和: 开始记录但暂不发布, 90天后决定" },
+      { icon: "⚡", topic: "搬家地点", viewA: "Trump: 别去屯门去荃湾", viewB: "Naval: 通勤<50分且房租<$6K才搬", resolution: "折中: 先短租荃湾西, 实测通勤, 9月再签长约" },
+    ],
+    consensus: [
+      { icon: "💰", text: "CFO一致: 目标$500K不现实, 调整到$400K (存$100K/7月 = $14K/月)", source: "Naval + Buffett + Duan + Musk" },
+      { icon: "🧬", text: "CHO警报: 6条并行皮质醇已偏高, 前90天优先睡眠+晨光", source: "Bryan + Huberman" },
+      { icon: "🧠", text: "战略层: 卖手机+搬家用1天搞定, 不要优化细节", source: "Zhang + Lidang + Trump" },
+    ],
+    actions: [
+      { period: "本周", items: ["卖坏手机 — 直接去先达广场或Carousell","搬家公司报价 — 预约1天完成","母亲签证 — 下载清单一次性寄出"] },
+      { period: "6月 (入职月)", items: ["每天15分钟粤语播客(通勤)","每天10分钟晨间光照","每周5天 22:30-06:30 睡眠","每晚列3件'已完成的事'","约经理: 我的Q1 OKR是什么?"] },
+      { period: "7-8月 (稳定期)", items: ["定短租(荃湾西 $7-8K)","每天15分钟记录AI工程师日常(存着不发)","评估存款: 每月$12-14K净存达标?"] },
+      { period: "9月 (决策点)", items: ["决定正式长居点","评估是否启动自媒体发布","复盘存款: 接近$400K路线?"] },
+    ],
+  },
+};
+
+let currentMeeting = null;
+let animating = false;
+
+// ══════════════════════════════════════════════════
+// RENDER FUNCTIONS
+// ══════════════════════════════════════════════════
+
+function renderCards() {
+  const grid = document.getElementById('agentGrid');
+  grid.innerHTML = '';
+  BOARD.forEach((agent, idx) => {
+    const card = document.createElement('div');
+    card.className = 'agent-card glass rounded-xl p-3 sm:p-4';
+    card.id = `card-${agent.id}`;
+    card.style.background = agent.domainColor;
+    card.dataset.index = idx;
+    card.innerHTML = `
+      <div class="flex items-center gap-2.5 mb-2.5">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-base sm:text-lg glass-strong
+                    avatar-frame" style="background:rgba(255,255,255,0.7)">
+          ${agent.emoji}
+        </div>
+        <div class="min-w-0">
+          <div class="name text-sm sm:text-base font-medium truncate">${agent.name}</div>
+          <div class="text-[10px] uppercase tracking-wider text-[#8a8278]">${agent.role} · ${agent.domain}</div>
+        </div>
+      </div>
+      <div class="score-bar mb-2">
+        <div class="score-bar-fill" id="sf-${agent.id}"></div>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="score-text text-sm font-semibold" id="st-${agent.id}">-/10</span>
+        <span class="status-badge text-[10px] text-[#b0a89e]" id="sb-${agent.id}">等待中</span>
+      </div>
+      <div class="reasoning-content mt-3" id="rc-${agent.id}">
+        <div class="text-xs text-[#6a6258] leading-relaxed" id="rr-${agent.id}"></div>
+        <div class="mt-2 text-[10px] text-[#8a8278]" id="rcn-${agent.id}"></div>
+      </div>
+    `;
+    card.addEventListener('click', () => toggleReasoning(agent.id));
+    grid.appendChild(card);
+  });
+}
+
+function toggleReasoning(id) {
+  const content = document.getElementById(`rc-${id}`);
+  content.classList.toggle('open');
+}
+
+function resetBoard() {
+  currentMeeting = null;
+  document.getElementById('synth-section').classList.add('hidden');
+  document.getElementById('resetBtn').classList.add('hidden');
+  document.getElementById('topicDisplay').classList.add('hidden');
+
+  BOARD.forEach(a => {
+    const card = document.getElementById(`card-${a.id}`);
+    card.classList.remove('reveal', 'thinking', 'done', 'breathe');
+    card.style.opacity = '0';
+    document.getElementById(`sf-${a.id}`).style.width = '0%';
+    document.getElementById(`st-${a.id}`).textContent = '-/10';
+    document.getElementById(`sb-${a.id}`).textContent = '等待中';
+    document.getElementById(`rc-${a.id}`).classList.remove('open');
+    document.getElementById(`rr-${a.id}`).textContent = '';
+    document.getElementById(`rcn-${a.id}`).textContent = '';
+  });
+}
+
+function revealBatch(agentIdxs, delay) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      agentIdxs.forEach((idx, i) => {
+        const agent = BOARD[idx];
+        const card = document.getElementById(`card-${agent.id}`);
+        setTimeout(() => {
+          card.classList.add('reveal', 'thinking', 'breathe');
+          document.getElementById(`sb-${agent.id}`).textContent = '⌛ 思考中...';
+          document.getElementById(`sb-${agent.id}`).style.color = '#b8860b';
+        }, i * 200);
+      });
+      resolve();
+    }, delay);
+  });
+}
+
+function completeAgent(agentId, data, delay) {
+  setTimeout(() => {
+    const card = document.getElementById(`card-${agentId}`);
+    card.classList.remove('thinking', 'breathe');
+    card.classList.add('done');
+
+    const fill = document.getElementById(`sf-${agentId}`);
+    fill.style.width = `${data.score * 10}%`;
+    fill.className = `score-bar-fill ${data.passed ? 'pass' : 'fail'}`;
+
+    document.getElementById(`st-${agentId}`).textContent = `${data.score}/10`;
+    document.getElementById(`st-${agentId}`).style.color = data.passed ? '#4e8c6e' : '#c0392b';
+
+    document.getElementById(`sb-${agentId}`).textContent = '✓ 完成';
+    document.getElementById(`sb-${agentId}`).style.color = '#4e8c6e';
+
+    // Reasoning content
+    document.getElementById(`rr-${agentId}`).innerHTML = `<p class="mb-1">${data.reasoning}</p>`;
+    if (data.concerns && data.concerns.length) {
+      document.getElementById(`rcn-${agentId}`).innerHTML =
+        '⚠️ ' + data.concerns.map(c => `<span class="inline-block bg-[rgba(192,57,43,0.06)] rounded px-1.5 py-0.5 mr-1 mb-1">${c}</span>`).join('');
+    }
+  }, delay);
+}
+
+function completeBatch(agentIdxs, meeting, baseDelay) {
+  agentIdxs.forEach((idx, i) => {
+    const agent = BOARD[idx];
+    const data = meeting.agents[agent.id];
+    if (data) completeAgent(agent.id, data, baseDelay + i * 400);
+  });
+}
+
+async function runMeeting(meeting) {
+  resetBoard();
+  currentMeeting = meeting;
+
+  document.getElementById('topicText').textContent = meeting.topic;
+  document.getElementById('topicDisplay').classList.remove('hidden');
+
+  // Phase 2: Batch reveal
+  let delay = 300;
+  for (const batch of BATCHES) {
+    await new Promise(r => setTimeout(r, 600));
+    await revealBatch(batch, delay);
+    delay += 1200;
+    completeBatch(batch, meeting, delay);
+    delay += 2000;
+  }
+
+  // Wait for last animations
+  await new Promise(r => setTimeout(r, 1500));
+
+  // Phase 3: Synthesis
+  renderSynthesis(meeting);
+}
+
+// ═══ Synthesis ═══
+
+function renderSynthesis(meeting) {
+  const section = document.getElementById('synth-section');
+  section.classList.remove('hidden');
+
+  // Verdict
+  const passed = meeting.avgScore >= meeting.threshold;
+  const banner = document.getElementById('verdictBanner');
+  banner.textContent = passed
+    ? `✅ 通过 — ${meeting.avgScore}/${meeting.threshold}`
+    : `❌ 未通过 — ${meeting.avgScore}/${meeting.threshold} (门槛 ${meeting.threshold})`;
+  banner.style.background = passed ? 'rgba(78,140,110,0.1)' : 'rgba(192,57,43,0.08)';
+  banner.style.color = passed ? '#4e8c6e' : '#c0392b';
+
+  document.getElementById('avgScore').textContent = meeting.avgScore;
+  document.getElementById('passCount').textContent = meeting.passedCount;
+  document.getElementById('failCount').textContent = meeting.failedCount;
+
+  // Domain scores
+  const ds = document.getElementById('domainScores');
+  ds.innerHTML = '';
+  meeting.domainScores.forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'glass rounded-xl p-2.5 text-center text-xs';
+    const p = Math.round((d.pass / d.total) * 100);
+    div.innerHTML = `
+      <div class="text-sm">${d.label}</div>
+      <div class="text-lg font-bold mt-0.5" style="color:${d.score >= 6 ? '#4e8c6e' : '#c0392b'}">${d.score}</div>
+      <div class="text-[#8a8278]">${d.pass}/${d.total} 通过</div>
+    `;
+    ds.appendChild(div);
+  });
+
+  // Fusion timeline
+  const tl = document.getElementById('synthTimeline');
+  tl.innerHTML = '<h3 class="text-xs uppercase tracking-widest text-[#8a8278] mb-3 font-medium">🧬 融合过程</h3>';
+
+  if (meeting.synthesis) {
+    // Consensus
+    if (meeting.synthesis.consensus) {
+      meeting.synthesis.consensus.forEach((item, i) => {
+        const el = document.createElement('div');
+        el.className = 'synth-item glass rounded-xl p-3 flex gap-3 items-start';
+        el.innerHTML = `
+          <span class="text-base mt-0.5">${item.icon}</span>
+          <div>
+            <p class="text-xs leading-relaxed text-[#2c2820]">${item.text}</p>
+            <p class="text-[10px] text-[#8a8278] mt-1">来源: ${item.source}</p>
+          </div>
+        `;
+        tl.appendChild(el);
+        setTimeout(() => el.classList.add('reveal'), i * 400);
+      });
+    }
+
+    // Contradictions
+    if (meeting.synthesis.contradictions) {
+      const sep = document.createElement('div');
+      sep.className = 'text-xs uppercase tracking-widest text-[#8a8278] mt-5 mb-3 font-medium';
+      sep.textContent = '⚡ 矛盾点与调和';
+      tl.appendChild(sep);
+
+      meeting.synthesis.contradictions.forEach((item, i) => {
+        const el = document.createElement('div');
+        el.className = 'synth-item glass rounded-xl p-3';
+        el.innerHTML = `
+          <div class="flex items-center gap-2 mb-2">
+            <span>${item.icon}</span>
+            <span class="text-xs font-medium">${item.topic}</span>
+          </div>
+          <div class="flex gap-3 text-[10px] text-[#6a6258]">
+            <div class="flex-1 p-2 rounded-lg" style="background:rgba(192,57,43,0.05)">${item.viewA}</div>
+            <div class="flex-1 p-2 rounded-lg" style="background:rgba(44,40,32,0.04)">${item.viewB}</div>
+          </div>
+          <div class="mt-2 text-[11px] text-[#4e8c6e] font-medium">→ ${item.resolution}</div>
+        `;
+        tl.appendChild(el);
+        setTimeout(() => el.classList.add('reveal'), (meeting.synthesis.consensus.length + i) * 400);
+      });
+    }
+  }
+
+  // Action timeline
+  const at = document.getElementById('actionItems');
+  at.innerHTML = '';
+  if (meeting.synthesis && meeting.synthesis.actions) {
+    meeting.synthesis.actions.forEach(a => {
+      const div = document.createElement('div');
+      div.className = 'synth-item glass rounded-xl p-3';
+      div.innerHTML = `
+        <div class="text-xs font-medium text-[#4e8c6e] mb-1.5">▸ ${a.period}</div>
+        ${a.items.map(item => `<div class="flex items-start gap-2 text-[11px] text-[#6a6258] mb-1"><span class="mt-0.5 text-[#4e8c6e]">✓</span>${item}</div>`).join('')}
+      `;
+      at.appendChild(div);
+      setTimeout(() => div.classList.add('reveal'), 300);
+    });
+  }
+
+  document.getElementById('resetBtn').classList.remove('hidden');
+
+  // Scroll to synthesis
+  setTimeout(() => {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 500);
+}
+
+// ═══ Event Handlers ═══
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  const topic = document.getElementById('topicInput').value.trim();
+  if (!topic) { document.getElementById('topicInput').focus(); return; }
+
+  // For demo: use SAMPLE_MEETING with custom topic
+  const meeting = JSON.parse(JSON.stringify(SAMPLE_MEETING));
+  meeting.topic = topic;
+  runMeeting(meeting);
+});
+
+document.getElementById('topicInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('startBtn').click();
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  resetBoard();
+  document.getElementById('topicInput').value = '';
+  document.getElementById('topicInput').focus();
+});
+
+// ═══ Init ═══
+
+renderCards();
+
+// Auto-run demo after 500ms
+setTimeout(() => {
+  document.getElementById('topicInput').value = SAMPLE_MEETING.topic;
+  runMeeting(SAMPLE_MEETING);
+}, 500);
+</script>
+</body>
+</html>

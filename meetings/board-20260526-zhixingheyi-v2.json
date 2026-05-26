@@ -1,0 +1,24 @@
+{
+  "id": "board-20260526-zhixingheyi-v2",
+  "topic": "如何做到知行合一？多线任务人生规划",
+  "timestamp": "2026-05-26T23:45:00",
+  "agents_called": 10,
+  "average_score": 5.3,
+  "passed_count": 5,
+  "failed_count": 5,
+  "verdict": "FAILED",
+  "threshold": 6.0,
+  "synthesis_theme": "当前计划的核心矛盾：5线并行+$500K目标不可调和。董事会5.3/10否决，建议调整目标到$400K、砍到2线并行、前90天只做主业+搬家+睡眠。",
+  "votes": [
+    {"agent":"Naval Ravikant","role":"CFO","score":4,"verdict":"fail"},
+    {"agent":"Warren Buffett","role":"CFO","score":6,"verdict":"pass"},
+    {"agent":"段永平","role":"CFO","score":3,"verdict":"fail"},
+    {"agent":"Donald Trump","role":"CBO","score":7,"verdict":"pass"},
+    {"agent":"Dan Koe","role":"CMO","score":7,"verdict":"pass"},
+    {"agent":"Bryan Johnson","role":"CHO","score":4,"verdict":"fail"},
+    {"agent":"Andrew Huberman","role":"CHO","score":5,"verdict":"fail"},
+    {"agent":"张雪峰","role":"CSO","score":6,"verdict":"pass"},
+    {"agent":"Lidangzzz","role":"COO","score":7,"verdict":"pass"},
+    {"agent":"Elon Musk","role":"CVO","score":4,"verdict":"fail"}
+  ]
+}
