@@ -1,0 +1,29 @@
+{
+  "id": "board-20260529-worldcup-etf",
+  "topic": "2026 FIFA世界杯事件驱动ETF评选",
+  "clarifyAnswers": {},
+  "timestamp": "2026-05-29T00:00:00Z",
+  "agents_called": 10,
+  "vote_result": {
+    "IYZ": 4,
+    "BETZ": 3,
+    "JETS": 1,
+    "BJK": 1,
+    "XLC": 1
+  },
+  "board_pick": "IYZ",
+  "threshold": 6.0,
+  "verdict": "IYZ wins with 4/10 votes — plurality but not majority",
+  "agents": {
+    "naval": {"pick": "BETZ", "score": 7, "reasoning": "BETZ offers the cleanest asymmetric bet: down 27% from highs with a defined catalyst 3 weeks away, and every major sports betting event backtest shows positive returns — repeatable pattern with measurable demand leverage. WC26 on North American soil = largest addressable market spike sports betting has ever seen.", "key_concern": "Structural decline in sports betting stocks reflects real headwinds; buy-the-rumor-sell-the-news dynamics.", "position": "5-8% satellite position, hard exit by July 1."},
+    "trump": {"pick": "JETS", "score": 8, "reasoning": "This is a GREAT deal. World Cup coming to America, people need to FLY. JETS has the best momentum (up 22% in 3M). World Cup is bigger than Super Bowl. World Cup means travel, travel means jets, jets means money.", "key_concern": "SB25 was -6.5% showing event-driven travel demand can disappoint if already priced in. Fuel price spike risk.", "position": "Full position, go big. Stop-loss 8%, take profits +15-20% by July 19."},
+    "zhang": {"pick": "IYZ", "score": 7, "reasoning": "投影到底层：世界杯核心是全球注意力汇聚时信息分发的增量需求。IYZ持有无线运营商和通信基础设施——信息流的物理管道。2026首届48队赛事且在美国举办，全球流媒体消费暴增。电信寡头的网络效应天然具备飞轮结构，和字节推荐系统网络效应同构。持有信息时代水电煤的逻辑。", "key_concern": "T-Mobile权重过高（~25%）单一公司集中风险。", "position": "核心仓位40-50%，管道型资产做事件驱动核心持仓。"},
+    "buffett": {"pick": "BJK", "score": 7, "reasoning": "BJK is down 25% from 52w high — widest safety margin. Gaming has real structural moats: limited licenses, high customer loyalty. BJK surged 23% during WC22, consistent positive returns. World Cup is single biggest gambling event on the planet.", "key_concern": "Event may be partially priced in. Regulatory crackdowns in Macau could worsen.", "position": "轻仓参与（输出不完整）。"},
+    "dan_koe": {"pick": "IYZ", "score": 7.5, "reasoning": "世界杯不是只关于球场——是关于30亿人同时盯着屏幕。IYZ坐拥注意力管道本身。1年涨57.6%说明市场已在为结构性叙事定价，距52周高只剩2.4%是突破前最后的安静期。BETZ回测更一致但一年跌12.7%说明市场在抛弃纯betting叙事。管道才是永远不会被替代的层。", "key_concern": "57.6%的1Y涨幅已经price in大量预期。", "position": "70%现在进，30%留到6月4日附近回调再加。7月10日左右分批出。"},
+    "lidangzzz": {"pick": "BETZ", "score": 7, "reasoning": "BETZ事件回测最稳定——三次事件平均+8.6%，方差最小。距52周高-27.2%安全边际最大。BETZ的体育博彩+世界杯是1:1映射关系，不是蹭概念。BJK的WC22 +23.2%只是极端值。", "key_concern": "样本量只有3次，统计置信度有限。美国博彩监管政策利空可能对冲世界杯利好。", "position": "轻仓5%以内，止损-10%止盈+15%。"},
+    "duan": {"pick": "XLC", "score": 5, "reasoning": "5支ETF都不在能力圈内。短期事件投机不是买公司。但XLC勉强看得懂底牌：成分股Google/Meta/Netflix护城河真实，世界杯广告收入大增逻辑最确定。不过按段永平的标准这种短期投机仓位绝对不能重。", "key_concern": "不知道这些ETF背后的公司值多少价钱。不是能力圈内的投资。", "position": "最多5-8%，有止损纪律。亏了完全不心疼才能参与。"},
+    "bryan": {"pick": "IYZ", "score": 7, "reasoning": "5维数据测量全部优化：事件alpha一致(2/2正收益+7.3%均值)、动量对齐(全部绿色)、距52w高最近(-2.4%)、信噪比最高(零负回测)、风险调整最优(不在深跌中)。IYZ是唯一同时优化全部5个测量协议的ETF。", "key_concern": "只有2个事件数据点，样本量较小。5G建设利好可能已price in。", "position": "核心仓位60-70%，留30-40%现金等6月第一周BJK/BETZ动量反转确认后再分配。"},
+    "huberman": {"pick": "BETZ", "score": 7, "reasoning": "从神经科学角度，世界杯是全球最大的多巴胺事件——数十亿观众的多巴胺释放与比赛结果同步，体育博彩/游戏生态系统(BETZ)是这个多巴胺激活的直接行为变现回测。BETZ事件回测零失败周期。距52w高-27.2%意味着市场尚未price in——这是不对称上行，神经科学中的'多巴胺预测误差'机会。", "key_concern": "行业结构性不受欢迎，监管风险和促销支出压缩。", "position": "3-5%，止损$16(-13.7%)，分批止盈+8%和+15%，持有窗口6月15-7月10日。"},
+    "elon": {"pick": "IYZ", "score": 8, "reasoning": "First principles: 2026世界杯3国合办美国本土=创纪录的流媒体需求集中在国内电信基建。IYZ核心电信股按用量收费模式变现流量暴增——可扩展、有杠杆、不需要监管松绑。JETS有燃油成本脆弱性。BETZ/BJK有监管逆风且仍距高点25-27%。IYZ的+57.6% 1Y趋势确认结构性需求已在动量中。距52w高仅-2.4%意味着在上升趋势中——事件驱动要买动量不要买折扣。", "key_concern": "FIFA与单一平台签独家全球流媒协议可能导致IYZ内单股暴跌。电信资本支出周期可能在世界杯期间压缩利润率。", "position": "事件驱动仓位的30-40%，止损$40.5(-8.2%)，目标价$50-52。"}
+  }
+}

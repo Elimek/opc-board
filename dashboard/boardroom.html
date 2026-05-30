@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OPC Boardroom</title>
-<script src="https://cdn.tailwindcss.com">
-</script>
+<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Georgia&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,7 +56,7 @@
   <!-- ═══ Header ═══ -->
   <header class="text-center mb-4">
     <h1 class="name text-3xl sm:text-4xl font-normal tracking-tight text-[#2c2820] mb-1">🏢 OPC Boardroom</h1>
-    <p class="text-sm text-[#8a8278] italic">One-Person Company · 10 Directors · Every Topic</p>
+    <p class="text-sm text-[#8a8278] italic">One-Person Company · 9 Directors · Every Topic</p>
   </header>
 
   <!-- ═══ Phase Indicator ═══ -->
@@ -85,14 +84,19 @@
         <span class="text-lg">🔍</span>
         <h2 class="name text-lg font-normal">董事会需要补充信息</h2>
       </div>
-      <p class="text-xs text-[#8a8278] mb-4">为了让 10 位董事给出更准确的建议，请回答以下问题：</p>
-      <div id="clarifyQuestions" class="space-y-3 mb-4"></div>
+      <p class="text-xs text-[#8a8278] mb-4">为了让 9 位董事给出更准确的建议，请回答以下问题（可留空直接跳过）：</p>
+      <div class="mb-3">
+        <label class="block text-xs font-medium text-[#2c2820] mb-1.5">背景信息（收入、资产、目标、约束等，越详细越好）</label>
+        <textarea id="contextInput" rows="5" class="w-full topic-input rounded-xl px-4 py-3 text-xs text-[#2c2820] placeholder:text-[#b0a89e] resize-none" placeholder="例：月薪HK$30K，储蓄目标$500K，现有股票SOXQ 98股+QCOM 70股，风险承受中等…"></textarea>
+      </div>
       <button id="clarifySubmitBtn" class="glass-strong rounded-xl px-5 py-2.5 text-sm font-medium text-[#2c2820] hover:bg-white/85 transition">开始董事会议</button>
+      <button id="skipClarifyBtn" class="ml-2 rounded-xl px-4 py-2.5 text-xs text-[#8a8278] hover:text-[#2c2820] transition">跳过，直接开始</button>
     </div>
   </div>
 
   <!-- ═══ Phase 2: Board Meeting ═══ -->
   <div id="phase-board" class="hidden mb-8">
+    <div id="statusBar" class="text-center text-xs text-[#8a8278] mb-3 h-4"></div>
     <div class="agent-grid grid" id="agentGrid"></div>
   </div>
 
@@ -109,11 +113,11 @@
         <div class="glass rounded-xl p-3"><div class="text-lg font-bold" id="passCount">-</div><div class="text-[#8a8278] mt-1">通过</div></div>
         <div class="glass rounded-xl p-3"><div class="text-lg font-bold" id="failCount">-</div><div class="text-[#8a8278] mt-1">未通过</div></div>
       </div>
-      <div id="domainScores" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-5"></div>
+      <div id="agentDetailList" class="space-y-2 mb-5"></div>
       <div id="synthTimeline" class="space-y-3"></div>
       <div id="actionTimeline" class="mt-5 pt-4 border-t border-[rgba(44,40,32,0.08)]">
-        <h3 class="text-xs uppercase tracking-widest text-[#8a8278] mb-3 font-medium">📋 行动时间表</h3>
-        <div id="actionItems" class="space-y-2"></div>
+        <h3 class="text-xs uppercase tracking-widest text-[#8a8278] mb-3 font-medium">📋 综合建议</h3>
+        <div id="synthesisText" class="text-xs text-[#6a6258] leading-relaxed whitespace-pre-wrap"></div>
       </div>
     </div>
   </div>
@@ -123,96 +127,42 @@
     <div class="glass rounded-2xl p-5 sm:p-7 animate-slide-up">
       <div class="flex items-center gap-2 mb-3">
         <span class="text-lg">💬</span>
-        <h2 class="name text-lg font-normal">追问董事会</h2>
+        <h2 class="name text-lg font-normal">新议题</h2>
       </div>
-      <p class="text-xs text-[#8a8278] mb-3">对裁决有疑问？或想深入某个方向？向董事会追问：</p>
+      <p class="text-xs text-[#8a8278] mb-3">提出一个新的决策议题：</p>
       <div class="flex gap-3">
-        <input id="followupInput" type="text" class="followup-input flex-1 rounded-xl px-4 py-3 text-sm text-[#2c2820] placeholder:text-[#b0a89e]" placeholder="追问… e.g. 为什么CFO一致反对TQQQ？">
-        <button id="followupBtn" class="glass-strong rounded-xl px-5 py-3 text-sm font-medium text-[#2c2820] hover:bg-white/85 transition whitespace-nowrap">追问</button>
+        <input id="newTopicInput" type="text" class="topic-input flex-1 rounded-xl px-4 py-3 text-sm text-[#2c2820] placeholder:text-[#b0a89e]" placeholder="新议题…">
+        <button id="newTopicBtn" class="glass-strong rounded-xl px-5 py-3 text-sm font-medium text-[#2c2820] hover:bg-white/85 transition whitespace-nowrap">开始</button>
       </div>
-      <div id="followupResult" class="hidden mt-4"></div>
     </div>
-
-    <!-- Reset -->
     <div class="text-center mt-4">
-      <button id="resetBtn" class="glass rounded-xl px-5 py-2.5 text-sm text-[#6a6258] hover:bg-white/80 transition">新议题</button>
+      <button id="resetBtn" class="glass rounded-xl px-5 py-2.5 text-sm text-[#6a6258] hover:bg-white/80 transition">回到首页</button>
     </div>
   </div>
 
 </div>
 
 <script>
+// ─── Board Configuration (9 agents) ──────────────────────────────────────────
 const BOARD = [
-  { id:'naval',   name:'Naval Ravikant',  role:'CFO', domain:'finance',    emoji:'💰', color:'rgba(91,140,154,0.08)' },
-  { id:'buffett', name:'Warren Buffett',  role:'CFO', domain:'finance',    emoji:'💰', color:'rgba(91,140,154,0.08)' },
-  { id:'duan',    name:'段永平',            role:'CFO', domain:'finance',    emoji:'💰', color:'rgba(91,140,154,0.08)' },
-  { id:'trump',   name:'Donald Trump',    role:'CBO', domain:'brand',      emoji:'📱', color:'rgba(139,107,154,0.08)' },
-  { id:'dankoe',  name:'Dan Koe',         role:'CMO', domain:'brand',      emoji:'📱', color:'rgba(139,107,154,0.08)' },
-  { id:'bryan',   name:'Bryan Johnson',   role:'CHO', domain:'health',     emoji:'🧬', color:'rgba(90,154,107,0.08)' },
-  { id:'huberman',name:'Andrew Huberman', role:'CHO', domain:'health',     emoji:'🧬', color:'rgba(90,154,107,0.08)' },
-  { id:'zhang',   name:'张雪峰',            role:'CSO', domain:'strategy',  emoji:'🧠', color:'rgba(140,122,79,0.08)' },
-  { id:'lidang',  name:'Lidangzzz',       role:'COO', domain:'strategy',  emoji:'🧠', color:'rgba(140,122,79,0.08)' },
-  { id:'musk',    name:'Elon Musk',       role:'CVO', domain:'innovation',emoji:'🚀', color:'rgba(79,140,154,0.08)' },
+  { id:'naval-ravikant',  name:'Naval Ravikant',  role:'CFO', domain:'finance',    emoji:'💰', color:'rgba(245,158,11,0.08)'  },
+  { id:'donald-trump',    name:'Donald Trump',    role:'CBO', domain:'brand',      emoji:'🏆', color:'rgba(239,68,68,0.08)'   },
+  { id:'steve-jobs',      name:'Steve Jobs',      role:'CPO', domain:'product',    emoji:'🍎', color:'rgba(107,114,128,0.08)' },
+  { id:'warren-buffett',  name:'Warren Buffett',  role:'CFO', domain:'finance',    emoji:'📈', color:'rgba(34,197,94,0.08)'   },
+  { id:'dan-koe',         name:'Dan Koe',         role:'CMO', domain:'brand',      emoji:'🎙️', color:'rgba(168,85,247,0.08)'  },
+  { id:'duan-yongping',   name:'Duan Yongping',   role:'CFO', domain:'finance',    emoji:'⚖️', color:'rgba(20,184,166,0.08)'  },
+  { id:'bryan-johnson',   name:'Bryan Johnson',   role:'CHO', domain:'health',     emoji:'🧬', color:'rgba(236,72,153,0.08)'  },
+  { id:'andrew-huberman', name:'Andrew Huberman', role:'CHO', domain:'health',     emoji:'🧠', color:'rgba(99,102,241,0.08)'  },
+  { id:'elon-musk',       name:'Elon Musk',       role:'CVO', domain:'innovation', emoji:'🚀', color:'rgba(100,116,139,0.08)' },
 ];
-const BATCHES = [[0,1,2],[3,4,5],[6,7,8],[9]];
+// Batch allocation: 3-2-3-1
+const BATCHES = [[0,1,2],[3,4],[5,6,7],[8]];
 
-const SAMPLE_CLARIFY = [
-  { id:'q1', label:'月薪 HK$30K 税前，扣除 MPF 和税后净收入大约多少？', answer:'' },
-  { id:'q2', label:'现租约几月到期？搬家的 deadline 是哪天？', answer:'' },
-  { id:'q3', label:'母亲签证已经递交了吗？还是刚开始了解流程？', answer:'' },
-  { id:'q4', label:'新公司试用期多长？有没有业绩奖金制度？', answer:'' },
-];
+const DOMAIN_LABELS = { finance:'💰 财务', brand:'📱 品牌', health:'🧬 健康', product:'🍎 产品', innovation:'🚀 创新' };
 
-const SAMPLE_MEETING = {
-  topic:'如何做到知行合一？多线任务人生规划',
-  avgScore:5.3, passedCount:5, failedCount:5, threshold:6.0,
-  domainScores:[
-    {domain:'finance',label:'💰 财务',score:4.3,pass:0,total:3},
-    {domain:'brand',label:'📱 品牌',score:7.0,pass:2,total:2},
-    {domain:'health',label:'🧬 健康',score:4.5,pass:0,total:2},
-    {domain:'strategy',label:'🧠 战略',score:6.3,pass:2,total:2},
-    {domain:'innovation',label:'🚀 创新',score:4.0,pass:0,total:1},
-  ],
-  agents:{
-    naval:{score:4,passed:false,reasoning:"Your savings goal ($200k in 7 months) is mathematically impossible on your current income and expenses. Attention fragmentation across 5+ projects violates the power law of leverage.",concerns:["目标不现实","注意力碎片化","通勤成本"],advice:["调整目标到$360K","延迟自媒体6个月","卖手机一天内搞定","母亲签证延到8月","每天90分钟深度学习主业"]},
-    buffett:{score:6,passed:true,reasoning:"AI engineering job is a genuine moat with high earning potential. Cutting rent is a clear margin-of-safety move. Target of +$200k unrealistic without side income.",concerns:["储蓄缺口","低护城河活动","通勤伤害主业"],advice:["调整目标到$400K","90%精力投主业","立刻卖坏手机","延迟母亲签证"]},
-    duan:{score:3,passed:false,reasoning:"多线并行导致每件事都做不透。被焦虑驱动而非理性规划。自媒体和粤语与存钱目标弱相关。",concerns:["多线并行","焦虑驱动","缺优先级"],advice:["砍自媒体粤语到年底","本分做事一周搬家","母亲签证排搬家后","每天只列三件事"]},
-    trump:{score:7,passed:true,reasoning:"$300k cash + AI skills as trumps. HK$30k/month is passable. Hitting $500k needs maximum leverage — brand, rent negotiation, fix iPhone before sell.",concerns:["焦虑影响谈判","资源分散","坏手机亏钱"],advice:["立刻启动AI自媒体每周2条","谈判年付租房降价","修iPhone多赚2-3k","自媒体有2000粉后办签证"]},
-    dankoe:{score:7,passed:true,reasoning:"Strong foundation. Anxiety from skipping to final product before building system. Start with single repeatable content loop. Need 24-hour feedback micro-loop.",concerns:["交易vs资产","认知带宽满","缺反馈循环"],advice:["前90天每天40秒短视频","$5k买二手iPhone拍","建一人公司迭代日志","3个月0销售","粤语录成内容"]},
-    bryan:{score:4,passed:false,reasoning:"6 transitions on physiology already in deficit. Sympathetic nervous system chronically elevated. Operating at 95% CPU with no cooling.",concerns:["生理储备耗尽","无健康协议","久坐城市环境"],advice:["22:30-06:30睡眠","晨间光照+盐水","追踪HRV","预装环境减决策"]},
-    huberman:{score:5,passed:false,reasoning:"HPA axis elevated cortisol from 6 stressors. Impairs prefrontal cortex. 'Can\\'t enjoy process' = dopamine anticipatory-loop trap.",concerns:["皮质醇高","多巴胺预期","无恢复窗口"],advice:["晨间光照10分钟","2个90分钟深度块","咖啡因延迟90分","火柴仪式","日落观看"]},
-    zhang:{score:6,passed:true,reasoning:"有一定经济基础。核心瓶颈不是钱是决策排序。焦虑来自'都想做'，战略是'选择不做'。",concerns:["精力碎片化","副业回报慢","签证反复跑"],advice:["本周卖手机搬家公司","母亲签证一次搞定","自媒体暂停到年底","月存25k","焦虑清单贴墙"]},
-    lidang:{score:7,passed:true,reasoning:"Moderate feasibility. Prioritize cashflow stability and skill-building. Achievable with disciplined execution leveraging AI freelance.",concerns:["存款耗尽风险","burnout风险","副业不确定"],advice:["6月卖手机+粤语","7-8月搬家+AI作品集","9-11月副业$15k/月","12月复盘"]},
-    musk:{score:4,passed:false,reasoning:"First principles: 168h/week. +$200k in 7mo = $28.5k/mo savings = physically impossible. 6 vectors dilutes focus.",concerns:["目标不可行","多向量","副业投机"],advice:["砍粤语自媒体90天","卖手机找近公寓","母亲签证一次搞定","目标$400K","找经理定Q1 OKR"]},
-  },
-  synthesis:{
-    consensus:[
-      {icon:'💰',text:'CFO一致: 目标$500K不现实，调整到$400K (存$100K/7月=$14K/月)',source:'Naval+Buffett+Duan+Musk'},
-      {icon:'🧬',text:'CHO警报: 6条并行皮质醇已偏高，前90天优先睡眠+晨光',source:'Bryan+Huberman'},
-      {icon:'🧠',text:'战略层: 卖手机搬家用1天搞定不要优化细节',source:'Zhang+Lidang+Trump'},
-      {icon:'📱',text:'品牌层: 自媒体方向对但时机要调 — 先记录不发布',source:'Trump+DanKoe (调和CFO)'},
-    ],
-    contradictions:[
-      {icon:'⚡',topic:'自媒体时机',viewA:'Trump: 立刻启动',viewB:'CFO: 等6个月',resolution:'调和: 开始记录内容但不发布，90天后决定是否上线'},
-      {icon:'⚡',topic:'搬家地点',viewA:'Trump: 别去屯门去荃湾',viewB:'Naval: 通勤<50分+房租<$6K才搬',resolution:'折中: 先短租荃湾西实测通勤，9月再签长约'},
-    ],
-    actions:[
-      {period:'本周',items:['卖坏手机 — 直接去先达广场或Carousell','搬家公司报价 — 预约1天完成','母亲签证 — 下载清单一次性寄出']},
-      {period:'6月 (入职月)',items:['粤语播客15分钟/天(通勤)','晨间光照10分钟','22:30-06:30睡眠','每晚列3件已完成','约经理定Q1 OKR']},
-      {period:'7-8月 (稳定期)',items:['短租荃湾西$7-8K','记录AI日常存着不发','评估存款: 月$12-14K净存?']},
-      {period:'9月 (决策点)',items:['决定长居点','评估是否启动自媒体','复盘存款接近$400K?']},
-    ],
-  },
-};
+let state = { phase:0, topic:'', context:'', results:null };
 
-const SAMPLE_FOLLOWUP = {
-  question:'为什么CFO一致反对TQQQ？但Trump和Dan Koe却给7分？',
-  answer:'CFO三人（Naval 4/Buffett 6/Duan 3）的核心分歧不在TQQQ本身——议题是人生规划而非投资组合。Naval和Duan的低分（4/3）是因为他们认为「5条并行+$500K目标」这个结构本身有矛盾，不是针对具体标的。Buffett给了6分因为他识别出AI主业是真正的护城河。Trump和Dan Koe的7分来自品牌/内容视角：他们看到了自媒体杠杆的潜力，这是CFO视角不覆盖的维度。这就是为什么需要10个视角——没有人看到全部。',
-};
-
-let state = { phase:0, context:{}, meeting:null };
-
-// ─── Phase Control ───
+// ─── Phase Control ──────────────────────────────────────────────────────────
 function setPhase(n) {
   state.phase = n;
   ['phase-topic','phase-clarify','phase-board','phase-synth','phase-followup'].forEach((id,i)=>{
@@ -220,18 +170,20 @@ function setPhase(n) {
   });
   for(let i=0;i<=4;i++){
     const dot = document.getElementById('pd'+i);
-    dot.classList.toggle('active', i===n);
-    dot.classList.toggle('done', i<n);
+    if(dot){ dot.classList.toggle('active', i===n); dot.classList.toggle('done', i<n); }
   }
 }
 
-// ─── Render Agent Cards ───
+// ─── Render Agent Cards ─────────────────────────────────────────────────────
 function renderCards() {
-  const grid = document.getElementById('agentGrid'); grid.innerHTML = '';
+  const grid = document.getElementById('agentGrid');
+  grid.innerHTML = '';
   BOARD.forEach((agent,idx)=>{
     const card = document.createElement('div');
-    card.className='agent-card glass rounded-xl p-3 sm:p-4'; card.id='card-'+agent.id;
-    card.style.background=agent.color; card.dataset.index=idx;
+    card.className='agent-card glass rounded-xl p-3 sm:p-4';
+    card.id='card-'+agent.id;
+    card.style.background=agent.color;
+    card.dataset.index=idx;
     card.innerHTML=`
       <div class="flex items-center gap-2.5 mb-2.5">
         <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-base sm:text-lg glass-strong" style="background:rgba(255,255,255,0.7)">${agent.emoji}</div>
@@ -239,7 +191,10 @@ function renderCards() {
       </div>
       <div class="score-bar mb-2"><div class="score-bar-fill" id="sf-${agent.id}"></div></div>
       <div class="flex items-center justify-between"><span class="score-text text-sm font-semibold" id="st-${agent.id}">-/10</span><span class="status-badge text-[10px] text-[#b0a89e]" id="sb-${agent.id}">等待中</span></div>
-      <div class="reasoning-content mt-3" id="rc-${agent.id}"><div class="text-xs text-[#6a6258] leading-relaxed" id="rr-${agent.id}"></div><div class="mt-2 text-[10px] text-[#8a8278]" id="rcn-${agent.id]"></div></div>
+      <div class="reasoning-content mt-3" id="rc-${agent.id}">
+        <div class="text-xs text-[#6a6258] leading-relaxed" id="rr-${agent.id}"></div>
+        <div class="mt-2 text-[10px] text-[#8a8278]" id="rad-${agent.id}"></div>
+      </div>
     `;
     card.addEventListener('click',()=>{
       document.getElementById('rc-'+agent.id).classList.toggle('open');
@@ -248,8 +203,13 @@ function renderCards() {
   });
 }
 
-// ─── Run Board Meeting Animation ───
-async function runMeeting(meeting) {
+// ─── Run Board Meeting ───────────────────────────────────────────────────────
+async function runMeeting() {
+  const btn = document.getElementById('clarifySubmitBtn');
+  const skipBtn = document.getElementById('skipClarifyBtn');
+  btn.disabled = true; skipBtn.disabled = true;
+  btn.textContent = '连接 OpenRouter 中...';
+
   // Reset cards
   BOARD.forEach(a=>{
     const card=document.getElementById('card-'+a.id);
@@ -259,169 +219,180 @@ async function runMeeting(meeting) {
     document.getElementById('st-'+a.id).textContent='-/10';
     document.getElementById('st-'+a.id).style.color='#2c2820';
     document.getElementById('sb-'+a.id).textContent='等待中';
-    document.getElementById('sb-'+a.id).style.color='#b0a89e';
+    document.querySelector('sb-'+a.id).style.color='#b0a89e';
     document.getElementById('rc-'+a.id).classList.remove('open');
   });
-  state.meeting=meeting;
+
   setPhase(2);
+  document.getElementById('statusBar').textContent = '正在连接 OpenRouter API，9位董事思考中…（最多45秒）';
+
+  try {
+    const res = await fetch('/api/evaluate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ topic: state.topic, context: state.context }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: '请求失败' }));
+      throw new Error(err.detail || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    state.results = data;
+    await animateResults(data);
+    renderSynthesis(data);
+    document.getElementById('statusBar').textContent = `评估完成 · 综合均分 ${data.avg_score}/10`;
+  } catch(e) {
+    document.getElementById('statusBar').innerHTML = `<span class="text-red-500">❌ 错误：${e.message}</span>`;
+    btn.disabled = false;
+    btn.textContent = '重试';
+    return;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '开始董事会议';
+}
+
+// ─── Animate Results (batch by batch) ────────────────────────────────────────
+async function animateResults(data) {
+  const resultsMap = {};
+  data.results.forEach(r => { resultsMap[r.name] = r; });
 
   for(const batch of BATCHES){
-    await new Promise(r=>setTimeout(r,500));
+    await new Promise(r=>setTimeout(r,400));
     batch.forEach((idx,i)=>{
       const a=BOARD[idx]; const card=document.getElementById('card-'+a.id);
-      setTimeout(()=>{ card.classList.add('reveal','thinking','breathe');
+      setTimeout(()=>{
+        card.classList.add('reveal','thinking','breathe');
         document.getElementById('sb-'+a.id).textContent='⌛ 思考中...';
         document.getElementById('sb-'+a.id).style.color='#b8860b';
-      }, i*200);
+      }, i*150);
     });
-    await new Promise(r=>setTimeout(r,1500));
+    await new Promise(r=>setTimeout(r,1200));
     batch.forEach((idx,i)=>{
-      const a=BOARD[idx]; const d=meeting.agents[a.id]; if(!d) return;
+      const a=BOARD[idx]; const d=resultsMap[a.id]; if(!d) return;
       setTimeout(()=>{
         const card=document.getElementById('card-'+a.id);
-        card.classList.remove('thinking','breathe'); card.classList.add('done');
-        const fill=document.getElementById('sf-'+a.id); fill.style.width=(d.score*10)+'%';
-        fill.className='score-bar-fill '+(d.passed?'pass':'fail');
+        card.classList.remove('thinking','breathe');
+        card.classList.add('done');
+        const fill=document.getElementById('sf-'+a.id);
+        fill.style.width=(d.score*10)+'%';
+        fill.className='score-bar-fill '+(d.score>=6?'pass':'fail');
         document.getElementById('st-'+a.id).textContent=d.score+'/10';
-        document.getElementById('st-'+a.id).style.color=d.passed?'#4e8c6e':'#c0392b';
+        document.getElementById('st-'+a.id).style.color=d.score>=6?'#4e8c6e':'#c0392b';
         document.getElementById('sb-'+a.id).textContent='✓ 完成';
         document.getElementById('sb-'+a.id).style.color='#4e8c6e';
-        document.getElementById('rr-'+a.id).innerHTML='<p class="mb-1">'+d.reasoning+'</p>';
-        if(d.concerns) document.getElementById('rcn-'+a.id).innerHTML = '⚠️ '+d.concerns.map(c=>'<span class="inline-block bg-[rgba(192,57,43,0.06)] rounded px-1.5 py-0.5 mr-1 mb-1">'+c+'</span>').join('');
-      }, i*350);
+        document.getElementById('rr-'+a.id).innerHTML='<p class="mb-1">'+esc(d.reasoning)+'</p>';
+        if(d.key_concerns && d.key_concerns.length)
+          document.getElementById('rad-'+a.id).innerHTML='⚠️ '+d.key_concerns.map(c=>'<span class="inline-block bg-[rgba(192,57,43,0.06)] rounded px-1.5 py-0.5 mr-1 mb-1">'+esc(c)+'</span>').join('');
+      }, i*300);
     });
-    await new Promise(r=>setTimeout(r,1800));
+    await new Promise(r=>setTimeout(r,1500));
   }
-  await new Promise(r=>setTimeout(r,800));
-  renderSynthesis(meeting);
 }
 
-function renderSynthesis(m){
+// ─── Render Synthesis ────────────────────────────────────────────────────────
+function renderSynthesis(data) {
   setPhase(3);
+  const THRESHOLD = 6.0;
+  const passed = data.results.filter(r=>r.score>=THRESHOLD).length;
+  const failed = data.results.length - passed;
+
   const banner=document.getElementById('verdictBanner');
-  const passed=m.avgScore>=m.threshold;
-  banner.textContent=passed?'✅ 通过 — '+m.avgScore+'/'+m.threshold:'❌ 未通过 — '+m.avgScore+'/'+m.threshold+' (门槛 '+m.threshold+')';
-  banner.style.background=passed?'rgba(78,140,110,0.1)':'rgba(192,57,43,0.08)';
-  banner.style.color=passed?'#4e8c6e':'#c0392b';
-  document.getElementById('avgScore').textContent=m.avgScore+'/10';
-  document.getElementById('passCount').textContent=m.passedCount;
-  document.getElementById('failCount').textContent=m.failedCount;
+  const passStr = data.avg_score >= THRESHOLD;
+  banner.textContent = passStr ? '✅ 通过 — '+data.avg_score+'/' + THRESHOLD : '❌ 未通过 — '+data.avg_score+'/'+THRESHOLD+' (门槛 '+THRESHOLD+')';
+  banner.style.background = passStr ? 'rgba(78,140,110,0.1)' : 'rgba(192,57,43,0.08)';
+  banner.style.color = passStr ? '#4e8c6e' : '#c0392b';
 
-  const ds=document.getElementById('domainScores'); ds.innerHTML='';
-  m.domainScores.forEach(d=>{
-    const div=document.createElement('div');
-    div.className='glass rounded-xl p-2.5 text-center text-xs';
-    div.innerHTML=`<div class="text-sm">${d.label}</div><div class="text-lg font-bold mt-0.5" style="color:${d.score>=6?'#4e8c6e':'#c0392b'}">${d.score}</div><div class="text-[#8a8278]">${d.pass}/${d.total} 通过</div>`;
-    ds.appendChild(div);
-  });
+  document.getElementById('avgScore').textContent = data.avg_score+'/10';
+  document.getElementById('passCount').textContent = passed;
+  document.getElementById('failCount').textContent = failed;
 
-  const tl=document.getElementById('synthTimeline');
-  tl.innerHTML='<h3 class="text-xs uppercase tracking-widest text-[#8a8278] mb-3 font-medium">🧬 融合过程</h3>';
-  if(m.synthesis){
-    if(m.synthesis.consensus) m.synthesis.consensus.forEach((item,i)=>{
-      const el=document.createElement('div');
-      el.className='synth-item glass rounded-xl p-3 flex gap-3 items-start';
-      el.innerHTML=`<span class="text-base mt-0.5">${item.icon}</span><div><p class="text-xs leading-relaxed">${item.text}</p><p class="text-[10px] text-[#8a8278] mt-1">来源: ${item.source}</p></div>`;
-      tl.appendChild(el); setTimeout(()=>el.classList.add('reveal'),i*300);
-    });
-    if(m.synthesis.contradictions){
-      const sep=document.createElement('div');
-      sep.className='text-xs uppercase tracking-widest text-[#8a8278] mt-5 mb-3 font-medium';
-      sep.textContent='⚡ 矛盾点与调和'; tl.appendChild(sep);
-      m.synthesis.contradictions.forEach((item,i)=>{
-        const el=document.createElement('div');
-        el.className='synth-item glass rounded-xl p-3';
-        el.innerHTML=`<div class="flex items-center gap-2 mb-2"><span>${item.icon}</span><span class="text-xs font-medium">${item.topic}</span></div><div class="flex gap-3 text-[10px] text-[#6a6258]"><div class="flex-1 p-2 rounded-lg" style="background:rgba(192,57,43,0.05)">${item.viewA}</div><div class="flex-1 p-2 rounded-lg" style="background:rgba(44,40,32,0.04)">${item.viewB}</div></div><div class="mt-2 text-[11px] text-[#4e8c6e] font-medium">→ ${item.resolution}</div>`;
-        tl.appendChild(el);
-        setTimeout(()=>el.classList.add('reveal'),((m.synthesis.consensus?.length||0)+i)*300);
-      });
-    }
-  }
+  // Agent detail list
+  const adl = document.getElementById('agentDetailList');
+  adl.innerHTML = data.results.map(r=>{
+    const pass = r.score >= THRESHOLD;
+    return `<div class="flex gap-3 p-2 rounded-lg bg-white/40">
+      <div class="flex-shrink-0 w-7 h-7 rounded-full bg-white/70 flex items-center justify-center text-xs">${getEmoji(r.name)}</div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 mb-0.5">
+          <span class="text-xs font-semibold text-[#2c2820]">${r.title}</span>
+          <span class="text-xs font-bold ${pass?'text-green-600':'text-red-600'}">${r.score}分</span>
+          <span class="text-[10px] text-[#8a8278]">${r.role}</span>
+        </div>
+        <div class="text-[11px] text-[#6a6258] leading-relaxed">${esc(r.reasoning)}</div>
+        ${r.action_advice.length ? `<div class="mt-1 text-[10px] text-[#8a8278]">💡 ${esc(r.action_advice.slice(0,2).join(' · '))}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
 
-  const at=document.getElementById('actionItems'); at.innerHTML='';
-  if(m.synthesis?.actions) m.synthesis.actions.forEach(a=>{
-    const div=document.createElement('div');
-    div.className='synth-item glass rounded-xl p-3';
-    div.innerHTML=`<div class="text-xs font-medium text-[#4e8c6e] mb-1.5">▸ ${a.period}</div>${a.items.map(it=>'<div class="flex items-start gap-2 text-[11px] text-[#6a6258] mb-1"><span class="mt-0.5 text-[#4e8c6e] shrink-0">✓</span>'+it+'</div>').join('')}`;
-    at.appendChild(div); setTimeout(()=>div.classList.add('reveal'),300);
-  });
+  // Synthesis text
+  document.getElementById('synthesisText').textContent = data.synthesis || '无综合建议。';
 
   setTimeout(()=>{
-    document.getElementById('phase-followup').classList.contains('hidden') && setPhase(4);
     document.getElementById('phase-synth').scrollIntoView({behavior:'smooth',block:'start'});
-  },600);
+  },400);
 }
 
-// ─── Clarification ───
-function showClarify(questions){
-  const c=document.getElementById('clarifyQuestions'); c.innerHTML='';
-  questions.forEach((q,i)=>{
-    const div=document.createElement('div');
-    div.className='glass rounded-xl p-3 animate-fade';
-    div.style.animationDelay=(i*0.12)+'s';
-    div.innerHTML=`<label class="block text-xs font-medium text-[#2c2820] mb-1.5">${q.label}</label><input type="text" class="clarify-answer w-full topic-input rounded-lg px-3 py-2 text-xs" data-qid="${q.id}" placeholder="输入..." value="${q.answer||''}">`;
-    c.appendChild(div);
-  });
-  setPhase(1);
-}
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+const EMOJI_MAP = {
+  'naval-ravikant':'💰','donald-trump':'🏆','steve-jobs':'🍎',
+  'warren-buffett':'📈','dan-koe':'🎙️','duan-yongping':'⚖️',
+  'bryan-johnson':'🧬','andrew-huberman':'🧠','elon-musk':'🚀'
+};
+function getEmoji(name){ return EMOJI_MAP[name]||'🔮'; }
+function esc(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
 
-// ─── Event Handlers ───
+// ─── Event Handlers ─────────────────────────────────────────────────────────
 document.getElementById('startBtn').addEventListener('click',()=>{
   const topic=document.getElementById('topicInput').value.trim();
   if(!topic){document.getElementById('topicInput').focus();return;}
-  state.context.topic=topic;
-  showClarify(SAMPLE_CLARIFY);
+  state.topic=topic;
+  setPhase(1);
 });
-
 document.getElementById('topicInput').addEventListener('keydown',(e)=>{
   if(e.key==='Enter') document.getElementById('startBtn').click();
 });
 
 document.getElementById('clarifySubmitBtn').addEventListener('click',()=>{
-  const answers={};
-  document.querySelectorAll('.clarify-answer').forEach(inp=>{
-    answers[inp.dataset.qid]=inp.value.trim();
-  });
-  state.context.clarifyAnswers=answers;
-  const m=JSON.parse(JSON.stringify(SAMPLE_MEETING));
-  m.topic=state.context.topic;
-  runMeeting(m);
+  state.context = document.getElementById('contextInput').value.trim();
+  runMeeting();
+});
+document.getElementById('skipClarifyBtn').addEventListener('click',()=>{
+  state.context = document.getElementById('contextInput').value.trim();
+  runMeeting();
+});
+document.getElementById('contextInput').addEventListener('keydown',(e)=>{
+  if(e.key==='Enter' && e.ctrlKey){ state.context=e.target.value.trim(); runMeeting(); }
 });
 
-// ─── Follow-up ───
-document.getElementById('followupBtn').addEventListener('click',()=>{
-  const q=document.getElementById('followupInput').value.trim();
-  if(!q) return;
-  const result=document.getElementById('followupResult');
-  result.classList.remove('hidden');
-  result.innerHTML=`<div class="glass rounded-xl p-4 animate-slide-up"><div class="flex items-center gap-2 mb-2"><span class="text-sm">💬</span><span class="text-xs font-medium text-[#2c2820]">你的追问</span></div><p class="text-xs text-[#6a6258] mb-3 italic">"${q}"</p><div class="flex items-center gap-2 mb-2"><span class="text-sm">🧬</span><span class="text-xs font-medium text-[#4e8c6e]">董事会回应</span></div><p class="text-xs text-[#2c2820] leading-relaxed">${SAMPLE_FOLLOWUP.answer}</p></div>`;
-  document.getElementById('followupInput').value='';
-  result.scrollIntoView({behavior:'smooth',block:'center'});
+document.getElementById('newTopicBtn').addEventListener('click',()=>{
+  const t=document.getElementById('newTopicInput').value.trim();
+  if(!t){document.getElementById('newTopicInput').focus();return;}
+  state.topic=t;
+  state.context='';
+  state.results=null;
+  setPhase(1);
 });
-document.getElementById('followupInput').addEventListener('keydown',(e)=>{
-  if(e.key==='Enter') document.getElementById('followupBtn').click();
+document.getElementById('newTopicInput').addEventListener('keydown',(e)=>{
+  if(e.key==='Enter') document.getElementById('newTopicBtn').click();
 });
 
 document.getElementById('resetBtn').addEventListener('click',()=>{
-  state={phase:0,context:{},meeting:null};
+  state={phase:0,topic:'',context:'',results:null};
   document.getElementById('topicInput').value='';
-  document.getElementById('followupResult').classList.add('hidden');
-  document.getElementById('followupInput').value='';
-  setPhase(0);
+  document.getElementById('contextInput').value='';
+  document.getElementById('newTopicInput').value='';
   BOARD.forEach(a=>{
     const c=document.getElementById('card-'+a.id);
     if(c){c.classList.remove('reveal','thinking','done','breathe');c.style.opacity='0';}
   });
+  setPhase(0);
 });
 
-// ─── Init ───
+// ─── Init ────────────────────────────────────────────────────────────────────
 renderCards();
-
-// Auto demo
-setTimeout(()=>{
-  document.getElementById('topicInput').value=SAMPLE_MEETING.topic;
-  document.getElementById('startBtn').click();
-},600);
 </script>
 </body>
 </html>
