@@ -7,7 +7,6 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![One Person Company](https://img.shields.io/badge/made%20by-solopreneur-blue)](#)
 
-**OPC Board** 是一个开源的、可部署的个人操作系统。它将 Naval、巴菲特、段永平、Bryan Johnson、Dan Koe、张雪峰、马斯克等顶级思想家的认知框架蒸馏成可执行的 SKILL，让你一个人的公司拥有一个完整的董事会。
 
 ---
 
@@ -15,14 +14,13 @@
 
 | 角色 | 导师 | 核心原则 |
 |------|------|----------|
-| **💼 CFO** | Naval · 巴菲特 · 段永平 | 长期复利 · 价值投资 |
-| **🏢 CBO** | Trump | 个人品牌 · 谈判 · 注意力 |
-| **🧬 CHO** | Bryan Johnson · Huberman | 健康优化 · 精力管理 |
-| **📱 CMO** | Dan Koe | 内容营销 · 产品转化 |
-| **🧠 CSO** | 张雪峰 | 宏观战略 · 方向选择 · ROI |
-| **⚡ COO** | Lidangzzz | 具体战术 · 落地执行 · 反诈 |
-| **🚀 CVO** | Elon Musk | 长期Vision · All-In执行力 |
-
+| 💼 CFO | Naval · 巴菲特 · 段永平 | 长期复利 · 价值投资 |
+| 🏢 CBO | Trump | 个人品牌 · 谈判 · 注意力 |
+| 🧬 CHO | Bryan Johnson · Huberman | 健康优化 · 精力管理 |
+| 📱 CMO | Dan Koe | 内容营销 · 产品转化 |
+| ⚡ COO | Lidangzzz | 具体战术 · 落地执行 · 反诈 |
+| 🚀 CVO | Elon Musk | 长期Vision · All-In执行力 |
+| 🎯 CSO | 张雪峰 | 教育选择 · 职业策略 · 阶层流动 |
 ---
 
 ## 🚀 快速启动
@@ -57,7 +55,6 @@ opc-board/
 │   ├── finance/            # 💰 Naval · 巴菲特 · 段永平 · 特朗普
 │   ├── health/             # 🧬 Bryan Johnson · Huberman
 │   ├── media/              # 📱 Dan Koe
-│   ├── strategy/           # 🧠 张雪峰 · lidangzzz
 │   └── innovation/         # 🚀 Elon Musk
 │
 ├── dashboard/
@@ -98,7 +95,6 @@ opc-board/
 │  "你不需要二选一。白天工作积累素材，晚上写内容。       │
 │   你的内容就是你的产品原型。"                          │
 │                                                      │
-│  🧠 Strategy (张雪峰):                               │
 │  "普通人家孩子，先拿 offer 保底。香港房租贵，          │
 │   别拿生存去赌。拿 offer 同时搞副业，这性价比最高。"    │
 │                                                      │
@@ -134,7 +130,6 @@ opc-board/
 1. **💼 Finance Filter** (Naval/巴菲特): 这个决定有复利吗？能加杠杆吗？
 2. **🧬 Health Filter** (Bryan): 这会损害我的长期健康吗？
 3. **📱 Media Filter** (Dan Koe): 我能从中产出内容吗？
-4. **🧠 Strategy Filter** (张雪峰): 普通人的 ROI 如何？风险可控吗？
 5. **🚀 Innovation Filter** (马斯克): 第一性原理看，这是最优解吗？
 
 ---

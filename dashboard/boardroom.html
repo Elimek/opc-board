@@ -56,7 +56,7 @@
   <!-- ═══ Header ═══ -->
   <header class="text-center mb-4">
     <h1 class="name text-3xl sm:text-4xl font-normal tracking-tight text-[#2c2820] mb-1">🏢 OPC Boardroom</h1>
-    <p class="text-sm text-[#8a8278] italic">One-Person Company · 9 Directors · Every Topic</p>
+    <p class="text-sm text-[#8a8278] italic">One-Person Company · 10 Directors · Every Topic</p>
   </header>
 
   <!-- ═══ Phase Indicator ═══ -->
@@ -149,16 +149,17 @@ const BOARD = [
   { id:'donald-trump',    name:'Donald Trump',    role:'CBO', domain:'brand',      emoji:'🏆', color:'rgba(239,68,68,0.08)'   },
   { id:'steve-jobs',      name:'Steve Jobs',      role:'CPO', domain:'product',    emoji:'🍎', color:'rgba(107,114,128,0.08)' },
   { id:'warren-buffett',  name:'Warren Buffett',  role:'CFO', domain:'finance',    emoji:'📈', color:'rgba(34,197,94,0.08)'   },
+  { id:'zhangxuefeng',    name:'张雪峰',           role:'CSO', domain:'strategy',   emoji:'🎯', color:'rgba(59,130,246,0.08)'  },
   { id:'dan-koe',         name:'Dan Koe',         role:'CMO', domain:'brand',      emoji:'🎙️', color:'rgba(168,85,247,0.08)'  },
   { id:'duan-yongping',   name:'Duan Yongping',   role:'CFO', domain:'finance',    emoji:'⚖️', color:'rgba(20,184,166,0.08)'  },
   { id:'bryan-johnson',   name:'Bryan Johnson',   role:'CHO', domain:'health',     emoji:'🧬', color:'rgba(236,72,153,0.08)'  },
   { id:'andrew-huberman', name:'Andrew Huberman', role:'CHO', domain:'health',     emoji:'🧠', color:'rgba(99,102,241,0.08)'  },
   { id:'elon-musk',       name:'Elon Musk',       role:'CVO', domain:'innovation', emoji:'🚀', color:'rgba(100,116,139,0.08)' },
 ];
-// Batch allocation: 3-2-3-1
-const BATCHES = [[0,1,2],[3,4],[5,6,7],[8]];
+// Batch allocation: 5 pairs
+const BATCHES = [[0,1],[2,3],[4,5],[6,7],[8,9]];
 
-const DOMAIN_LABELS = { finance:'💰 财务', brand:'📱 品牌', health:'🧬 健康', product:'🍎 产品', innovation:'🚀 创新' };
+const DOMAIN_LABELS = { finance:'💰 财务', brand:'📱 品牌', strategy:'🎯 策略', health:'🧬 健康', product:'🍎 产品', innovation:'🚀 创新' };
 
 let state = { phase:0, topic:'', context:'', results:null };
 
@@ -338,8 +339,8 @@ function renderSynthesis(data) {
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const EMOJI_MAP = {
   'naval-ravikant':'💰','donald-trump':'🏆','steve-jobs':'🍎',
-  'warren-buffett':'📈','dan-koe':'🎙️','duan-yongping':'⚖️',
-  'bryan-johnson':'🧬','andrew-huberman':'🧠','elon-musk':'🚀'
+  'warren-buffett':'📈','zhangxuefeng':'🎯','dan-koe':'🎙️',
+  'duan-yongping':'⚖️','bryan-johnson':'🧬','andrew-huberman':'🧠','elon-musk':'🚀'
 };
 function getEmoji(name){ return EMOJI_MAP[name]||'🔮'; }
 function esc(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
