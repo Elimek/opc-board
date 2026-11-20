@@ -1,39 +1,36 @@
 # Contributing
 
-OPC Board is a one-person company, but contributions are welcome.
+OPC Board is a one-person company. Pull requests are welcome. Please describe the repository that exists, not the one older docs imagined.
 
-## Ways to Contribute
+## What you can open today
 
-### Add a New Advisor Skill
-1. Study the existing skills in `skills/` for format reference
-2. Create `skills/<category>/<name>.md` with:
-   - YAML frontmatter (name, description, trigger conditions)
-   - 3-6 core mental models
-   - Decision heuristics table
-   - Expression DNA
-   - Anti-patterns and honest boundaries
-3. Add your skill to the category README.md
-4. Submit a PR
+The only published mentor skill is [`skills/strategy/zhangxuefeng/`](skills/strategy/zhangxuefeng/). Use that directory as the format reference: `SKILL.md`, a short README, and `references/research/`.
 
-### Improve Existing Skills
-- Found a missing mental model? Open an issue or PR.
-- Know a better expression of a principle? Edit the file.
-- Translations welcome.
+There is no `scripts/test-harness.sh` and no `quality-harness.sh`. Do not add a commit that claims "43 tests passed."
 
-### Bug Reports & Feature Requests
+## Add a mentor skill
+
+1. Read `skills/strategy/zhangxuefeng/` before inventing a new layout.
+2. Add `skills/<category>/<name>/SKILL.md` with a stance a person can follow, at least one counter-option, the evidence you used, and a confidence level.
+3. A skill is complete only when criticism materials are included, sealed test items are kept out of the runtime package, and a fidelity check against a bare model has been done before you call it complete.
+4. Until that bar is met, say the seat is not yet distilled. A name on the landing page is not a vote.
+5. Open a pull request against `master`.
+
+## Improve the published skill
+
+Corrections to Zhang Xuefeng's file are in scope: a missing decision rule, a bad quote, a clearer limit. Do not paste a new celebrity into the page and call the library finished.
+
+## Bugs and ideas
+
 Open a [GitHub Issue](https://github.com/Elimek/opc-board/issues/new).
 
-## Style Guide
-- Skills are markdown files with YAML frontmatter
-- Use emoji prefixes for sections
-- Keep it executable — every principle should answer "what do I DO with this?"
-- No fluff. Every sentence should either teach or guide.
+## Style
 
-## Running Tests
-```bash
-bash scripts/test-harness.sh
-```
-43 tests should all pass.
+- Markdown with YAML frontmatter for a SKILL.
+- Every line should tell the reader what to do, or what not to do.
+- Vague lines ("consider", "适当配置", "可以考虑") are not a finished answer.
+- The owner decides. Do not add a rule that the board passes only when every seat scores 6 or higher.
 
 ## License
-MIT — do whatever you want.
+
+MIT.

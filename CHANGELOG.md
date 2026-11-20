@@ -1,43 +1,39 @@
 # Changelog
 
-All notable changes to OPC Board will be documented in this file.
+## [Unreleased] — 2026-11-20
+
+Documentation and a free checklist. No new mentor skill, no CLI, and no tests added to make an old claim true.
+
+### Corrected
+
+The public docs described a repository this tree does not contain.
+
+| What the docs said | What is true |
+| --- | --- |
+| Mentor SKILL library complete; 9 executable SKILLs | One published SKILL: `skills/strategy/zhangxuefeng/` (Zhang Xuefeng) |
+| CLI `opc.sh` | Not in the repo |
+| `scripts/test-harness.sh`, `quality-harness.sh`, 43/43 tests | Not in the repo |
+| Three cron jobs | Not in the repo |
+| `checklist/daily-routine.md` and `checklist/financial-review.md` | Not in the repo |
+| Quick start on branch `main`, folder `/docs` | Branch is `master`. Pages source is the repository root |
+| Canonical URL `https://opc-board.is-a.dev` | Live demo is https://elimek.github.io/opc-board. The custom domain is Issue #4 and is not active |
+| Issue #7 fixes shipped (Naval stance table, engineering-only Musk) | Issue #7 is still open. Those skill files are not in this repo |
+| "Zhang Xuedong" in the changelog, site, and Pages config | The name is Zhang Xuefeng (张雪峰) |
+| A decision passes only if all 10 seats score ≥ 6 | Removed from the landing page. The owner decides. Scores are not raised so the row looks unanimous |
+
+### Added
+
+- `checklist/weekly-board-meeting.md`
+- `checklist/weekly-board-meeting.html` (same checklist, opened in a browser; nothing is submitted)
 
 ## [1.0.0] — 2026-05-21
 
-### 🎉 Initial Release — OPC Board Goes Live
+The bullets that used to live here listed a CLI, nine SKILLs, checklist templates, cron jobs, and a 43-test harness. Those paths are not in the public tree at `7efafbb` (pushed 2026-06-10). Read the 2026-11-20 correction above instead of treating that list as files you can open.
 
-The first public release of OPC Board, a deployable one-person company operating system.
+What that era still accounts for on `master`:
 
-#### 🏛️ Board of Directors
-- **Finance CEO** — Naval Ravikant (财富/杠杆), Buffett & Duan Yongping (价值投资), Donald Trump (品牌/谈判)
-- **Health CEO** — Bryan Johnson (长寿/优化), Andrew Huberman (神经科学/日常)
-- **Media CEO** — Dan Koe (一人公司/内容)
-- **Strategy Advisor** — Zhang Xuedong (实用主义/ROI), Lidangzzz (数据驱动/避坑)
-- **Innovation CEO** — Elon Musk (第一性原理/工程)
+- A static landing page and static dashboard HTML
+- GitHub Pages with no backend in the repo
+- Commit `7efafbb` (2026-06-09) adding `skills/strategy/zhangxuefeng/`
 
-#### 🚀 Features
-- **Landing Page**: Glassmorphism UI, kanban-inspired board layout, light theme, product-grade design
-- **Interactive Dashboard**: Browser-based board meeting simulator with 5 advisor roles, daily tracker with localStorage persistence, system status view
-- **CLI Tool** (`opc.sh`): Run board meetings, daily OS, 5-filter decision protocol, health tracker from terminal
-- **9 Executable SKILLs**: Each with YAML frontmatter, agentic protocol (research→analyze→answer), 3-6 mental models, decision heuristics, expression DNA, anti-patterns, honest boundaries
-- **Integration Layer**: 5-filter decision protocol combining all advisors into a single framework
-- **Weekly Board Meeting Template**: Structured agenda covering all 5 departments
-- **Daily OS Template**: Huberman-inspired morning/midday/evening protocol
-- **Financial Review Template**: Income/expense/product funnel tracking
-
-#### ⚙️ Automation
-- **3 Active Cronjobs**: Sunday Board Meeting, Daily OS, Weekly GitHub Stats
-- **Test Harness**: 43/43 smoke/functional/integration/system tests
-
-#### 📦 Deployment
-- GitHub Pages (static, zero-cost)
-- Free subdomain via is-a.dev (PR pending merge)
-- Pure HTML/CSS/JS — no backend, no build step
-
-#### 🧠 Hermes Agent Skills (installed)
-- `trump-perspective` (nuwa-skill, 320KB research)
-- `lidangzzz-perspective` (custom)
-- `buffett-duan-perspective` (custom)
-- `bryan-johnson-perspective` (custom)
-- `huberman-perspective` (custom)
-- `dan-koe-perspective` (custom)
+The strategy seat in the old notes was spelled Zhang Xuedong. The name is Zhang Xuefeng.

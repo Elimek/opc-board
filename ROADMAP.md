@@ -1,53 +1,37 @@
 # Roadmap
 
-> **Current version**: v1.0.0 — Initial Release
-> **Next milestone**: v1.1.0 — Public Beta
+> **In this repository:** landing page, one published SKILL (`skills/strategy/zhangxuefeng/`, Zhang Xuefeng), static dashboard HTML, meeting JSON, and a free weekly checklist.
+> **Not in this repository:** a CLI, a test harness, cron jobs, and `skills/finance`, `skills/health`, `skills/media`, `skills/innovation`.
+> **Pages:** branch `master`, source `/` (root). Live site: https://elimek.github.io/opc-board
+> **Not the live site:** `https://opc-board.is-a.dev` (Issue #4 is still open).
 
-## Short-term (Next 30 days)
+The mentor SKILL library is not complete. A name on the landing page is not a published SKILL.
 
-### v1.1.0 — Public Beta
-- [ ] Custom domain activation (waiting for is-a.dev PR merge)
-- [ ] Add email capture to landing page (free lead magnet)
-- [ ] Publish first "OPC Weekly" public digest
-- [ ] Add more advisor response variety to dashboard
-- [ ] Publish project on Hacker News / relevant communities
-- [ ] Add dark mode toggle to landing page
+## Still open
 
-### v1.2.0 — Product Market Fit
-- [ ] Collect user feedback via GitHub Issues
-- [ ] Create premium Notion template pack ($9-19)
-- [ ] Add "add your own advisor" guide
-- [ ] Translate core skills to English-only version
-- [ ] Set up GitHub Discussions for community
+These are open issues. Nothing in this list is shipped.
 
-## Medium-term (60-90 days)
+- [ ] Email capture on the landing page (Issue #1)
+- [ ] First OPC Weekly digest (Issue #2)
+- [ ] Dark mode (Issue #3)
+- [ ] Custom domain (Issue #4)
+- [ ] Paid Notion pack (Issue #5)
+- [ ] A guide for loading a SKILL into any LLM (Issue #6). Today the only file you can load is Zhang Xuefeng.
+- [ ] Issue #7 output-quality fixes. The issue is still open. The Naval stance table and engineering-only Musk skill it describes are not files in this tree.
 
-### v2.0.0 — Interactive Platform
-- [ ] CLI v2: interactive board meeting with real-time advisor selection
-- [ ] AI-powered board meeting (integrate with local LLM or API)
-- [ ] User-submitted advisor skills (PR-based like is-a.dev)
-- [ ] OPC Board GitHub Action for auto-deployment
-- [ ] Multi-language support (EN, JP, KR)
+## Only after the files exist
 
-### v2.1.0 — Monetization
-- [ ] Premium template bundle (Notion + Obsidian + CLI)
-- [ ] "Build Your OPC" mini-course
-- [ ] Community membership (private Discord/group)
+- [ ] More published SKILLs. A seat is not done when its name is on the page.
+- [ ] A CLI. There is no `opc.sh` here to upgrade.
 
-## Long-term (90+ days)
+## Out of scope until someone explicitly takes them
 
-### v3.0.0 — OPC Ecosystem
-- [ ] OPC Board as a service (managed hosting)
-- [ ] AI coach integration (your personal board meeting)
-- [ ] Marketplace for community advisor skills
-- [ ] Mobile app (daily OS + quick board check)
-- [ ] Analytics dashboard for your OPC metrics
+Paid hosting, a paid-API board, courses, a community, and a mobile app are not on this patch and are not implied by the pages that exist today.
 
-## No-go (will not build)
-- Paid hosting tier (violates zero-cost principle)
-- Native mobile apps (web-first, responsive)
-- AI API-dependent features (costs money to run)
+## What "done" means for a future SKILL
 
----
+Criticism materials are in the skill, sealed test items are not shipped inside the runtime package, and a fidelity check against a bare model has been run before anyone marks that skill complete.
 
-*Last updated: 2026-05-21*
+A board does not pass because every seat scored 6 or higher. The owner decides. A seat with no published SKILL does not vote.
+
+*Corrected 2026-11-20 against the public tree (last code commit `7efafbb`).*

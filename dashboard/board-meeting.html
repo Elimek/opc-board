@@ -326,7 +326,7 @@
 
 <div class="page-header">
   <h1>OPC Board · Board Meeting</h1>
-  <p>Your One-Person Company Board of Directors — 10 voices, 1 verdict.</p>
+  <p>Static page. Zhang Xuefeng is the only published SKILL. The other names do not vote, and a row of scores is not a pass.</p>
 </div>
 
 <!-- ─── INPUT ──────────────────────────────────── -->
@@ -338,9 +338,9 @@
   <textarea class="context-textarea" id="contextInput" placeholder='{"monthly_amount": 1000, "salary": 4000, "risk_tolerance": "high"}'></textarea>
 
   <div class="toolbar">
-    <button class="btn btn-primary" id="btnStart">▶  Start Board Meeting</button>
+    <button class="btn btn-primary" id="btnStart">▶  Call /opc-api (not in this repo)</button>
     <button class="btn" id="btnDemo">⚡ Demo Mode</button>
-    <span class="status-badge" id="statusBadge">Ready — 10 agents standing by</span>
+    <span class="status-badge" id="statusBadge">Ready — demo scores are written into this file</span>
   </div>
 </div>
 
@@ -352,7 +352,7 @@
 <!-- ─── VERDICT ─────────────────────────────────── -->
 <div class="verdict-banner" id="verdictBanner"></div>
 
-<div class="pencil-sig">— signed, OPC Board · Powered by Hermes Agent</div>
+<div class="pencil-sig">— static file in this repo. No board API is shipped here. Start Meeting calls <code>/opc-api/board-meeting</code>, which this repository does not contain.</div>
 
 <script>
 // ══════════════════════════════════════════════════
@@ -366,7 +366,7 @@ const AGENTS = [
   { id: "dan_koe",  name: "Dan Koe",             role: "CMO", crew: "brand",      color: "#8b6b9a" },
   { id: "bryan",    name: "Bryan Johnson",       role: "CHO", crew: "health",     color: "#5a9a6b" },
   { id: "huberman", name: "Andrew Huberman",     role: "CHO", crew: "health",     color: "#5a9a6b" },
-  { id: "zhang",    name: "Zhang Xuedong",       role: "CSO", crew: "strategy",   color: "#8c7a4f" },
+  { id: "zhang",    name: "Zhang Xuefeng",       role: "CSO", crew: "strategy",   color: "#8c7a4f" },
   { id: "lidang",   name: "Lidangzzz",           role: "COO", crew: "strategy",   color: "#8c7a4f" },
   { id: "musk",     name: "Elon Musk",           role: "CVO", crew: "innovation", color: "#4f8c9a" },
 ];
@@ -458,6 +458,11 @@ function setBadge(id, score, reasoning, keyConcerns) {
 
 function showVerdict(verdict, avgScore) {
   const banner = document.getElementById("verdictBanner");
+  if (verdict === "illustration") {
+    banner.className = "verdict-banner verdict-revised visible";
+    banner.innerHTML = `Illustration only · scripted average ${avgScore}/10. This page does not pass a decision because every score is 6 or higher. Only Zhang Xuefeng has a published SKILL. You decide.`;
+    return;
+  }
   banner.className = `verdict-banner ${verdict === 'passed' ? 'verdict-passed' : verdict === 'failed' ? 'verdict-failed' : 'verdict-revised'} visible`;
   const emoji = verdict === 'passed' ? '✅' : verdict === 'failed' ? '❌' : '⚡';
   banner.innerHTML = `${emoji}  ${verdict.toUpperCase()} · Avg ${avgScore}/10 across 10 agents`;
@@ -489,7 +494,7 @@ const DEMO_VOTES = [
 function runDemo() {
   const topic = document.getElementById("topicInput").value || "Demo: DCA Investment Plan (2026)";
   document.getElementById("btnDemo").disabled = true;
-  setStatus("Demo mode — 10 agents voting...", true);
+  setStatus("Demo mode — scripted numbers, not a vote...", true);
   setBadge("demo-placeholder", "-", "", "");
   buildBoard();
 
@@ -506,9 +511,8 @@ function runDemo() {
   // Show verdict after all votes in
   setTimeout(() => {
     const avgScore = (DEMO_VOTES.reduce((s, [,v]) => s + v, 0) / DEMO_VOTES.length).toFixed(2);
-    const verdict = DEMO_VOTES.every(([,v]) => v >= 6) ? "passed" : "failed";
-    showVerdict(verdict, avgScore);
-    setStatus(`Demo complete — ${verdict.toUpperCase()}  Avg: ${avgScore}/10`, true);
+    showVerdict("illustration", avgScore);
+    setStatus(`Demo complete — scripted average ${avgScore}/10. Not a verdict.`, true);
     document.getElementById("btnDemo").disabled = false;
   }, DEMO_VOTES.length * 600 + 200);
 }

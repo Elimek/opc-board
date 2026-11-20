@@ -56,7 +56,7 @@
   <!-- ═══ Header ═══ -->
   <header class="text-center mb-4">
     <h1 class="name text-3xl sm:text-4xl font-normal tracking-tight text-[#2c2820] mb-1">🏢 OPC Boardroom</h1>
-    <p class="text-sm text-[#8a8278] italic">One-Person Company · 10 Directors · Every Topic</p>
+    <p class="text-sm text-[#8a8278] italic">Static demo. Zhang Xuefeng is the only published SKILL. An average on this page is not a decision.</p>
   </header>
 
   <!-- ═══ Phase Indicator ═══ -->
@@ -110,8 +110,8 @@
       <div id="verdictBanner" class="rounded-xl px-4 py-3 mb-5 text-center text-sm font-medium"></div>
       <div class="grid grid-cols-3 gap-3 mb-5 text-center text-xs">
         <div class="glass rounded-xl p-3"><div class="text-lg font-bold" id="avgScore">-</div><div class="text-[#8a8278] mt-1">平均分</div></div>
-        <div class="glass rounded-xl p-3"><div class="text-lg font-bold" id="passCount">-</div><div class="text-[#8a8278] mt-1">通过</div></div>
-        <div class="glass rounded-xl p-3"><div class="text-lg font-bold" id="failCount">-</div><div class="text-[#8a8278] mt-1">未通过</div></div>
+        <div class="glass rounded-xl p-3"><div class="text-lg font-bold" id="passCount">-</div><div class="text-[#8a8278] mt-1">score ≥ 6</div></div>
+        <div class="glass rounded-xl p-3"><div class="text-lg font-bold" id="failCount">-</div><div class="text-[#8a8278] mt-1">score &lt; 6</div></div>
       </div>
       <div id="agentDetailList" class="space-y-2 mb-5"></div>
       <div id="synthTimeline" class="space-y-3"></div>
@@ -301,10 +301,9 @@ function renderSynthesis(data) {
   const failed = data.results.length - passed;
 
   const banner=document.getElementById('verdictBanner');
-  const passStr = data.avg_score >= THRESHOLD;
-  banner.textContent = passStr ? '✅ 通过 — '+data.avg_score+'/' + THRESHOLD : '❌ 未通过 — '+data.avg_score+'/'+THRESHOLD+' (门槛 '+THRESHOLD+')';
-  banner.style.background = passStr ? 'rgba(78,140,110,0.1)' : 'rgba(192,57,43,0.08)';
-  banner.style.color = passStr ? '#4e8c6e' : '#c0392b';
+  banner.textContent = 'Avg '+data.avg_score+'/10 · '+passed+' scores at or above 6, '+failed+' below. Not a pass line. You decide.';
+  banner.style.background = 'rgba(44,40,32,0.04)';
+  banner.style.color = '#2c2820';
 
   document.getElementById('avgScore').textContent = data.avg_score+'/10';
   document.getElementById('passCount').textContent = passed;
