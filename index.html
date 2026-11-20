@@ -3,141 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OPC Board — One-Person Company Operating System</title>
+<title>OPC Board</title>
 <meta name="description" content="One-person company notes. The only published SKILL in this repo is Zhang Xuefeng. You decide. Empty seats do not vote.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',system-ui,sans-serif;background:#f8f9fa;color:#1a1a2e;line-height:1.6;font-size:16px;min-height:100vh}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',system-ui,sans-serif;background:#f4f5f7;color:#1a1a2e;line-height:1.6;font-size:16px;min-height:100vh}
 .container{max-width:1120px;margin:0 auto;padding:0 24px}
 
-/* Nav */
+[lang=en]{display:block}
+[lang=zh]{display:none}
+html[data-lang=zh] [lang=en]{display:none}
+html[data-lang=zh] [lang=zh]{display:block}
+
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:1px solid #e4e4e7;height:48px}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:48px;padding-top:0;padding-bottom:0}
-.nav-logo{font-size:15px;font-weight:700;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:48px}
+.nav-logo{font-size:15px;font-weight:700;color:#1a1a2e;text-decoration:none}
 .nav-right{display:flex;align-items:center;gap:8px}
 .nav-link{color:#52525b;text-decoration:none;font-size:13px;font-weight:600}
-.nav-link:hover{color:#2563eb}
+.nav-link:hover{color:#1d4e89}
 .lang-switch{display:flex;background:#f4f4f5;border-radius:8px;overflow:hidden}
 .lang-btn{padding:4px 10px;font-size:12px;font-weight:600;border:none;cursor:pointer;background:transparent;color:#71717a}
 .lang-btn.active{background:#1a1a2e;color:#fff;border-radius:6px}
 
-/* Language */
-[lang=en]{display:block}[lang=zh]{display:none}
-html[data-lang=zh] [lang=en]{display:none}
-html[data-lang=zh] [lang=zh]{display:block}
-
-/* Hero */
-.hero{padding:72px 0 32px;position:relative}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
-.hero h1{font-size:36px;font-weight:750;letter-spacing:-1px;line-height:1.15;margin-bottom:12px}
-.hero h1 .g{background:linear-gradient(135deg,#2563eb,#7c3aed,#0891b2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{font-size:16px;color:#52525b;margin-bottom:20px;line-height:1.6;max-width:480px}
-.badge{display:inline-flex;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;background:rgba(37,99,235,0.08);color:#2563eb;border:1px solid rgba(37,99,235,0.12);margin-bottom:16px}
+.hero{padding:72px 0 12px}
+.hero-copy{max-width:640px}
+.hero h1{font-size:34px;font-weight:750;letter-spacing:-0.5px;line-height:1.2;margin-bottom:12px}
+.hero p{font-size:16px;color:#3f3f46;margin-bottom:16px;line-height:1.6}
+.badge{display:inline-flex;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:600;background:#eef2ff;color:#1d4e89;border:1px solid #dbe3f5;margin-bottom:14px}
 .ha{display:flex;gap:10px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .15s}
-.btn-pri{background:#1a1a2e;color:#fff}.btn-pri:hover{background:#2563eb}
-.btn-sec{background:#fff;color:#1a1a2e;border:1px solid #e4e4e7}.btn-sec:hover{border-color:#cbd5e1}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer}
+.btn-pri{background:#1a1a2e;color:#fff}
+.btn-pri:hover{background:#1d4e89}
+.btn-sec{background:#fff;color:#1a1a2e;border:1px solid #e4e4e7}
+.btn-sec:hover{border-color:#a1a1aa}
 
-/* Canvas for WebGPU glass backdrop */
-#glass-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.s{padding:28px 0}
+#board,#meeting,#scores,.close{scroll-margin-top:64px}
+.sh{margin-bottom:16px}
+.sh h2{font-size:22px;font-weight:700;margin-bottom:6px}
+.sh p{color:#3f3f46;font-size:15px;max-width:680px}
 
-/* Kanban — taller cards with more vertical space usage */
-.kanban{position:relative;z-index:1;background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.5);border-radius:16px;padding:16px;box-shadow:0 8px 32px rgba(0,0,0,0.06)}
-.kc{display:flex;gap:8px;min-height:140px}
-.kcol{flex:1;display:flex;flex-direction:column}
-.kch{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#64748b;margin-bottom:8px;text-align:center}
-.kcard{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:3px solid #e4e4e7;padding:10px 6px;margin-bottom:6px;font-size:13px;background:rgba(255,255,255,0.7);border-radius:6px;min-height:44px}
-.kcard:last-child{margin-bottom:0}
-.kcard .ki{font-size:18px;margin-bottom:2px}.kcard .kl{font-weight:600;color:#1a1a2e;font-size:12px}.kcard .ks{font-size:10px;color:#64748b}
-.kd{border-left-color:#22c55e}.kp{border-left-color:#f59e0b}.kt{border-left-color:#94a3b8}
-.kcol-single .kcard{flex:1;min-height:92px}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:24px}.kanban{display:none}}
-
-/* Glass cards — fallback if WebGPU unavailable */
-.gl{background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.5);border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,0.03),0 8px 32px rgba(0,0,0,0.04)}
-.gl-h{border:1px solid rgba(255,255,255,0.5);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.06)}
-
-/* Section */
-.s{padding:24px 0;position:relative;z-index:1}
-.sh{text-align:center;margin-bottom:20px}
-.st{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#94a3b8;font-weight:700;margin-bottom:4px}
-.sh h2{font-size:22px;font-weight:700}
-
-/* Board cards — glass */
-.bg{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
-.bc{padding:18px 10px;text-align:center;transition:all .25s;cursor:default}
-.bc:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.08)}
-.bc .bi{font-size:28px;display:block;margin-bottom:8px}
+.bg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.bc{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:18px 14px;text-align:center}
+.bc .bi{font-size:26px;display:block;margin-bottom:6px}
 .bc h3{font-size:14px;font-weight:700;margin-bottom:2px}
-.bc .mn{font-size:11px;color:#64748b;margin-bottom:8px;line-height:1.3}
-.bc p{font-size:13px;color:#52525b;margin-bottom:10px;line-height:1.4}
-.bc .tp{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:600;background:rgba(37,99,235,0.07);color:#2563eb;border:1px solid rgba(37,99,235,0.1)}
-@media(max-width:1000px){.bg{grid-template-columns:repeat(4,1fr)}}
+.bc .mn{font-size:11px;color:#64748b;margin-bottom:8px;line-height:1.35}
+.bc p{font-size:13px;color:#3f3f46;margin-bottom:10px;line-height:1.45}
+.bc a{color:#1d4e89}
+.tp{display:inline-block;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600;background:#f4f4f5;color:#52525b;border:1px solid #e4e4e7}
+.tp-on{background:#f0fdf4;color:#15803d;border-color:#bbf7d0}
 @media(max-width:650px){.bg{grid-template-columns:repeat(2,1fr)}}
 
-/* Flow */
 .fl{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.fs{text-align:center;padding:22px 16px}
-.fs .fn{display:inline-flex;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:700;font-size:14px;align-items:center;justify-content:center;margin-bottom:12px}
+.fs{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:18px 16px}
 .fs h3{font-size:15px;font-weight:700;margin-bottom:6px}
-.fs p{font-size:13px;color:#52525b;line-height:1.5;margin:0}
+.fs p{font-size:14px;color:#3f3f46;line-height:1.5}
+.fs a{color:#1d4e89}
 @media(max-width:650px){.fl{grid-template-columns:1fr}}
 
-/* Demo */
-.dc{overflow:hidden}
-.dh{padding:14px 20px;font-size:13px;font-weight:600;color:#52525b;border-bottom:1px solid rgba(255,255,255,0.3)}
-.db{padding:14px 20px}
-.al{display:flex;gap:10px;align-items:flex-start;padding:8px 0}
-.al:not(:last-child){border-bottom:1px solid rgba(0,0,0,0.04)}
-.ad{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
-.ac{flex:1;min-width:0}.ac .role{font-size:12px;font-weight:700;margin-bottom:2px}
-.ac .tx{font-size:14px;color:#52525b;line-height:1.5;font-style:italic}
-.dfi{background:#dcfce7;color:#16a34a}.dhe{background:#f3e8ff;color:#9333ea}
-.dme{background:#dbeafe;color:#2563eb}.dst{background:#fef3c7;color:#d97706}
-.din{background:#cffafe;color:#0891b2}
-.cfi{color:#16a34a}.che{color:#9333ea}.cme{color:#2563eb}.cst{color:#d97706}.cin{color:#0891b2}
+.sheet{background:#fff;border:1px solid #e4e4e7;border-radius:12px;overflow:hidden}
+.sheet-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:12px 16px;font-size:13px;font-weight:600;color:#3f3f46;border-bottom:1px solid #e4e4e7}
+.pill{font-size:12px;font-weight:600;background:#f4f4f5;color:#3f3f46;padding:2px 10px;border-radius:6px}
+.sheet-b{padding:12px 16px}
+.sheet-f{padding:10px 16px 14px;border-top:1px solid #f1f5f9;font-size:13px;font-weight:600;color:#3f3f46}
 
-/* Features */
-.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.fc{text-align:center;padding:18px 12px}
-.fc .fi{font-size:24px;display:block;margin-bottom:6px}
-.fc h4{font-size:14px;font-weight:700;margin-bottom:4px}
-.fc p{font-size:13px;color:#52525b;line-height:1.4;margin:0}
-@media(max-width:650px){.fg{grid-template-columns:1fr 1fr}}
+.close{padding:8px 0 36px}
+.close h2{font-size:20px;font-weight:700;margin-bottom:6px}
+.close p{font-size:15px;color:#3f3f46;margin-bottom:14px;max-width:640px}
 
-/* Stats */
-.sb{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
-.si{text-align:center;padding:14px 6px}
-.sn{font-size:22px;font-weight:750;background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sl{font-size:11px;color:#64748b}.si .emoji{font-size:18px;display:block;margin-bottom:4px}
-@media(max-width:900px){.sb{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:550px){.sb{grid-template-columns:repeat(2,1fr)}}
+footer{text-align:center;padding:16px;font-size:13px;color:#71717a;border-top:1px solid #e4e4e7}
+footer a{color:#52525b;text-decoration:none}
+footer a:hover{color:#1d4e89}
 
-/* Code */
-.cb{background:#0f172a;border-radius:12px;padding:16px 20px;font-family:monospace;font-size:13px;line-height:1.7;overflow-x:auto;color:#94a3b8}
-.cb .cm{color:#64748b}.cb .cd{color:#22c55e}
-
-/* CTA */
-.cta{text-align:center;padding:32px 0;position:relative;z-index:1}
-.cta-inner{padding:32px}
-.cta h2{font-size:20px;margin-bottom:6px;font-weight:700}
-.cta p{font-size:14px;color:#52525b;margin-bottom:16px}
-
-footer{text-align:center;padding:16px;font-size:13px;color:#71717a;border-top:1px solid #e4e4e7;position:relative;z-index:1}
-footer a{color:#52525b;text-decoration:none}footer a:hover{color:#2563eb}
-
-@media(max-width:650px){.hero h1{font-size:28px}.sh h2{font-size:18px}.container{padding:0 16px}}
+@media(max-width:650px){
+  .hero h1{font-size:28px}
+  .sh h2{font-size:20px}
+  .container{padding:0 16px}
+  .nav-link{font-size:12px}
+}
 </style>
 </head>
 <body>
-<canvas id="glass-canvas"></canvas>
 
 <div class="nav">
   <div class="container nav-inner">
-    <div class="nav-logo">🏢 OPC Board</div>
+    <a class="nav-logo" href="#top">OPC Board</a>
     <div class="nav-right">
-      <a href="checklist/weekly-board-meeting.html" class="nav-link">Checklist</a>
+      <a href="checklist/weekly-board-meeting.html" class="nav-link"><span lang="en">Checklist</span><span lang="zh">清单</span></a>
       <a href="https://github.com/Elimek/opc-board" class="nav-link">GitHub</a>
       <div class="lang-switch">
         <button class="lang-btn active" onclick="setLang('en')" id="lben">EN</button>
@@ -147,39 +101,16 @@ footer a{color:#52525b;text-decoration:none}footer a:hover{color:#2563eb}
   </div>
 </div>
 
-<section class="hero">
+<section class="hero" id="top">
   <div class="container">
-    <div class="hero-grid">
-      <div>
-        <div class="badge"><span lang="en">🏢 1 published SKILL · You decide</span><span lang="zh">🏢 已发布 1 份 SKILL · 你做决定</span></div>
-        <h1><span lang="en">Your <span class="g">OPC Board</span></span><span lang="zh">你的 <span class="g">董事会</span></span></h1>
-        <p lang="en">Ten seats are named. The only SKILL in this repository is Zhang Xuefeng. A seat with no published SKILL does not vote. Scores are notes for you, the owner — a decision does not pass because every number is 6 or higher.</p>
-        <p lang="zh">页面上有十个席位名字。这个仓库里发布了的 SKILL 只有张雪峰。没有 SKILL 的席位不能投票。分数是记给你的，不是过关线。没有「全部 6 分以上才通过」。决定的人是你。</p>
-        <div class="ha">
-          <a href="#board" class="btn btn-pri"><span lang="en">Meet the Board →</span><span lang="zh">认识董事会 →</span></a>
-          <a href="https://github.com/Elimek/opc-board" class="btn btn-sec">GitHub ★</a>
-        </div>
-      </div>
-      <div class="kanban">
-        <div class="kc">
-          <div class="kcol"><div class="kch">Strategy</div>
-            <div class="kcard kd"><span class="ki">🧠</span><div class="kl">Zhang Xuefeng</div><div class="ks">Published</div></div></div>
-          <div class="kcol"><div class="kch">Operations</div>
-            <div class="kcard kt"><span class="ki">⚡</span><div class="kl">Lidangzzz</div><div class="ks">No SKILL</div></div></div>
-          <div class="kcol"><div class="kch">Finance</div>
-            <div class="kcard kt"><span class="ki">💼</span><div class="kl">Naval</div><div class="ks">No SKILL</div></div>
-            <div class="kcard kt"><span class="ki">🐂</span><div class="kl">Buffett</div><div class="ks">No SKILL</div></div>
-            <div class="kcard kt"><span class="ki">📱</span><div class="kl">Duan</div><div class="ks">No SKILL</div></div></div>
-          <div class="kcol"><div class="kch">Brand</div>
-            <div class="kcard kt"><span class="ki">🏢</span><div class="kl">Trump</div><div class="ks">No SKILL</div></div></div>
-          <div class="kcol"><div class="kch">Health</div>
-            <div class="kcard kt"><span class="ki">🧬</span><div class="kl">Bryan</div><div class="ks">No SKILL</div></div>
-            <div class="kcard kt"><span class="ki">⚡</span><div class="kl">Huberman</div><div class="ks">No SKILL</div></div></div>
-          <div class="kcol"><div class="kch">Marketing</div>
-            <div class="kcard kt"><span class="ki">📱</span><div class="kl">Dan Koe</div><div class="ks">No SKILL</div></div></div>
-          <div class="kcol kcol-single"><div class="kch">Vision</div>
-            <div class="kcard kt" style="min-height:92px"><span class="ki">🚀</span><div class="kl">Elon Musk</div><div class="ks">No SKILL</div></div></div>
-        </div>
+    <div class="hero-copy">
+      <div class="badge"><span lang="en">1 published SKILL · You decide</span><span lang="zh">已发布 1 份 SKILL · 你做决定</span></div>
+      <h1><span lang="en">OPC Board</span><span lang="zh">董事会</span></h1>
+      <p lang="en">Ten seats are named. The only SKILL in this repository is Zhang Xuefeng. A seat with no published SKILL does not vote. Scores are notes for you, the owner — a decision does not pass because every number is 6 or higher.</p>
+      <p lang="zh">页面上有十个席位名字。这个仓库里发布了的 SKILL 只有张雪峰。没有 SKILL 的席位不能投票。分数是记给你的，不是过关线。没有「全部 6 分以上才通过」。决定的人是你。</p>
+      <div class="ha">
+        <a href="checklist/weekly-board-meeting.html" class="btn btn-pri"><span lang="en">Weekly checklist</span><span lang="zh">每周清单</span></a>
+        <a href="#meeting" class="btn btn-sec"><span lang="en">This week</span><span lang="zh">这周写什么</span></a>
       </div>
     </div>
   </div>
@@ -187,115 +118,77 @@ footer a{color:#52525b;text-decoration:none}footer a:hover{color:#2563eb}
 
 <section class="s" id="board">
   <div class="container">
-    <div class="sh"><div class="st">🏛️ BOARD OF DIRECTORS</div>
-      <h2 lang="en">Your Executive Team</h2><h2 lang="zh">你的管理层</h2>
-      <p lang="en" style="text-align:center;color:#52525b;font-size:14px;max-width:640px;margin:8px auto 0">Published in this repo: Zhang Xuefeng only. Every other card is a seat name, not a SKILL, and it does not vote.</p>
-      <p lang="zh" style="text-align:center;color:#52525b;font-size:14px;max-width:640px;margin:8px auto 0">这个仓库里发布了的只有张雪峰。其余卡片是席位名字，不是 SKILL，不能投票。</p>
+    <div class="sh">
+      <h2 lang="en">Seats</h2>
+      <h2 lang="zh">席位</h2>
+      <p lang="en">Published in this repo: Zhang Xuefeng only. Every other card is a seat name, not a SKILL, and it does not vote. A new seat counts when its SKILL file is in the repo.</p>
+      <p lang="zh">这个仓库里发布了的只有张雪峰。其余卡片是席位名字，不是 SKILL，不能投票。新席位要有仓库里的 SKILL 文件才算数。</p>
     </div>
     <div class="bg">
-      <div class="bc gl"><span class="bi">💼</span><h3>CFO</h3><div class="mn">Naval · Buffett · Duan</div><p lang="en">Long-term compounding, value investing, capital leverage.</p><p lang="zh">长期复利、价值投资、资本杠杆。</p><span class="tp">Not distilled</span></div>
-      <div class="bc gl"><span class="bi">🏢</span><h3>CBO</h3><div class="mn">Donald Trump</div><p lang="en">Personal branding, negotiation, attention, deal-making.</p><p lang="zh">个人品牌、谈判加价、注意力争夺。</p><span class="tp">Not distilled</span></div>
-      <div class="bc gl"><span class="bi">🧬</span><h3>CHO</h3><div class="mn">Bryan Johnson · Huberman</div><p lang="en">Health optimization, sleep protocols, energy management.</p><p lang="zh">健康优化、精力管理、数据驱动身体管理。</p><span class="tp">Not distilled</span></div>
-      <div class="bc gl"><span class="bi">📱</span><h3>CMO</h3><div class="mn">Dan Koe</div><p lang="en">Content marketing, product conversion, build in public.</p><p lang="zh">内容营销、产品转化、一人公司增长引擎。</p><span class="tp">Not distilled</span></div>
-      <div class="bc gl"><span class="bi">🧠</span><h3>CSO</h3><div class="mn">Zhang Xuefeng</div><p lang="en">The only published SKILL: strategy, ROI, career and education choices.</p><p lang="zh">唯一已发布的 SKILL：选方向、算 ROI、教育和职业。</p><span class="tp">Published</span></div>
-      <div class="bc gl"><span class="bi">⚡</span><h3>COO</h3><div class="mn">Lidangzzz</div><p lang="en">Tactical execution, index fund strategy, anti-scam, data.</p><p lang="zh">具体战术、执行落地、反诈识别、数据驱动。</p><span class="tp">Not distilled</span></div>
-      <div class="bc gl"><span class="bi">🚀</span><h3>CVO</h3><div class="mn">Elon Musk</div><p lang="en">Long-term vision, all-in execution, first principles.</p><p lang="zh">方向感、All-In执行力、公司为什么存在。</p><span class="tp">Not distilled</span></div>
+      <div class="bc"><span class="bi">💼</span><h3>CFO</h3><div class="mn">Naval · Buffett · Duan</div><p lang="en">Long-term compounding, value investing, capital leverage.</p><p lang="zh">长期复利、价值投资、资本杠杆。</p><span class="tp"><span lang="en">Not distilled</span><span lang="zh">未蒸馏</span></span></div>
+      <div class="bc"><span class="bi">🏢</span><h3>CBO</h3><div class="mn">Donald Trump</div><p lang="en">Personal branding, negotiation, attention, deal-making.</p><p lang="zh">个人品牌、谈判加价、注意力争夺。</p><span class="tp"><span lang="en">Not distilled</span><span lang="zh">未蒸馏</span></span></div>
+      <div class="bc"><span class="bi">🧬</span><h3>CHO</h3><div class="mn">Bryan Johnson · Huberman</div><p lang="en">Health optimization, sleep protocols, energy management.</p><p lang="zh">健康优化、精力管理、数据驱动身体管理。</p><span class="tp"><span lang="en">Not distilled</span><span lang="zh">未蒸馏</span></span></div>
+      <div class="bc"><span class="bi">📱</span><h3>CMO</h3><div class="mn">Dan Koe</div><p lang="en">Content marketing, product conversion, build in public.</p><p lang="zh">内容营销、产品转化、一人公司增长引擎。</p><span class="tp"><span lang="en">Not distilled</span><span lang="zh">未蒸馏</span></span></div>
+      <div class="bc"><span class="bi">🧠</span><h3>CSO</h3><div class="mn">Zhang Xuefeng</div><p lang="en">The only published SKILL: strategy, ROI, career and education choices. <a href="skills/strategy/zhangxuefeng/SKILL.md">Read it</a>.</p><p lang="zh">唯一已发布的 SKILL：选方向、算 ROI、教育和职业。<a href="skills/strategy/zhangxuefeng/SKILL.md">阅读</a>。</p><span class="tp tp-on"><span lang="en">Published</span><span lang="zh">已发布</span></span></div>
+      <div class="bc"><span class="bi">⚡</span><h3>COO</h3><div class="mn">Lidangzzz</div><p lang="en">Tactical execution, index fund strategy, anti-scam, data.</p><p lang="zh">具体战术、执行落地、反诈识别、数据驱动。</p><span class="tp"><span lang="en">Not distilled</span><span lang="zh">未蒸馏</span></span></div>
+      <div class="bc"><span class="bi">🚀</span><h3>CVO</h3><div class="mn">Elon Musk</div><p lang="en">Long-term vision, all-in execution, first principles.</p><p lang="zh">方向感、All-In执行力、公司为什么存在。</p><span class="tp"><span lang="en">Not distilled</span><span lang="zh">未蒸馏</span></span></div>
     </div>
   </div>
 </section>
 
-<section class="s">
+<section class="s" id="meeting">
   <div class="container">
-    <div class="sh"><div class="st">⚙️ HOW IT WORKS</div>
-      <h2 lang="en">Three Modes, One System</h2><h2 lang="zh">三种模式，一个系统</h2>
+    <div class="sh">
+      <h2 lang="en">This week's meeting</h2>
+      <h2 lang="zh">这周的会</h2>
+      <p lang="en">Three things to write down. The checklist is the page you fill in.</p>
+      <p lang="zh">写下这三样。清单是你填写的那一页。</p>
     </div>
     <div class="fl">
-      <div class="fs gl"><div class="fn">1</div><h3 lang="en">Weekly Board Meeting</h3><h3 lang="zh">每周董事会</h3><p lang="en">One decision. Zhang Xuefeng can take a stance. Empty seats stay blank. You decide. <a href="checklist/weekly-board-meeting.html">Open the checklist</a>.</p><p lang="zh">一个决定。张雪峰可以给立场。空席位留白。你做决定。<a href="checklist/weekly-board-meeting.html">打开清单</a>。</p></div>
-      <div class="fs gl"><div class="fn">2</div><h3 lang="en">Cash check</h3><h3 lang="zh">现金核对</h3><p lang="en">Months of runway, money in, money out, and any offer you accepted or refused. No separate finance skill is published.</p><p lang="zh">跑道还有几个月、进账、出账、有没有接或拒一份 offer。财务席位还没有 SKILL。</p></div>
-      <div class="fs gl"><div class="fn">3</div><h3 lang="en">Five filters</h3><h3 lang="zh">五个滤镜</h3><p lang="en">Compounding, health, content, first principles, and whether this gambles rent, survival, or a visa date. Then you still decide.</p><p lang="zh">复利、健康、能不能变成内容、第一性原理、以及这是不是在赌房租、生存或签证日期。写完仍然由你决定。</p></div>
+      <div class="fs"><h3 lang="en">Weekly board meeting</h3><h3 lang="zh">每周董事会</h3><p lang="en">One decision. Zhang Xuefeng can take a stance. Empty seats stay blank. You decide. <a href="checklist/weekly-board-meeting.html">Open the checklist</a>.</p><p lang="zh">一个决定。张雪峰可以给立场。空席位留白。你做决定。<a href="checklist/weekly-board-meeting.html">打开清单</a>。</p></div>
+      <div class="fs"><h3 lang="en">Cash check</h3><h3 lang="zh">现金核对</h3><p lang="en">Months of runway, money in, money out, and any offer you accepted or refused. No separate finance skill is published.</p><p lang="zh">跑道还有几个月、进账、出账、有没有接或拒一份 offer。财务席位还没有 SKILL。</p></div>
+      <div class="fs"><h3 lang="en">Five filters</h3><h3 lang="zh">五个滤镜</h3><p lang="en">Compounding, health, content, first principles, and whether this gambles rent, survival, or a visa date. Then you still decide.</p><p lang="zh">复利、健康、能不能变成内容、第一性原理、以及这是不是在赌房租、生存或签证日期。写完仍然由你决定。</p></div>
     </div>
   </div>
 </section>
 
-<section class="s" id="demo">
+<section class="s" id="scores">
   <div class="container">
-    <div class="sh"><div class="st">🎯 SCORES ARE NOTES</div>
-      <h2 lang="en">Numbers don't pass the decision</h2><h2 lang="zh">分数不能代替决定</h2>
+    <div class="sh">
+      <h2 lang="en">Scores are notes</h2>
+      <h2 lang="zh">分数只是记录</h2>
+      <p lang="en">Numbers on this page do not pass the decision. There is no rule that all ten must be 6 or higher.</p>
+      <p lang="zh">这页上的数字不能通过一个决定。没有「十个席位都要 6 分或以上」这条规则。</p>
     </div>
-    <div class="dc" style="background:#fff;border:1px solid #e4e4e7;border-radius:14px;overflow:hidden">
-      <div class="dh" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap">
-        <span>📋 <span lang="en">Illustration: a DCA allocation, written into this page</span><span lang="zh">示意：写在这页里的一组定投分数</span></span>
-        <span id="roundLabel" style="font-size:12px;background:#f4f4f5;padding:2px 10px;border-radius:6px;font-weight:400">Not a vote</span>
+    <div class="sheet">
+      <div class="sheet-h">
+        <span><span lang="en">Illustration: a DCA allocation, written into this page</span><span lang="zh">示意：写在这页里的一组定投分数</span></span>
+        <span class="pill"><span lang="en">Not a vote</span><span lang="zh">不是投票</span></span>
       </div>
-      <div class="db" id="consensusBody"></div>
-      <div style="padding:10px 20px 14px;border-top:1px solid #f1f5f9">
-        <div id="resultBadge" style="font-size:13px;font-weight:600;color:#71717a">You decide. A meeting does not pass because every score is 6 or higher. Only Zhang Xuefeng has a published SKILL, so the other numbers are not votes.</div>
+      <div class="sheet-b" id="consensusBody"></div>
+      <div class="sheet-f" id="resultBadge">
+        <span lang="en">You decide. A meeting does not pass because every score is 6 or higher. Only Zhang Xuefeng has a published SKILL, so the other numbers are not votes.</span>
+        <span lang="zh">你做决定。会议不会因为每个分数都到 6 分或以上就通过。已发布的 SKILL 只有张雪峰，所以其他数字不是投票。</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="s">
+<section class="close">
   <div class="container">
-    <div class="sb">
-      <div class="si gl"><span class="emoji">💰</span><div class="sn">3</div><div class="sl">Finance</div></div>
-      <div class="si gl"><span class="emoji">🏢</span><div class="sn">1</div><div class="sl">Brand</div></div>
-      <div class="si gl"><span class="emoji">🧬</span><div class="sn">2</div><div class="sl">Health</div></div>
-      <div class="si gl"><span class="emoji">📱</span><div class="sn">1</div><div class="sl">Marketing</div></div>
-      <div class="si gl"><span class="emoji">🧠</span><div class="sn">1</div><div class="sl">Strategy</div></div>
-      <div class="si gl"><span class="emoji">⚡</span><div class="sn">1</div><div class="sl">Operations</div></div>
-      <div class="si gl"><span class="emoji">🚀</span><div class="sn">1</div><div class="sl">Vision</div></div>
-      <div class="si gl"><span class="emoji">📦</span><div class="sn">1</div><div class="sl">Published SKILL</div></div>
-    </div>
-    <p lang="en" style="text-align:center;font-size:13px;color:#64748b;margin-top:12px">The first seven numbers are seats named on the page, not files in the repo. Published SKILLs: Zhang Xuefeng.</p>
-    <p lang="zh" style="text-align:center;font-size:13px;color:#64748b;margin-top:12px">前七个数字是页面上的席位，不是仓库里的文件。已发布的 SKILL：张雪峰。</p>
-  </div>
-</section>
-
-<section class="s">
-  <div class="container">
-    <div class="fg">
-      <div class="fc gl"><span class="fi">🧠</span><h4 lang="en">One SKILL so far</h4><h4 lang="zh">目前一份 SKILL</h4><p lang="en">Zhang Xuefeng: mental models, decision rules, expression, and limits. The other seats are not distilled.</p><p lang="zh">张雪峰：心智模型、决策规则、表达和边界。其余席位还没蒸馏。</p></div>
-      <div class="fc gl"><span class="fi">🔓</span><h4 lang="en">Open Source</h4><h4 lang="zh">完全开源</h4><p lang="en">MIT License. Fork it, modify it, sell it. Your board, your rules.</p><p lang="zh">MIT协议，随便改随便赚钱。</p></div>
-      <div class="fc gl"><span class="fi">🌐</span><h4 lang="en">Free Hosting</h4><h4 lang="zh">免费托管</h4><p lang="en">GitHub Pages. Zero hosting cost. Push to master = site goes live.</p><p lang="zh">GitHub Pages零成本托管，推送即上线。</p></div>
-      <div class="fc gl"><span class="fi">🧩</span><h4 lang="en">Extensible</h4><h4 lang="zh">可扩展</h4><p lang="en">A new seat counts when its SKILL file is in the repo, not when a name is added here.</p><p lang="zh">新席位要有仓库里的 SKILL 文件才算数，只在这里加一个名字不算。</p></div>
-      <div class="fc gl"><span class="fi">✅</span><h4 lang="en">Free checklist</h4><h4 lang="zh">免费清单</h4><p lang="en">A weekly meeting page you can print. No email form and no paid pack in this repo.</p><p lang="zh">一份可以打印的每周会议页。这个仓库里没有邮件表单，也没有付费包。</p></div>
-      <div class="fc gl"><span class="fi">🇭🇰</span><h4 lang="en">Bilingual</h4><h4 lang="zh">中英双语</h4><p lang="en">English + Chinese. Built for Asia-based solopreneurs.</p><p lang="zh">英文+中文，面向亚洲一人创业者。</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="s">
-  <div class="container">
-    <div class="sh"><div class="st">🚀 QUICK START</div>
-      <h2 lang="en">Deploy in 2 Minutes</h2><h2 lang="zh">两分钟部署</h2>
-    </div>
-    <div class="cb">
-      <span class="cm"># Clone</span><br>
-      <span class="cd">$</span> git clone https://github.com/Elimek/opc-board.git<br>
-      <span class="cd">$</span> cd opc-board<br><br>
-      <span class="cm"># GitHub Pages: branch master, folder / (root)</span><br>
-      <span class="cm"># Live: https://elimek.github.io/opc-board</span><br>
-      <span class="cm"># Weekly checklist: checklist/weekly-board-meeting.html</span>
-    </div>
-  </div>
-</section>
-
-<section class="cta">
-  <div class="container">
-    <div class="cta-inner gl">
-      <h2 lang="en">One Person. A Full Board. Zero Cost.</h2><h2 lang="zh">一个人。一个董事会。零成本。</h2>
-      <p lang="en">Read the one published SKILL, then fill in this week's checklist. You still make the decision.</p><p lang="zh">读已经发布的那一份 SKILL，然后填这周的清单。决定仍然是你做。</p>
-      <div class="ha" style="justify-content:center">
-        <a href="checklist/weekly-board-meeting.html" class="btn btn-pri"><span lang="en">Weekly checklist</span><span lang="zh">每周清单</span></a>
-        <a href="https://github.com/Elimek/opc-board" class="btn btn-sec">GitHub</a>
-      </div>
+    <h2 lang="en">Fill in the checklist</h2>
+    <h2 lang="zh">填写清单</h2>
+    <p lang="en">Open this week's checklist and write the decision, the cash check, and the five filters. Leave seats with no SKILL blank. The repository is on GitHub.</p>
+    <p lang="zh">打开这周的清单，写下决定、现金核对和五个滤镜。没有 SKILL 的席位留白。仓库在 GitHub。</p>
+    <div class="ha">
+      <a href="checklist/weekly-board-meeting.html" class="btn btn-pri"><span lang="en">Weekly checklist</span><span lang="zh">每周清单</span></a>
+      <a href="https://github.com/Elimek/opc-board" class="btn btn-sec">GitHub</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>OPC Board — <a href="https://github.com/Elimek/opc-board">Open Source</a> · MIT · <span lang="en">One person, one board, one operating system.</span><span lang="zh">一个人，一个董事会，一个操作系统。</span></p>
+  <p>OPC Board · MIT · <a href="https://github.com/Elimek/opc-board">github.com/Elimek/opc-board</a></p>
 </footer>
 
 <script>
@@ -303,204 +196,64 @@ function setLang(l){
   document.documentElement.setAttribute('data-lang', l);
   document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active')});
   document.getElementById('lb'+l).classList.add('active');
+  renderIllustration();
 }
-var pref = 'en';
-setLang(pref);
 
-// Illustration only. Scores stay as written. They are not a pass gate,
-// and they are not walked upward until every seat is 6 or higher.
-const advisors = [
-  {name:'Naval',emoji:'💼',role:'No SKILL'},
-  {name:'Buffett',emoji:'🐂',role:'No SKILL'},
-  {name:'Duan',emoji:'📱',role:'No SKILL'},
-  {name:'Trump',emoji:'🏢',role:'No SKILL'},
-  {name:'Bryan',emoji:'🧬',role:'No SKILL'},
-  {name:'Huberman',emoji:'⚡',role:'No SKILL'},
-  {name:'Dan Koe',emoji:'📱',role:'No SKILL'},
-  {name:'Xuefeng',emoji:'🧠',role:'Published'},
-  {name:'Lidangzzz',emoji:'⚡',role:'No SKILL'},
-  {name:'Musk',emoji:'🚀',role:'No SKILL'}
+var advisors = [
+  {name:'Naval',emoji:'💼',role:['No SKILL','无 SKILL']},
+  {name:'Buffett',emoji:'🐂',role:['No SKILL','无 SKILL']},
+  {name:'Duan',emoji:'📱',role:['No SKILL','无 SKILL']},
+  {name:'Trump',emoji:'🏢',role:['No SKILL','无 SKILL']},
+  {name:'Bryan',emoji:'🧬',role:['No SKILL','无 SKILL']},
+  {name:'Huberman',emoji:'⚡',role:['No SKILL','无 SKILL']},
+  {name:'Dan Koe',emoji:'📱',role:['No SKILL','无 SKILL']},
+  {name:'Xuefeng',emoji:'🧠',role:['Published','已发布']},
+  {name:'Lidangzzz',emoji:'⚡',role:['No SKILL','无 SKILL']},
+  {name:'Musk',emoji:'🚀',role:['No SKILL','无 SKILL']}
 ];
-const illustration = [
-  {score:7,note:'Written on this page'},{score:6,note:'Not a vote'},{score:5,note:'Cash unknown'},
-  {score:4,note:'No SKILL file'},{score:8,note:'No SKILL file'},{score:7,note:'No SKILL file'},
-  {score:6,note:'No SKILL file'},{score:5,note:'Only published seat'},{score:7,note:'No SKILL file'},
-  {score:3,note:'No SKILL file'}
+var illustration = [
+  {score:7,note:['Written on this page','写在这页上']},
+  {score:6,note:['Not a vote','不是投票']},
+  {score:5,note:['Cash unknown','现金不明']},
+  {score:4,note:['No SKILL file','没有 SKILL 文件']},
+  {score:8,note:['No SKILL file','没有 SKILL 文件']},
+  {score:7,note:['No SKILL file','没有 SKILL 文件']},
+  {score:6,note:['No SKILL file','没有 SKILL 文件']},
+  {score:5,note:['Only published seat','唯一已发布的席位']},
+  {score:7,note:['No SKILL file','没有 SKILL 文件']},
+  {score:3,note:['No SKILL file','没有 SKILL 文件']}
 ];
+
+function langIndex(){
+  return document.documentElement.getAttribute('data-lang') === 'zh' ? 1 : 0;
+}
+
 function renderIllustration(){
-  var html = '<div style="display:flex;flex-wrap:wrap;gap:4px;padding:4px 0">';
+  var iLang = langIndex();
+  var html = '<div style="display:flex;flex-wrap:wrap;gap:6px">';
   for(var i=0;i<advisors.length;i++){
     var a = advisors[i], v = illustration[i];
     var barW = (v.score/10)*100;
-    html += '<div style="flex:1;min-width:90px;max-width:110px;background:#fafafa;border-radius:8px;padding:6px 4px;text-align:center;border:1px solid #e4e4e7">';
-    html += '<div style="font-size:10px">'+a.emoji+'</div>';
-    html += '<div style="font-size:9px;font-weight:600">'+a.name+'</div>';
-    html += '<div style="font-size:8px;color:#94a3b8">'+a.role+'</div>';
-    html += '<div style="margin-top:4px;height:4px;background:#e4e4e7;border-radius:2px;overflow:hidden">';
+    html += '<div style="flex:1;min-width:92px;max-width:120px;background:#fafafa;border-radius:8px;padding:8px 4px;text-align:center;border:1px solid #e4e4e7">';
+    html += '<div style="font-size:14px;line-height:1.2">'+a.emoji+'</div>';
+    html += '<div style="font-size:11px;font-weight:600">'+a.name+'</div>';
+    html += '<div style="font-size:10px;color:#64748b">'+a.role[iLang]+'</div>';
+    html += '<div style="margin-top:6px;height:4px;background:#e4e4e7;border-radius:2px;overflow:hidden">';
     html += '<div style="height:100%;width:'+barW+'%;background:#64748b;border-radius:2px"></div></div>';
     html += '<div style="font-size:14px;font-weight:700;color:#1a1a2e">'+v.score+'/10</div>';
-    html += '<div style="font-size:7px;color:#94a3b8">'+v.note+'</div>';
+    html += '<div style="font-size:10px;color:#64748b;line-height:1.3">'+v.note[iLang]+'</div>';
     html += '</div>';
   }
   html += '</div>';
   var avg = Math.round(illustration.reduce(function(s,v){return s+v.score},0)/illustration.length*10)/10;
-  html += '<div style="margin-top:8px;padding:6px 10px;border-radius:6px;font-size:12px;font-weight:600;text-align:center;background:#f4f4f5;color:#3f3f46">';
-  html += 'Avg '+avg+'/10 on the page. Not a verdict. Do not edit the low scores upward to force a unanimous 6.';
-  html += '</div>';
+  var summary = iLang
+    ? ('这页上的平均分 '+avg+'/10。不是结论。不要把低分改上去，凑成全员 6 分。')
+    : ('Avg '+avg+'/10 on the page. Not a verdict. Do not edit the low scores upward to force a unanimous 6.');
+  html += '<div style="margin-top:10px;padding:8px 10px;border-radius:6px;font-size:13px;font-weight:600;text-align:center;background:#f4f4f5;color:#3f3f46">'+summary+'</div>';
   document.getElementById('consensusBody').innerHTML = html;
 }
-renderIllustration();
 
-// === WebGPU Glass Renderer ===
-(async function(){
-  if(!navigator.gpu){ console.log('WebGPU not supported, using CSS glass fallback'); return; }
-
-  // Find glass elements
-  const glassEls = document.querySelectorAll('.gl');
-  if(!glassEls.length) return;
-
-  try{
-    const adapter = await navigator.gpu.requestAdapter();
-    if(!adapter) throw 'no adapter';
-    const device = await adapter.requestDevice();
-    const canvas = document.getElementById('glass-canvas');
-    const ctx = canvas.getContext('webgpu');
-    if(!ctx) throw 'no webgpu context';
-
-    // Size canvas to viewport
-    function resize(){
-      const w = window.innerWidth, h = window.innerHeight;
-      canvas.width = w; canvas.height = h;
-      ctx.configure({device, format: navigator.gpu.getPreferredCanvasFormat(), alphaMode: 'premultiplied'});
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    // WGSL shader: refractive glass
-    const shaderCode = `
-      struct Uniforms { resolution: vec2<f32>, time: f32, pad: f32 };
-      @group(0) @binding(0) var<uniform> u: Uniforms;
-      @group(0) @binding(1) var bg: texture_2d<f32>;
-      @group(0) @binding(2) var samp: sampler;
-
-      struct FragOut { @location(0) color: vec4<f32> };
-      struct VertOut { @builtin(position) pos: vec4<f32>, @location(0) uv: vec2<f32> };
-
-      @vertex fn vert(@builtin(vertex_index) i: u32) -> VertOut {
-        var pos = array(vec2(-1,-1), vec2(3,-1), vec2(-1,3));
-        return VertOut(vec4(pos[i], 0, 1), pos[i] * 0.5 + 0.5);
-      }
-
-      // Simplex-like noise for refraction
-      fn hash(p: vec2<f32>) -> f32 {
-        return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-      }
-
-      @fragment fn frag(v: VertOut) -> FragOut {
-        let aspect = u.resolution.x / u.resolution.y;
-        var uv = vec2(v.uv.x * aspect, v.uv.y);
-
-        // Refraction distortion
-        let t = u.time * 0.15;
-        let noise1 = hash(uv * 3.0 + t);
-        let noise2 = hash(uv * 5.0 - t * 0.7);
-        let distort = (noise1 - 0.5) * 0.008 + (noise2 - 0.5) * 0.005;
-
-        // Chromatic aberration
-        let r_uv = vec2(v.uv.x + distort * 1.5, v.uv.y + distort);
-        let g_uv = vec2(v.uv.x, v.uv.y);
-        let b_uv = vec2(v.uv.x - distort * 1.5, v.uv.y - distort);
-
-        // Sample background with mip-level blur
-        let r = textureSampleLevel(bg, samp, r_uv, 0.8).r;
-        let g = textureSampleLevel(bg, samp, g_uv, 0.6).g;
-        let b = textureSampleLevel(bg, samp, b_uv, 0.8).b;
-
-        // Edge glow
-        let edge = 1.0 - smoothstep(0.0, 0.15, min(v.uv.x, min(1.0-v.uv.x, min(v.uv.y, 1.0-v.uv.y))));
-        let glow = vec3(0.6, 0.7, 1.0) * edge * 0.15;
-
-        return FragOut(vec4(r * 0.85 + glow.r, g * 0.85 + glow.g, b * 0.85 + glow.b, 0.55));
-      }
-    `;
-
-    const shader = device.createShaderModule({code: shaderCode});
-    const pipeline = device.createRenderPipeline({
-      layout: 'auto',
-      vertex: {module: shader, entryPoint: 'vert'},
-      fragment: {module: shader, entryPoint: 'frag', targets: [{format: navigator.gpu.getPreferredCanvasFormat(), blend: {color: {srcFactor: 'src-alpha', dstFactor: 'one-minus-src-alpha'}}}]},
-      primitive: {topology: 'triangle-list'},
-    });
-
-    // Background texture: capture the page
-    function captureBG(){
-      return new Promise(resolve => {
-        // Create an offscreen canvas to capture the HTML
-        const offscreen = document.createElement('canvas');
-        offscreen.width = canvas.width;
-        offscreen.height = canvas.height;
-        resolve(null); // WEBGPU capture from HTML is complex; use gradient fallback
-      });
-    }
-
-    // Use a programmatic background texture
-    const bgSize = 512;
-    const bgData = new Uint8Array(bgSize * bgSize * 4);
-    for(let y=0; y<bgSize; y++){
-      for(let x=0; x<bgSize; x++){
-        const i = (y*bgSize + x)*4;
-        const cx = x/bgSize, cy = y/bgSize;
-        bgData[i] = Math.floor(200 + 55 * (1 - cy));   // R
-        bgData[i+1] = Math.floor(210 + 45 * (cx*0.6 + cy*0.4)); // G
-        bgData[i+2] = Math.floor(225 + 30 * cx);      // B
-        bgData[i+3] = 255;
-      }
-    }
-
-    const tex = device.createTexture({
-      size: [bgSize, bgSize], format: 'rgba8unorm', usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST
-    });
-    device.queue.writeTexture(
-      {texture: tex}, bgData, {bytesPerRow: bgSize*4, rowsPerImage: bgSize}, [bgSize, bgSize]
-    );
-
-    const sampler = device.createSampler({magFilter: 'linear', minFilter: 'linear', mipmapFilter: 'linear'});
-
-    const uniformBuf = device.createBuffer({
-      size: 16, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
-    });
-
-    const bindGroup = device.createBindGroup({
-      layout: pipeline.getBindGroupLayout(0),
-      entries: [
-        {binding: 0, resource: {buffer: uniformBuf}},
-        {binding: 1, resource: tex.createView()},
-        {binding: 2, resource: sampler}
-      ]
-    });
-
-    let start = performance.now();
-    function frame(){
-      const time = (performance.now() - start) / 1000;
-      const res = new Float32Array([canvas.width, canvas.height, time, 0]);
-      device.queue.writeBuffer(uniformBuf, 0, res.buffer);
-
-      const cmd = device.createCommandEncoder();
-      const pass = cmd.beginRenderPass({
-        colorAttachments: [{view: ctx.getCurrentTexture().createView(), loadOp: 'clear', storeOp: 'store', clearValue: {r:0,g:0,b:0,a:0}}]
-      });
-      pass.setPipeline(pipeline);
-      pass.setBindGroup(0, bindGroup);
-      pass.draw(3, 1, 0, 0);
-      pass.end();
-      device.queue.submit([cmd.finish()]);
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }catch(e){
-    console.log('WebGPU init failed, using CSS fallback:', e);
-  }
-})();
+setLang('en');
 </script>
 </body>
 </html>
