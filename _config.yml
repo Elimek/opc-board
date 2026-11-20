@@ -1,8 +1,10 @@
-# OPC Board — GitHub Pages Configuration
-# Deploy: push to main, GitHub Pages auto-builds from root
+# OPC Board — GitHub Pages
+# Branch: master (there is no main branch)
+# Source: repository root, not /docs
+# Live: https://elimek.github.io/opc-board
 title: OPC Board
-description: Your One-Person Company Operating System — distilled wisdom from Naval, Buffett, Musk, Bryan Johnson, Dan Koe, Zhang Xuedong, and more.
-url: "https://opc-board.is-a.dev"
+description: One-person company notes. The only published mentor SKILL in this repo is Zhang Xuefeng. Other board seats are named, not distilled.
+url: "https://elimek.github.io"
 baseurl: "/opc-board"
 markdown: kramdown
 theme: null

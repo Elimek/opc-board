@@ -7,9 +7,11 @@ labels: quality-audit
 
 ## Audit Results
 
-- Harness PASS: N
-- Harness FAIL: N
-- Harness WARN: N
+This repository has no test harness. Leave the counts blank or write "no harness". Do not invent a 43-test run.
+
+- Harness PASS: no harness
+- Harness FAIL: no harness
+- Harness WARN: no harness
 
 ## Issues Found
 

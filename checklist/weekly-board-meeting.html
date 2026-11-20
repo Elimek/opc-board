@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly board meeting — OPC Board</title>
+<meta name="description" content="A free weekly checklist. Only Zhang Xuefeng has a published SKILL. Nothing on this page is submitted.">
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f4f1ea;
+    color: #1c1915;
+    font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+    line-height: 1.5;
+  }
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 22px 64px;
+    background: #fffdf8;
+    min-height: 100vh;
+    box-shadow: 0 0 0 1px #e6e0d4;
+  }
+  header p, .note, footer, .seat-note { color: #5c564c; }
+  h1 { font-size: 32px; line-height: 1.15; margin: 0 0 8px; font-weight: 650; }
+  h2 {
+    font-size: 18px;
+    margin: 28px 0 8px;
+    padding-top: 12px;
+    border-top: 1px solid #e6e0d4;
+  }
+  a { color: #1d4e89; }
+  .toolbar { display: flex; gap: 12px; align-items: center; margin: 16px 0; font-family: system-ui, sans-serif; font-size: 14px; }
+  button, .linkish {
+    font-family: system-ui, sans-serif;
+    font-size: 14px;
+    background: #1c1915;
+    color: #fff;
+    border: 0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .linkish.secondary { background: transparent; color: #1c1915; border: 1px solid #cfc6b8; }
+  label { display: block; font-size: 14px; margin: 12px 0 4px; font-family: system-ui, sans-serif; }
+  input[type="text"], textarea {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid #cfc6b8;
+    background: transparent;
+    font: inherit;
+    color: inherit;
+    padding: 6px 0;
+    resize: vertical;
+  }
+  textarea { min-height: 72px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 8px 8px 0; border-bottom: 1px solid #eee8dc; }
+  th { font-family: system-ui, sans-serif; font-size: 13px; font-weight: 650; width: 42%; }
+  ol, ul { margin: 8px 0 0; padding-left: 1.2rem; }
+  li { margin: 6px 0; }
+  .published { background: #f3f7f1; border: 1px solid #d5e3cf; border-radius: 10px; padding: 12px 14px; }
+  .unpublished { background: #f7f5f1; border: 1px dashed #d9d1c4; border-radius: 10px; padding: 12px 14px; }
+  .protocol { font-size: 15px; }
+  footer { margin-top: 28px; font-size: 13px; font-family: system-ui, sans-serif; }
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; padding: 0; }
+    .toolbar { display: none; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header>
+    <h1>Weekly board meeting</h1>
+    <p>One decision. A cash check. Filters in sentences. Three tasks, and a list of what you will not do.</p>
+    <p class="note">Nothing on this page is sent anywhere. There is no account, no email field, and no checkout. Print it, or copy it. The same text is in <a href="weekly-board-meeting.md">weekly-board-meeting.md</a>.</p>
+  </header>
+
+  <div class="toolbar">
+    <button type="button" onclick="window.print()">Print</button>
+    <a class="linkish secondary" href="../index.html">Back to the site</a>
+    <a class="linkish secondary" href="https://github.com/Elimek/opc-board">Repo</a>
+  </div>
+
+  <h2>Date</h2>
+  <input type="text" aria-label="Date">
+
+  <h2>The one decision to make this week</h2>
+  <p class="note">If you have two, pick the one that changes money, health, or a deadline. Park the other under “what not to do.”</p>
+  <textarea aria-label="The one decision"></textarea>
+
+  <h2>Cash and runway</h2>
+  <p class="note">Runway is cash you can spend divided by a typical month out. If you do not know, write “unknown” and the day you will look it up.</p>
+  <table>
+    <tr><th>Months of runway</th><td><input type="text" aria-label="Months of runway"></td></tr>
+    <tr><th>Money in</th><td><input type="text" aria-label="Money in"></td></tr>
+    <tr><th>Money out</th><td><input type="text" aria-label="Money out"></td></tr>
+    <tr><th>Offer accepted or refused</th><td><input type="text" aria-label="Offer accepted or refused"></td></tr>
+  </table>
+
+  <h2>Decision filters</h2>
+  <p class="note">One sentence each. “Maybe” and “consider” do not count.</p>
+  <label for="f1">1. Compounding — does this still matter in a year?</label>
+  <textarea id="f1"></textarea>
+  <label for="f2">2. Health — what does it take from sleep, body, or attention?</label>
+  <textarea id="f2"></textarea>
+  <label for="f3">3. Can it become content? Name the piece, or write “no.”</label>
+  <textarea id="f3"></textarea>
+  <label for="f4">4. First principles — if you ignore the usual way, does it still hold?</label>
+  <textarea id="f4"></textarea>
+  <label for="f5">5. Does this gamble rent, survival, or a visa timeline? Which date?</label>
+  <textarea id="f5"></textarea>
+
+  <h2>Published seat</h2>
+  <div class="published">
+    <p><strong>Zhang Xuefeng (张雪峰), CSO — available.</strong> This is the only mentor SKILL in the repository: <a href="../skills/strategy/zhangxuefeng/SKILL.md">skills/strategy/zhangxuefeng/SKILL.md</a>.</p>
+    <label for="stance">Stance</label>
+    <textarea id="stance"></textarea>
+    <label for="counter">One counter-option</label>
+    <textarea id="counter"></textarea>
+    <label for="evidence">Evidence (a number, a date, a source)</label>
+    <textarea id="evidence"></textarea>
+    <label for="confidence">Confidence, and what would change it</label>
+    <textarea id="confidence"></textarea>
+  </div>
+
+  <h2>Seats not yet distilled</h2>
+  <div class="unpublished">
+    <p class="seat-note">These names are on the site. They have no SKILL file. They do not vote. A sentence you imagine in their voice is not a vote.</p>
+    <ul>
+      <li>CFO — Naval, Buffett, Duan Yongping — not yet distilled</li>
+      <li>CBO — Trump — not yet distilled</li>
+      <li>CHO — Bryan Johnson, Huberman — not yet distilled</li>
+      <li>CMO — Dan Koe — not yet distilled</li>
+      <li>COO — Lidangzzz — not yet distilled</li>
+      <li>CVO — Elon Musk — not yet distilled</li>
+    </ul>
+  </div>
+
+  <h2>Next week's 3 MITs</h2>
+  <label for="m1">1</label>
+  <input id="m1" type="text">
+  <label for="m2">2</label>
+  <input id="m2" type="text">
+  <label for="m3">3</label>
+  <input id="m3" type="text">
+
+  <h2>What not to do</h2>
+  <p class="note">Name the work you are dropping. An empty list means you have not chosen.</p>
+  <textarea aria-label="What not to do"></textarea>
+
+  <h2>How a meeting counts</h2>
+  <ul class="protocol">
+    <li>The owner decides. A row of high scores is not a yes.</li>
+    <li>A seat with no published SKILL does not vote.</li>
+    <li>A published SKILL owes a stance, at least one counter-option, evidence, and a confidence level.</li>
+    <li>Do not raise a number so that every seat looks like a 6 or higher.</li>
+  </ul>
+  <p class="note">A future skill is complete only when criticism materials are included, sealed test items stay out of the runtime package, and a fidelity check against a bare model has been run before it is marked complete.</p>
+
+  <footer>
+    OPC Board · free checklist · <a href="https://elimek.github.io/opc-board">elimek.github.io/opc-board</a>
+  </footer>
+</main>
+</body>
+</html>

@@ -88,7 +88,10 @@ body{background:#0a0a0b;color:#e4e4e7;min-height:100vh}
   <div class="card">
     <h3>🎯 What's your challenge?</h3>
     <p style="color:#71717a;font-size:0.85rem;margin-bottom:1rem">
-      Type any decision or problem. Your board will respond.
+      The only published SKILL in this repo is Zhang Xuefeng
+      (<code>skills/strategy/zhangxuefeng/</code>).
+      Lines below are sample sentences stored in this file, not a vote.
+      Seats with no SKILL stay blank.
     </p>
     <input type="text" class="meeting-input" id="questionInput"
       placeholder='e.g. "Should I freelance full-time or take a job?"'
@@ -99,7 +102,7 @@ body{background:#0a0a0b;color:#e4e4e7;min-height:100vh}
   <div id="responseArea" class="response-area">
     <div class="empty-state">
       <div class="icon">🏛️</div>
-      <p>Your board is waiting for a question.</p>
+      <p>Zhang Xuefeng is the only published SKILL. Ask something, and this page will show a stored sample line plus the empty seats.</p>
       <p style="font-size:0.8rem;margin-top:0.3rem">Try: "我应该留在香港找工作还是回内地发展？"</p>
     </div>
   </div>
@@ -147,42 +150,43 @@ body{background:#0a0a0b;color:#e4e4e7;min-height:100vh}
 <div id="panel-status" class="panel">
   <div class="card">
     <h3>🏛️ Board Status</h3>
+    <p style="color:#71717a;font-size:0.85rem;margin-bottom:0.75rem">Counts are files in this repository, not names on the landing page.</p>
     <div class="grid-3" style="margin-top:0.5rem">
       <div class="stat">
+        <div style="font-size:2rem">🧠</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#f59e0b">1</div>
+        <div class="stat-label">Published SKILL</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-orange">Zhang Xuefeng</span></div>
+      </div>
+      <div class="stat">
         <div style="font-size:2rem">💼</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#22c55e">4</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#71717a">0</div>
         <div class="stat-label">Finance SKILLs</div>
-        <div style="margin-top:0.3rem"><span class="tag tag-green">Active</span></div>
+        <div style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">Not distilled</span></div>
       </div>
       <div class="stat">
         <div style="font-size:2rem">🧬</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#a855f7">2</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#71717a">0</div>
         <div class="stat-label">Health SKILLs</div>
-        <div style="margin-top:0.3rem"><span class="tag tag-purple">Active</span></div>
+        <div style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">Not distilled</span></div>
       </div>
       <div class="stat">
         <div style="font-size:2rem">📱</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#3b82f6">1</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#71717a">0</div>
         <div class="stat-label">Media SKILLs</div>
-        <div style="margin-top:0.3rem"><span class="tag tag-blue">Active</span></div>
-      </div>
-      <div class="stat">
-        <div style="font-size:2rem">🧠</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#f59e0b">2</div>
-        <div class="stat-label">Strategy SKILLs</div>
-        <div style="margin-top:0.3rem"><span class="tag tag-orange">Active</span></div>
+        <div style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">Not distilled</span></div>
       </div>
       <div class="stat">
         <div style="font-size:2rem">🚀</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#06b6d4">1</div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#71717a">0</div>
         <div class="stat-label">Innovation SKILLs</div>
-        <div style="margin-top:0.3rem"><span class="tag tag-cyan">Active</span></div>
+        <div style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">Not distilled</span></div>
       </div>
       <div class="stat">
         <div style="font-size:2rem">🐙</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#e4e4e7">0</div>
-        <div class="stat-label">GitHub Stars</div>
-        <div id="starStatus" style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">No data</span></div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#e4e4e7">—</div>
+        <div class="stat-label">GitHub stars</div>
+        <div style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">See the repo</span></div>
       </div>
     </div>
   </div>
@@ -200,11 +204,11 @@ body{background:#0a0a0b;color:#e4e4e7;min-height:100vh}
     <div class="card">
       <h3>🌐 Live</h3>
       <p style="font-size:0.85rem">
-      <a href="https://opc-board.is-a.dev" style="color:#3b82f6">
-            opc-board.is-a.dev
+      <a href="https://elimek.github.io/opc-board" style="color:#3b82f6">
+            elimek.github.io/opc-board
         </a>
       </p>
-      <p style="font-size:0.8rem;color:#71717a;margin-top:0.5rem">GitHub Pages · Cloudflare DNS</p>
+      <p style="font-size:0.8rem;color:#71717a;margin-top:0.5rem">GitHub Pages · branch master · folder / (root)</p>
     </div>
   </div>
 </div>
@@ -264,22 +268,16 @@ function callBoard() {
   }
 
   const r = [];
-  const advisors = [
-    {id:'finance', name:'💼 Finance CEO (Naval / 段永平 / 巴菲特 / 特朗普)', cls:'c-finance'},
-    {id:'health', name:'🧬 Health CEO (Bryan Johnson / Huberman)', cls:'c-health'},
-    {id:'media', name:'📱 Media CEO (Dan Koe)', cls:'c-media'},
-    {id:'strategy', name:'🧠 Strategy Advisor (张雪峰 / lidangzzz)', cls:'c-strategy'},
-    {id:'innovation', name:'🚀 Innovation CEO (Elon Musk)', cls:'c-innovation'}
-  ];
-
-  advisors.forEach(a => {
-    const pool = responses[a.id];
-    const pick = pool[Math.floor(Math.random() * pool.length)];
-    r.push(`<div class="advisor-resp ${a.cls}">
-      <div class="name">${a.name}</div>
-      <div class="text">${pick}</div>
+  const zhangLines = responses.strategy.filter(line => line.indexOf('张雪峰') !== -1);
+  const pick = zhangLines[Math.floor(Math.random() * zhangLines.length)];
+  r.push(`<div class="advisor-resp c-strategy">
+      <div class="name">🧠 Zhang Xuefeng (张雪峰) — published SKILL</div>
+      <div class="text">${pick}<br>Sample line stored in this page, not a live model call. Read skills/strategy/zhangxuefeng/SKILL.md for the actual skill.</div>
     </div>`);
-  });
+  r.push(`<div class="advisor-resp">
+      <div class="name">Other seats — not yet distilled</div>
+      <div class="text">Naval, Buffett, Duan, Trump, Bryan Johnson, Huberman, Dan Koe, Lidangzzz, and Musk have no SKILL file in this repo. They do not vote.</div>
+    </div>`);
 
   area.innerHTML = `
     <div class="card" style="margin-bottom:0.75rem">
