@@ -37,11 +37,17 @@ Answer each one in a sentence. "Maybe" and "consider" do not count.
 4. **First principles.** If you ignore how this is usually done, does the decision still hold?
 5. **Rent, survival, or a visa timeline.** Does this gamble rent, food, or a visa date? If yes, say which date.
 
-## Published seat
+## Published seats
 
-Only one SKILL is in this repository, and only this seat can take a stance:
+These SKILL files are in the repository. A published file can take a stance. For each file you use this week, write a stance, one counter-option, evidence, and a confidence level. The blanks are for one seat. Copy them if you use another.
 
-**Zhang Xuefeng (张雪峰), CSO** — [`skills/strategy/zhangxuefeng/SKILL.md`](../skills/strategy/zhangxuefeng/SKILL.md)
+- **Zhang Xuefeng (张雪峰), CSO** — [`skills/strategy/zhangxuefeng/SKILL.md`](../skills/strategy/zhangxuefeng/SKILL.md)
+- **Naval Ravikant, CFO** — [`skills/finance/naval/SKILL.md`](../skills/finance/naval/SKILL.md)
+- **Warren Buffett, CFO** — [`skills/finance/buffett/SKILL.md`](../skills/finance/buffett/SKILL.md)
+- **Duan Yongping (段永平), CFO** — [`skills/finance/duanyongping/SKILL.md`](../skills/finance/duanyongping/SKILL.md)
+- **Donald Trump, CBO** — [`skills/finance/trump/SKILL.md`](../skills/finance/trump/SKILL.md)
+- **Dan Koe, CMO** — [`skills/media/dan-koe/SKILL.md`](../skills/media/dan-koe/SKILL.md)
+- **Elon Musk, CVO** — [`skills/innovation/elon-musk/SKILL.md`](../skills/innovation/elon-musk/SKILL.md)
 
 - Stance:
 - One counter-option (what you would do instead):
@@ -50,16 +56,12 @@ Only one SKILL is in this repository, and only this seat can take a stance:
 
 If you cannot fill evidence, the stance is not finished. Leave it blank rather than smoothing it.
 
-## Seats not yet distilled
+## No SKILL file
 
 These names are on the site. They have no SKILL file. They do not vote, and a sentence you imagine in their voice is not a vote.
 
-- CFO — Naval, Buffett, Duan Yongping
-- CBO — Trump
 - CHO — Bryan Johnson, Huberman
-- CMO — Dan Koe
 - COO — Lidangzzz
-- CVO — Elon Musk
 
 ## Next week's 3 MITs
 
@@ -84,4 +86,4 @@ Name the work you are explicitly dropping this week. If the list is empty, you h
 - A published SKILL owes a stance, at least one counter-option, evidence, and a confidence level.
 - Do not raise a number so that every seat looks like a 6 or higher.
 
-A future skill is complete only when its criticism materials are included, its sealed test items stay out of the runtime package, and someone has checked it against a bare model before marking it complete. Zhang Xuefeng is the only seat that meets the "published" bar today.
+A seat is published when its SKILL file is in this repository. A skill is complete only when its criticism materials are included, its sealed test items stay out of the runtime package, and someone has checked it against a bare model before marking it complete. The copied files were not put through that check here.
