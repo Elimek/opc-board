@@ -88,10 +88,10 @@ body{background:#0a0a0b;color:#e4e4e7;min-height:100vh}
   <div class="card">
     <h3>🎯 What's your challenge?</h3>
     <p style="color:#71717a;font-size:0.85rem;margin-bottom:1rem">
-      The only published SKILL in this repo is Zhang Xuefeng
-      (<code>skills/strategy/zhangxuefeng/</code>).
+      Seven SKILL files are in this repo. Zhang Xuefeng was already here.
+      Naval, Buffett, Duan, Trump, Dan Koe, and Musk were copied in.
+      Bryan Johnson, Huberman, and Lidangzzz have no file.
       Lines below are sample sentences stored in this file, not a vote.
-      Seats with no SKILL stay blank.
     </p>
     <input type="text" class="meeting-input" id="questionInput"
       placeholder='e.g. "Should I freelance full-time or take a job?"'
@@ -102,7 +102,7 @@ body{background:#0a0a0b;color:#e4e4e7;min-height:100vh}
   <div id="responseArea" class="response-area">
     <div class="empty-state">
       <div class="icon">🏛️</div>
-      <p>Zhang Xuefeng is the only published SKILL. Ask something, and this page will show a stored sample line plus the empty seats.</p>
+      <p>Ask something. This page shows a stored sample line for Zhang Xuefeng, links the other SKILL files, and leaves Bryan Johnson, Huberman, and Lidangzzz blank.</p>
       <p style="font-size:0.8rem;margin-top:0.3rem">Try: "我应该留在香港找工作还是回内地发展？"</p>
     </div>
   </div>
@@ -150,19 +150,19 @@ body{background:#0a0a0b;color:#e4e4e7;min-height:100vh}
 <div id="panel-status" class="panel">
   <div class="card">
     <h3>🏛️ Board Status</h3>
-    <p style="color:#71717a;font-size:0.85rem;margin-bottom:0.75rem">Counts are files in this repository, not names on the landing page.</p>
+    <p style="color:#71717a;font-size:0.85rem;margin-bottom:0.75rem">Counts are files in this repository. Trump (CBO) is <code>skills/finance/trump/</code>. Health is still empty. Lidangzzz has no file.</p>
     <div class="grid-3" style="margin-top:0.5rem">
       <div class="stat">
         <div style="font-size:2rem">🧠</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#f59e0b">1</div>
-        <div class="stat-label">Published SKILL</div>
-        <div style="margin-top:0.3rem"><span class="tag tag-orange">Zhang Xuefeng</span></div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#f59e0b">7</div>
+        <div class="stat-label">Published SKILL files</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-orange">3 names have none</span></div>
       </div>
       <div class="stat">
         <div style="font-size:2rem">💼</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#71717a">0</div>
-        <div class="stat-label">Finance SKILLs</div>
-        <div style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">Not distilled</span></div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#22c55e">3</div>
+        <div class="stat-label">CFO SKILL files</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-green">Naval · Buffett · Duan</span></div>
       </div>
       <div class="stat">
         <div style="font-size:2rem">🧬</div>
@@ -172,15 +172,15 @@ body{background:#0a0a0b;color:#e4e4e7;min-height:100vh}
       </div>
       <div class="stat">
         <div style="font-size:2rem">📱</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#71717a">0</div>
-        <div class="stat-label">Media SKILLs</div>
-        <div style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">Not distilled</span></div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#3b82f6">1</div>
+        <div class="stat-label">Media SKILL</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-blue">Dan Koe</span></div>
       </div>
       <div class="stat">
         <div style="font-size:2rem">🚀</div>
-        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#71717a">0</div>
-        <div class="stat-label">Innovation SKILLs</div>
-        <div style="margin-top:0.3rem"><span class="tag" style="background:rgba(255,255,255,0.05);color:#71717a;border-color:#2a2a2e">Not distilled</span></div>
+        <div class="stat-num" style="font-size:1.3rem;-webkit-text-fill-color:#06b6d4">1</div>
+        <div class="stat-label">Innovation SKILL</div>
+        <div style="margin-top:0.3rem"><span class="tag tag-cyan">Elon Musk</span></div>
       </div>
       <div class="stat">
         <div style="font-size:2rem">🐙</div>
@@ -274,9 +274,13 @@ function callBoard() {
       <div class="name">🧠 Zhang Xuefeng (张雪峰) — published SKILL</div>
       <div class="text">${pick}<br>Sample line stored in this page, not a live model call. Read skills/strategy/zhangxuefeng/SKILL.md for the actual skill.</div>
     </div>`);
+  r.push(`<div class="advisor-resp c-finance">
+      <div class="name">Other published SKILL files — not a live call</div>
+      <div class="text">Naval (skills/finance/naval/), Buffett (skills/finance/buffett/), Duan (skills/finance/duanyongping/), Trump (skills/finance/trump/, CBO), Dan Koe (skills/media/dan-koe/), Musk (skills/innovation/elon-musk/). This button does not run them.</div>
+    </div>`);
   r.push(`<div class="advisor-resp">
-      <div class="name">Other seats — not yet distilled</div>
-      <div class="text">Naval, Buffett, Duan, Trump, Bryan Johnson, Huberman, Dan Koe, Lidangzzz, and Musk have no SKILL file in this repo. They do not vote.</div>
+      <div class="name">No SKILL file</div>
+      <div class="text">Bryan Johnson, Huberman, and Lidangzzz have no SKILL file in this repo. They do not vote.</div>
     </div>`);
 
   area.innerHTML = `

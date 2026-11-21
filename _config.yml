@@ -3,7 +3,7 @@
 # Source: repository root, not /docs
 # Live: https://elimek.github.io/opc-board
 title: OPC Board
-description: One-person company notes. The only published mentor SKILL in this repo is Zhang Xuefeng. Other board seats are named, not distilled.
+description: One-person company notes. Seven mentor SKILL files are in this repo. Bryan Johnson, Huberman, and Lidangzzz are named and not distilled.
 url: "https://elimek.github.io"
 baseurl: "/opc-board"
 markdown: kramdown

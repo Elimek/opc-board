@@ -326,7 +326,7 @@
 
 <div class="page-header">
   <h1>OPC Board · Board Meeting</h1>
-  <p>Static page. Zhang Xuefeng is the only published SKILL. The other names do not vote, and a row of scores is not a pass.</p>
+  <p>Static page. Seven SKILL files are in the repo. Bryan Johnson, Huberman, and Lidangzzz have none. A row of scores is not a pass.</p>
 </div>
 
 <!-- ─── INPUT ──────────────────────────────────── -->
@@ -460,7 +460,7 @@ function showVerdict(verdict, avgScore) {
   const banner = document.getElementById("verdictBanner");
   if (verdict === "illustration") {
     banner.className = "verdict-banner verdict-revised visible";
-    banner.innerHTML = `Illustration only · scripted average ${avgScore}/10. This page does not pass a decision because every score is 6 or higher. Only Zhang Xuefeng has a published SKILL. You decide.`;
+    banner.innerHTML = `Illustration only · scripted average ${avgScore}/10. This page does not pass a decision because every score is 6 or higher. Bryan Johnson, Huberman, and Lidangzzz have no SKILL file. You decide.`;
     return;
   }
   banner.className = `verdict-banner ${verdict === 'passed' ? 'verdict-passed' : verdict === 'failed' ? 'verdict-failed' : 'verdict-revised'} visible`;

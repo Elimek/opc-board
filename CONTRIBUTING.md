@@ -4,7 +4,7 @@ OPC Board is a one-person company. Pull requests are welcome. Please describe th
 
 ## What you can open today
 
-The only published mentor skill is [`skills/strategy/zhangxuefeng/`](skills/strategy/zhangxuefeng/). Use that directory as the format reference: `SKILL.md`, a short README, and `references/research/`.
+Published mentor skills are the directories under `skills/` that contain a `SKILL.md`. Zhang Xuefeng's directory is the format reference and was not rewritten when the other files were copied: [`skills/strategy/zhangxuefeng/`](skills/strategy/zhangxuefeng/). Copied skills keep their upstream license and a `SOURCE.md`. A name with no `SKILL.md` is not distilled.
 
 There is no `scripts/test-harness.sh` and no `quality-harness.sh`. Do not add a commit that claims "43 tests passed."
 

@@ -1,7 +1,7 @@
 # Roadmap
 
-> **In this repository:** landing page, one published SKILL (`skills/strategy/zhangxuefeng/`, Zhang Xuefeng), static dashboard HTML, meeting JSON, and a free weekly checklist.
-> **Not in this repository:** a CLI, a test harness, cron jobs, and `skills/finance`, `skills/health`, `skills/media`, `skills/innovation`.
+> **In this repository:** landing page, seven published SKILL files (Zhang Xuefeng, plus copied Naval, Buffett, Duan Yongping, Trump, Dan Koe, and Elon Musk), static dashboard HTML, meeting JSON, and a free weekly checklist.
+> **Not in this repository:** a CLI, a test harness, cron jobs, `skills/health/` (Bryan Johnson, Huberman), and a Lidangzzz skill. The copied files are upstream snapshots. They were not rewritten here, and they were not run through the completeness check below.
 > **Pages:** branch `master`, source `/` (root). Live site: https://elimek.github.io/opc-board
 > **Not the live site:** `https://opc-board.is-a.dev` (Issue #4 is still open).
 
@@ -16,8 +16,8 @@ These are open issues. Nothing in this list is shipped.
 - [ ] Dark mode (Issue #3)
 - [ ] Custom domain (Issue #4)
 - [ ] Paid Notion pack (Issue #5)
-- [ ] A guide for loading a SKILL into any LLM (Issue #6). Today the only file you can load is Zhang Xuefeng.
-- [ ] Issue #7 output-quality fixes. The issue is still open. The Naval stance table and engineering-only Musk skill it describes are not files in this tree.
+- [ ] A guide for loading a SKILL into any LLM (Issue #6). The files you can load are the `SKILL.md` paths in the README.
+- [ ] Issue #7 output-quality fixes. The issue is still open. Naval and Musk files in this tree are upstream copies. They are not a closure of #7.
 
 ## Only after the files exist
 
@@ -34,4 +34,4 @@ Criticism materials are in the skill, sealed test items are not shipped inside t
 
 A board does not pass because every seat scored 6 or higher. The owner decides. A seat with no published SKILL does not vote.
 
-*Corrected 2026-11-20 against the public tree (last code commit `7efafbb`).*
+*Corrected 2026-11-20 against the public tree (then `7efafbb`). Upstream skill copies were added 2026-11-21. The README lists which SKILL files are in the tree.*

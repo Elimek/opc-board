@@ -1,5 +1,27 @@
 # Changelog
 
+## [Unreleased] — 2026-11-21
+
+Copied six already-published mentor skills into the tree. The SKILL text was not rewritten. `skills/strategy/zhangxuefeng/` was not edited. No CLI, no release, and no claim that all ten named people have a file.
+
+### Added
+
+- `skills/finance/naval/` from [carollefkowitr0-a11y/NavalSKILL](https://github.com/carollefkowitr0-a11y/NavalSKILL) at `b7d6ccbc` (MIT)
+- `skills/finance/buffett/` from [will2025btc/buffett-perspective](https://github.com/will2025btc/buffett-perspective) at `e18afcfc` (MIT)
+- `skills/finance/duanyongping/` from [anneheartrecord/duanyongping-perspective](https://github.com/anneheartrecord/duanyongping-perspective) at `2f3f6ef9` (MIT)
+- `skills/finance/trump/` from [yangbuyiya/trump-perspective-skill](https://github.com/yangbuyiya/trump-perspective-skill) at `2ec37980` (MIT). CBO seat.
+- `skills/media/dan-koe/` from [Elimek/dan-koe-perspective](https://github.com/Elimek/dan-koe-perspective) at `37200c45` (MIT)
+- `skills/innovation/elon-musk/` from [showharLaw/musk-perspective](https://github.com/showharLaw/musk-perspective) at `ac1d22ed` (MIT)
+
+Each copied folder keeps the upstream license and adds `SOURCE.md`.
+
+### Not added
+
+- Lidangzzz. [Elimek/lidangzzz-perspective](https://github.com/Elimek/lidangzzz-perspective) at `5c73de06` has a `SKILL.md`, and the README says "MIT", but `LICENSE` is the 14-byte text `404: Not Found`.
+- Bryan Johnson and Andrew Huberman. No licensed single-skill distillation was copied.
+- The short stub files from tag `v2.2.0`.
+- `carollefkowitr0-a11y/naval-ravikant-perspective` (no license file).
+
 ## [Unreleased] — 2026-11-20
 
 Documentation and a free checklist. No new mentor skill, no CLI, and no tests added to make an old claim true.
